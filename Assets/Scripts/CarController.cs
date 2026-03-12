@@ -8,9 +8,12 @@ using Unity.Netcode.Components;
 using TMPro;
 using static NetcodeLobby;
 using Unity.Collections;
-using static UnityEngine.LowLevelPhysics2D.PhysicsLayers;
+using UnityEngine.UI;
+using Unity.Services.Matchmaker.Models;
+using Unity.VisualScripting;
+using static SpecialEffectItemClass;
 
-public class CarController : NetworkBehaviour
+public class CarController : HitteableBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private float maxAcel;
@@ -23,25 +26,53 @@ public class CarController : NetworkBehaviour
 
     [SerializeField] private GameObject m_Cam;
 
+    [SerializeField] private Image m_ItemIcon;
+
+    [SerializeField] private GameObject m_AimMarkerPrefab;
+    [SerializeField] private GameObject m_ShieldPrefab;
+    [SerializeField] private Transform m_ShootingTransform;
+    [SerializeField] private Transform m_ShieldTransform;
+
+    [SerializeField] private float stunTime;
+
     public NetworkVariable<FixedString32Bytes> playerName = new NetworkVariable<FixedString32Bytes>(default,
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Server);
 
+    private GameObject m_AimMarker;
+    private GameObject shieldVisual;
+
     private float turnInput;
     private bool accelerationInput;
     private bool driftingInput;
+    private bool canControl = true;
+
+    private int shieldHits = 0;
+    private bool isInvulnerable;
 
     private Rigidbody rb;
 
     private ItemClass m_ItemObtained;
 
-    private void OnEnable()
+    private List<HitteableBehaviour> m_Hitteables;
+
+    private HitteableBehaviour m_ActualObjective = null;
+
+    public override void OnEnable()
     {
+        base.OnEnable();
         playerName.OnValueChanged += OnNameChanged;
+
+        m_AimMarker = Instantiate(m_AimMarkerPrefab, Vector3.zero, Quaternion.identity);
+        m_AimMarker.SetActive(false);
+        shieldVisual = Instantiate(m_ShieldPrefab, m_ShieldTransform);
+        shieldVisual.transform.localPosition = Vector3.zero;
+        shieldVisual.SetActive(false);
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
+        base.OnDisable();
         playerName.OnValueChanged -= OnNameChanged;
     }
 
@@ -75,6 +106,17 @@ public class CarController : NetworkBehaviour
 
         velLocal.x = 0;
         rb.linearVelocity = transform.TransformDirection(velLocal);
+
+        if (m_ItemObtained != null)
+        {
+            if (m_ItemObtained.GetShootItem() != null)
+            {
+                if (m_ItemObtained.GetShootItem().isHoming)
+                {
+                    AimObjective();
+                }
+            }
+        }
     }
 
     private bool CheckGround()
@@ -96,26 +138,163 @@ public class CarController : NetworkBehaviour
         );
     }
 
-    private void OnDrawGizmosSelected()
+    public void SetHitteables()
     {
-        Gizmos.DrawSphere(m_GroundCheck.position, groundChkRadius);
+        m_Hitteables = GetAllExcept(this);
+    }
+
+    public override void OnHit()
+    {
+        base.OnHit();
+
+        OnHitCoroutine();
+    }
+
+    private IEnumerator OnHitCoroutine()
+    {
+        if (isInvulnerable) yield return null;
+
+        if(shieldHits > 0)
+        {
+            shieldHits--;
+            
+            if(shieldHits <= 0)
+            {
+                ChangeShieldClientRpc(false);
+            }
+
+            yield return null;
+        }
+
+        canControl = false;
+        yield return new WaitForSeconds(stunTime);
+        canControl = true;
     }
 
     #region Items
 
     public void ReceiveItem(ItemClass item)
     {
-
+        m_ItemObtained = item;
+        m_ItemIcon.sprite = item.itemIcon;
     }
 
-    public void ReceiveRandomItem()
+    private void UseItem()
     {
+        m_ItemObtained.UseItem(this);
 
+        if (m_ItemObtained.GetShootItem() != null)
+        {
+            ShootItemClass projectile = m_ItemObtained.GetShootItem();
+            
+            Shoot(projectile, m_ActualObjective);
+        }
+        else if(m_ItemObtained.GetSpecialEffectItem() != null)
+        {
+            ActivateSpecialEffectItem(m_ItemObtained.GetSpecialEffectItem());
+        }
+        else
+        {
+        }
+        RemoveItem();
     }
 
-    private void UseItem(ItemClass item)
+    private void ActivateSpecialEffectItem(SpecialEffectItemClass item)
     {
-        item.UseItem(this);
+        if(item.type == EffectType.Shield)
+        {
+            ActiveShieldServerRpc(item.duration, item.shieldHits);
+        }
+    }
+
+    private IEnumerator ActivateShield(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        shieldHits = 0;
+        ChangeShieldClientRpc(false);
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Owner)]
+    private void ActiveShieldServerRpc(float duration, int hits)
+    {
+        shieldHits = hits;
+
+        ChangeShieldClientRpc(true);
+
+        StartCoroutine(ActivateShield(duration));
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void ChangeShieldClientRpc(bool activated)
+    {
+        shieldVisual.SetActive(activated);
+    }
+
+    private HitteableBehaviour GetNearestHitteableObject()
+    {
+        float max = float.PositiveInfinity;
+        HitteableBehaviour nearestObjective = null;
+
+        foreach (HitteableBehaviour item in GetAllExcept(this))
+        {
+            float distance = Vector3.Distance(transform.position, item.transform.position);
+            if (distance < max)
+            {
+                max = distance;
+                nearestObjective = item;
+            }
+        }
+
+        return nearestObjective;
+    }
+
+    public void AimObjective()
+    {
+        HitteableBehaviour nearestObjective = GetNearestHitteableObject();
+
+        Vector3 playerVector = transform.forward;
+        playerVector.y = 0;
+        Vector3 playerToNearestObjective = (nearestObjective.transform.position - transform.position).normalized;
+        playerToNearestObjective.y = 0;
+        float dotProduct = Vector3.Dot(playerVector, playerToNearestObjective);
+
+        //Debug.Log(nearestObjective.name + " en la posicion " + nearestObjective.transform.position + " con punto " + dotProduct);
+        if (dotProduct > 0.6f)
+        {
+            Debug.Log("Objetivo en la mira");
+            m_AimMarker.SetActive(true);
+            m_AimMarker.transform.position = nearestObjective.m_MarkerPosition.position;
+            m_ActualObjective = nearestObjective;
+        }
+        else
+        {
+            if (m_AimMarker.activeSelf)
+            {
+                m_AimMarker.SetActive(false);
+            }
+            
+            m_ActualObjective = null;
+        }
+    }
+
+    public void Shoot(ShootItemClass m_Projectile, HitteableBehaviour m_Objective)
+    {
+        Debug.Log("Disparando objeto");
+
+        NetworkObjectReference targetRef = default;
+
+        if (m_Objective != null)
+            targetRef = new NetworkObjectReference(m_Objective.NetworkObject);
+
+        ShootServerRpc(m_Projectile.itemId, targetRef, transform.forward);
+    }
+
+    private void RemoveItem()
+    {
+        m_ItemIcon.sprite = null;
+        m_ItemObtained = null;
+        m_AimMarker.SetActive(false);
+        m_ActualObjective = null;
     }
 
     #endregion
@@ -125,6 +304,7 @@ public class CarController : NetworkBehaviour
     public void TurnInput(InputAction.CallbackContext ctx)
     {
         if (!IsOwner) return;
+        if (!canControl) return;
 
         turnInput = ctx.ReadValue<Vector2>().x;
     }
@@ -139,13 +319,43 @@ public class CarController : NetworkBehaviour
     public void AccelerationInput(InputAction.CallbackContext ctx)
     {
         if (!IsOwner) return;
+        if (!canControl) return;
 
         accelerationInput = ctx.performed;
+    }
+
+    public void UseItemInput(InputAction.CallbackContext ctx)
+    {
+        if (!IsOwner) return;
+
+        if(ctx.started && m_ItemObtained != null)
+        {
+            UseItem();
+        }
     }
 
     #endregion
 
     #region Networking
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Owner)]
+    private void ShootServerRpc(int m_ProjectileId, NetworkObjectReference targetRef, Vector3 direction)
+    {
+        ShootItemClass m_Projectile = ItemDatabase.Instance.GetProjectileItemById(m_ProjectileId);
+
+        GameObject projectile = Instantiate(m_Projectile.projectilePrefab, m_ShootingTransform.position, Quaternion.identity);
+        
+        projectile.GetComponent<NetworkObject>().Spawn();
+
+        HitteableBehaviour objective = null;
+
+        if (targetRef.TryGet(out NetworkObject targetNetObj))
+        {
+            objective = targetNetObj.GetComponent<HitteableBehaviour>();
+        }
+
+        projectile.GetComponent<ProjectileBehaviour>().SetProperties(objective, direction, m_Projectile.velocity, m_Projectile.isHoming);
+    }
 
     private void OnNameChanged(FixedString32Bytes oldName, FixedString32Bytes newName)
     {

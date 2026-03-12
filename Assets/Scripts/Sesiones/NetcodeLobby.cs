@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Netcode;
-using Unity.Netcode.Components;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class NetcodeLobby : NetworkBehaviour
@@ -131,8 +129,14 @@ public class NetcodeLobby : NetworkBehaviour
         Debug.Log("Starting game");
 
         CarController playerObj = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<CarController>();
+        playerObj.SetHitteables();
         Transform spawn = spawnPositions[(int) NetworkManager.Singleton.LocalClientId];
 
         playerObj.Teleport(spawn);
+
+        foreach(var a in FindObjectsByType<MoveToWaypoints>(FindObjectsSortMode.None))
+        {
+            a.ActivateMovement();
+        }
     }
 }
