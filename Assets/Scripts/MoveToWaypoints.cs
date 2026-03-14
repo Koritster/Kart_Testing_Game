@@ -8,8 +8,14 @@ public class MoveToWaypoints : NetworkBehaviour
 
     private Rigidbody rb;
     private Transform target;
-
+    private CarController car;
     bool canMove;
+
+    public int currentLap = 0;
+    public int totalLaps = 3;
+    float itemTimer;
+    float itemUseDelay;
+
 
     void Start()
     {
@@ -19,6 +25,9 @@ public class MoveToWaypoints : NetworkBehaviour
         //Waypoints
         target = Waypoints.waypoints[0];
         Debug.Log("Inicializando waypoints");
+        car = GetComponent<CarController>();
+        //Tiempo para que use un item
+        itemUseDelay = Random.Range(3f, 8f);
     }
 
     public void ActivateMovement()
@@ -34,6 +43,7 @@ public class MoveToWaypoints : NetworkBehaviour
 
         Movement();
     }
+
 
     Vector3 dir;
 
@@ -53,11 +63,22 @@ public class MoveToWaypoints : NetworkBehaviour
 
     private int wavepointIndex = 0;
 
+    //Waypoints de la pista y contador de vueltas
     private void NextWaypoint()
     {
         if (wavepointIndex >= Waypoints.waypoints.Length - 1)
         {
             wavepointIndex = 0;
+            currentLap++;
+
+            Debug.Log("IA completó vuelta: " + currentLap);
+
+            if (currentLap >= totalLaps)
+            {
+                FinishRace();
+                return;
+            }
+
             target = Waypoints.waypoints[wavepointIndex];
         }
         else
@@ -65,5 +86,11 @@ public class MoveToWaypoints : NetworkBehaviour
             wavepointIndex++;
             target = Waypoints.waypoints[wavepointIndex];
         }
+    }
+    // Detiene el movimiento de la IA cuando termina la carrera
+    void FinishRace()
+    {
+        canMove = false;
+        Debug.Log("Terminó la carrera");
     }
 }
