@@ -78,11 +78,13 @@ public class CarController : HitteableBehaviour
 
     public override void OnNetworkSpawn()
     {
-        if (!IsOwner) return;
-
         rb = GetComponent<Rigidbody>();
 
-        Camera.main.gameObject.SetActive(false);
+        if (!IsOwner) return;
+
+        if (Camera.main != null)
+            Camera.main.gameObject.SetActive(false);
+
         m_Cam.SetActive(true);
     }
 
@@ -175,11 +177,26 @@ public class CarController : HitteableBehaviour
 
     public void ReceiveItem(ItemClass item)
     {
+        Debug.Log("Recibiendo item");
+
+        if (m_ItemIcon == null)
+            Debug.LogError("ItemIcon no asignado en el inspector");
+
+        if (item == null)
+            Debug.LogError("Item recibido es null");
+
         m_ItemObtained = item;
-        m_ItemIcon.sprite = item.itemIcon;
+
+        if (m_ItemIcon != null && item != null)
+            m_ItemIcon.sprite = item.itemIcon;
+    }
+    //IA tiene item
+    public bool HasItem()
+    {
+        return m_ItemObtained != null;
     }
 
-    private void UseItem()
+    public void UseItem()
     {
         m_ItemObtained.UseItem(this);
 
@@ -338,7 +355,7 @@ public class CarController : HitteableBehaviour
 
     #region Networking
 
-    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Owner)]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void ShootServerRpc(int m_ProjectileId, NetworkObjectReference targetRef, Vector3 direction)
     {
         ShootItemClass m_Projectile = ItemDatabase.Instance.GetProjectileItemById(m_ProjectileId);
