@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 736bf4fb445c42e44bace47e428ed940, type: 3}
+  m_Name: Default
+  m_EditorClassIdentifier: Assembly-CSharp::CarModel
+  carVisual: {fileID: 6024408582441246799, guid: fa416e4067c149048b583576044a735a, type: 3}
+  carIcon: {fileID: 0}

@@ -102,6 +102,39 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1 &1555890365119112766
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1832342416726433274}
+  m_Layer: 0
+  m_Name: VisualModelCar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1832342416726433274
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555890365119112766}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8264075168060199629}
+  - {fileID: 6617029302335702711}
+  m_Father: {fileID: 1181562350251886477}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1851131794639260685
 GameObject:
   m_ObjectHideFlags: 0
@@ -411,8 +444,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8264075168060199629}
-  - {fileID: 6617029302335702711}
+  - {fileID: 1832342416726433274}
   - {fileID: 6828172321628777602}
   - {fileID: 1639562464398335733}
   - {fileID: 8893993843627728386}
@@ -461,7 +493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2522855888
+  GlobalObjectIdHash: 4219478514
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -488,24 +520,60 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CarController
   ShowTopMostFoldoutHeaderGroup: 1
   m_MarkerPosition: {fileID: 100325923224649179}
+  m_Cam: {fileID: 7735321072130867920}
   speed: 20000
   maxAcel: 25
   turnForce: 50
   turnForceDrifting: 100
+  stunTime: 3
   m_GroundCheck: {fileID: 1639562464398335733}
   groundChkRadius: 1
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   m_PlayerNameTxt: {fileID: 3329457920869262644}
-  m_Cam: {fileID: 7735321072130867920}
   m_ItemIcon: {fileID: 3047029740956820844}
   m_AimMarkerPrefab: {fileID: 117975356763802500, guid: 0b933d5d1262ced4684f8643d6219ffd, type: 3}
   m_ShieldPrefab: {fileID: 6204870892257718096, guid: fad0eb1963241cf41bdbf07aa62a1055, type: 3}
   m_ShootingTransform: {fileID: 6772610845970724388}
   m_ShieldTransform: {fileID: 4759035343831026531}
-  stunTime: 3
+  m_CarModelVisualTransform: {fileID: 1832342416726433274}
   playerName:
+    m_InternalValue:
+      utf8LengthInBytes: 0
+      bytes:
+        offset0000:
+          byte0000: 0
+          byte0001: 0
+          byte0002: 0
+          byte0003: 0
+          byte0004: 0
+          byte0005: 0
+          byte0006: 0
+          byte0007: 0
+          byte0008: 0
+          byte0009: 0
+          byte0010: 0
+          byte0011: 0
+          byte0012: 0
+          byte0013: 0
+          byte0014: 0
+          byte0015: 0
+        byte0016: 0
+        byte0017: 0
+        byte0018: 0
+        byte0019: 0
+        byte0020: 0
+        byte0021: 0
+        byte0022: 0
+        byte0023: 0
+        byte0024: 0
+        byte0025: 0
+        byte0026: 0
+        byte0027: 0
+        byte0028: 0
+        byte0029: 0
+  carModel:
     m_InternalValue:
       utf8LengthInBytes: 0
       bytes:
@@ -974,7 +1042,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7960405309978807084}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -983,7 +1051,7 @@ Transform:
   - {fileID: 6054450699211212762}
   - {fileID: 5383132174475645256}
   - {fileID: 7590071732102544279}
-  m_Father: {fileID: 1181562350251886477}
+  m_Father: {fileID: 1832342416726433274}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8065268429286065641
 GameObject:
@@ -1120,7 +1188,6 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1459,7 +1526,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1181562350251886477}
+    m_TransformParent: {fileID: 1832342416726433274}
     m_Modifications:
     - target: {fileID: 100006, guid: 3d145164381b5e74da063585c935cc39, type: 3}
       propertyPath: m_Name

@@ -35,6 +35,7 @@ public class NetcodeLobby : NetworkBehaviour
     }
 
     public NetworkList<PlayerNetworkData> players = new NetworkList<PlayerNetworkData>(default, NetworkVariableBase.DefaultReadPerm, NetworkVariableWritePermission.Owner);
+    
     public NetworkVariable<bool> GameStarted =
         new NetworkVariable<bool>(false,
             NetworkVariableReadPermission.Everyone,
@@ -94,6 +95,8 @@ public class NetcodeLobby : NetworkBehaviour
         CarController car = player.GetComponent<CarController>();
         
         car.playerName.Value = name;
+
+        //Setting Car Model Value
     }
 
     public void StartGame()

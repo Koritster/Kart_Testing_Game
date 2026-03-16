@@ -11,27 +11,39 @@ using static SpecialEffectItemClass;
 
 public class CarController : HitteableBehaviour
 {
+    [SerializeField] private GameObject m_Cam;
+
+    [Header("Control values")]
     [SerializeField] private float speed;
     [SerializeField] private float maxAcel;
     [SerializeField] private float turnForce;
     [SerializeField] private float turnForceDrifting;
+    [SerializeField] private float stunTime;
+
+    [Header("CheckGround")]
     [SerializeField] private Transform m_GroundCheck;
     [SerializeField] private float groundChkRadius;
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private TextMeshProUGUI m_PlayerNameTxt;
 
-    [SerializeField] private GameObject m_Cam;
+    [Header("UI")]
+    [SerializeField] private TextMeshProUGUI m_PlayerNameTxt;
 
     [SerializeField] private Image m_ItemIcon;
 
+    [Header("Prefabs References")]
     [SerializeField] private GameObject m_AimMarkerPrefab;
     [SerializeField] private GameObject m_ShieldPrefab;
+    
+    [Header("Transform References")]
     [SerializeField] private Transform m_ShootingTransform;
     [SerializeField] private Transform m_ShieldTransform;
-
-    [SerializeField] private float stunTime;
+    [SerializeField] private Transform m_CarModelVisualTransform;
 
     public NetworkVariable<FixedString32Bytes> playerName = new NetworkVariable<FixedString32Bytes>(default,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server);
+
+    public NetworkVariable<FixedString32Bytes> carModel = new NetworkVariable<FixedString32Bytes>(default,
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Server);
 
@@ -58,6 +70,7 @@ public class CarController : HitteableBehaviour
     {
         base.OnEnable();
         playerName.OnValueChanged += OnNameChanged;
+        carModel.OnValueChanged += OnCarModelChanged;
 
         m_AimMarker = Instantiate(m_AimMarkerPrefab, Vector3.zero, Quaternion.identity);
         m_AimMarker.SetActive(false);
@@ -70,6 +83,7 @@ public class CarController : HitteableBehaviour
     {
         base.OnDisable();
         playerName.OnValueChanged -= OnNameChanged;
+        carModel.OnValueChanged -= OnCarModelChanged;
     }
 
     public override void OnNetworkSpawn()
@@ -368,6 +382,11 @@ public class CarController : HitteableBehaviour
     private void OnNameChanged(FixedString32Bytes oldName, FixedString32Bytes newName)
     {
         m_PlayerNameTxt.text = newName.ToString();
+    }
+
+    private void OnCarModelChanged(FixedString32Bytes oldName, FixedString32Bytes newName)
+    {
+
     }
 
     #endregion
