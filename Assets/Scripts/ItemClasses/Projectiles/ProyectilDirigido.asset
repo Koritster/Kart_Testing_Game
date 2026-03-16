@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShootItemClass
   name: Proyectil Dirigido
   itemId: 2
-  itemIcon: {fileID: 21300000, guid: ae8622cceb70c7f49b398ecee38b275e, type: 3}
+  itemIcon: {fileID: 21300000, guid: c23a8e49bfd9365499eda0354b81896a, type: 3}
   velocity: 25
   amount: 1
   isHoming: 1
