@@ -276,6 +276,7 @@ GameObject:
   - component: {fileID: 3532242226702872334}
   - component: {fileID: 7682659981586177244}
   - component: {fileID: 259984588118435905}
+  - component: {fileID: 8390072915425280559}
   m_Layer: 0
   m_Name: KartWaypointsDummy
   m_TagString: Untagged
@@ -475,6 +476,20 @@ MonoBehaviour:
   speed: 175
   currentLap: 0
   totalLaps: 3
+--- !u!114 &8390072915425280559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5128785793726237720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ddd637fc3064e840b04e2fed260a0d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KartAIController
+  ShowTopMostFoldoutHeaderGroup: 1
+  shootingTransform: {fileID: 8325881384938861777}
 --- !u!1 &6121506106559450914
 GameObject:
   m_ObjectHideFlags: 0
