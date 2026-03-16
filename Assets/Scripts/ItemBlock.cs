@@ -15,10 +15,10 @@ public class ItemBlock : MonoBehaviour
 
             GetItemBlockServerRpc();
         }
-        
-        if(other.TryGetComponent<MoveToWaypoints>(out MoveToWaypoints m_IACar))
+        //Cambio de script para que la IA tome los items
+        if (other.TryGetComponent<KartAIController>(out KartAIController ai))
         {
-            m_IACar.ReceiveItem(GetRandomItem());
+            ai.ReceiveItem(GetRandomItem());
 
             GetItemBlockServerRpc();
         }

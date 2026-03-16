@@ -43,7 +43,6 @@ public class MoveToWaypoints : NetworkBehaviour
         if (!canMove) return;
 
         Movement();
-        HandleItemUse();
     }
 
 
@@ -63,60 +62,6 @@ public class MoveToWaypoints : NetworkBehaviour
         }
     }
 
-    HitteableBehaviour GetNearestTarget()
-    {
-        float minDistance = Mathf.Infinity;
-        HitteableBehaviour nearest = null;
-
-        foreach (HitteableBehaviour h in HitteableBehaviour.GetAllExcept(car))
-        {
-            float dist = Vector3.Distance(transform.position, h.transform.position);
-
-            if (dist < minDistance)
-            {
-                minDistance = dist;
-                nearest = h;
-            }
-        }
-
-        return nearest;
-    }
-
-    bool TargetIsInFront(HitteableBehaviour target)
-    {
-        Vector3 forward = transform.forward;
-        Vector3 dirToTarget = (target.transform.position - transform.position).normalized;
-
-        float dot = Vector3.Dot(forward, dirToTarget);
-
-        return dot > 0.5f;
-    }
-
-    void HandleItemUse()
-    {
-        itemTimer += Time.deltaTime;
-
-        if (itemTimer >= itemUseDelay && car.HasItem())
-        {
-            currentTarget = GetNearestTarget();
-
-            if (currentTarget != null)
-            {
-                float dist = Vector3.Distance(transform.position, currentTarget.transform.position);
-
-                if (dist < 25f)
-                {
-                    Debug.Log("IA disparando a objetivo");
-
-                    car.AimObjective();
-                    car.UseItem();
-
-                    itemTimer = 0;
-                    itemUseDelay = Random.Range(4f, 8f);
-                }
-            }
-        }
-    }
 
     private int wavepointIndex = 0;
 
