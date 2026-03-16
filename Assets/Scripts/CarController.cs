@@ -3,14 +3,10 @@ using UnityEngine.InputSystem;
 using Unity.Netcode;
 using System.Collections;
 using System.Collections.Generic;
-using System;
 using Unity.Netcode.Components;
 using TMPro;
-using static NetcodeLobby;
 using Unity.Collections;
 using UnityEngine.UI;
-using Unity.Services.Matchmaker.Models;
-using Unity.VisualScripting;
 using static SpecialEffectItemClass;
 
 public class CarController : HitteableBehaviour
@@ -189,11 +185,6 @@ public class CarController : HitteableBehaviour
 
         if (m_ItemIcon != null && item != null)
             m_ItemIcon.sprite = item.itemIcon;
-    }
-    //IA tiene item
-    public bool HasItem()
-    {
-        return m_ItemObtained != null;
     }
 
     public void UseItem()

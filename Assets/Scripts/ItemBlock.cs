@@ -1,3 +1,4 @@
+using Mono.Cecil.Cil;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
@@ -11,6 +12,13 @@ public class ItemBlock : MonoBehaviour
         if(other.TryGetComponent<CarController>(out CarController m_Car))
         {
             m_Car.ReceiveItem(GetRandomItem());
+
+            GetItemBlockServerRpc();
+        }
+        
+        if(other.TryGetComponent<MoveToWaypoints>(out MoveToWaypoints m_IACar))
+        {
+            m_IACar.ReceiveItem(GetRandomItem());
 
             GetItemBlockServerRpc();
         }

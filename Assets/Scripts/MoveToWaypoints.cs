@@ -8,7 +8,9 @@ public class MoveToWaypoints : NetworkBehaviour
 
     private Rigidbody rb;
     private Transform target;
-    private CarController car;
+    
+    private ItemClass m_ItemObtained;
+
     bool canMove;
 
     public int currentLap = 0;
@@ -25,7 +27,6 @@ public class MoveToWaypoints : NetworkBehaviour
         //Waypoints
         target = Waypoints.waypoints[0];
         Debug.Log("Inicializando waypoints");
-        car = GetComponent<CarController>();
         //Tiempo para que use un item
         itemUseDelay = Random.Range(3f, 8f);
     }
@@ -93,8 +94,6 @@ public class MoveToWaypoints : NetworkBehaviour
 
     void HandleItemUse()
     {
-        if (car == null) return;
-
         itemTimer += Time.deltaTime;
 
         if (itemTimer >= itemUseDelay && car.HasItem())
@@ -145,6 +144,17 @@ public class MoveToWaypoints : NetworkBehaviour
             target = Waypoints.waypoints[wavepointIndex];
         }
     }
+
+    public void ReceiveItem(ItemClass item)
+    {
+        Debug.Log("Recibiendo item");
+
+        if (item == null)
+            Debug.LogError("Item recibido es null");
+
+        m_ItemObtained = item;
+    }
+
     // Detiene el movimiento de la IA cuando termina la carrera
     void FinishRace()
     {
