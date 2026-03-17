@@ -90,6 +90,16 @@ public class CarController : HitteableBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
+        if (playerName.Value != default)
+        {
+            ChangeName(playerName.Value.ToString());
+        }
+
+        if (carModel.Value != default)
+        {
+            ChangeCarModel(carModel.Value.ToString());
+        }
+
         if (!IsOwner) return;
 
         if (Camera.main != null)
@@ -381,24 +391,22 @@ public class CarController : HitteableBehaviour
 
     private void OnNameChanged(FixedString32Bytes oldName, FixedString32Bytes newName)
     {
-        m_PlayerNameTxt.text = newName.ToString();
+        ChangeName(newName.ToString());
+    }
+
+    private void ChangeName(string name)
+    {
+        m_PlayerNameTxt.text = name;
     }
 
     private void OnCarModelChanged(FixedString32Bytes oldName, FixedString32Bytes newName)
     {
-        ChangeCarModelServerRpc(newName);
+        ChangeCarModel(newName.ToString());
     }
 
-    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
-    private void ChangeCarModelServerRpc(FixedString32Bytes newName)
+    private void ChangeCarModel(string newName)
     {
-        ChangeCarModelClientRpc(newName);
-    }
-
-    [Rpc(SendTo.ClientsAndHost)]
-    private void ChangeCarModelClientRpc(FixedString32Bytes newName)
-    {
-        GameObject kartVisual = CarSelector.instance.SearchKartModelByName(newName.ToString());
+        GameObject kartVisual = CarSelector.instance.SearchKartModelByName(newName);
         GameObject kartInstantiated = Instantiate(kartVisual, m_CarModelVisualTransform);
         kartInstantiated.transform.localPosition = Vector3.zero;
     }
