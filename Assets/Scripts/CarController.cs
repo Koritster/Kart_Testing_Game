@@ -387,9 +387,19 @@ public class CarController : HitteableBehaviour
     private void OnCarModelChanged(FixedString32Bytes oldName, FixedString32Bytes newName)
     {
         GameObject kartVisual = CarSelector.instance.SearchKartModelByName(newName.ToString());
+        ChangeCarModelServerRpc(kartVisual);
+    }
 
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    private void ChangeCarModelServerRpc(GameObject kartVisual)
+    {
+        ChangeCarModelClientRpc(kartVisual);
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void ChangeCarModelClientRpc(GameObject kartVisual)
+    {
         GameObject kartInstantiated = Instantiate(kartVisual, m_CarModelVisualTransform);
-
         kartInstantiated.transform.localPosition = Vector3.zero;
     }
 
