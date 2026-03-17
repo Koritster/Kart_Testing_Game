@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 736bf4fb445c42e44bace47e428ed940, type: 3}
-  m_Name: Carro Negro
+  m_Name: Triceratops
   m_EditorClassIdentifier: Assembly-CSharp::CarModel
-  carVisual: {fileID: 5128785793726237720, guid: 5419fb931b1bcbe4ea1260bd1b2a1e4b, type: 3}
+  carVisual: {fileID: 7170585390055438375, guid: 0f4534dac404a1146a83cbe48bdf4dda, type: 3}
   carIcon: {fileID: 0}

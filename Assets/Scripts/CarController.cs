@@ -386,7 +386,11 @@ public class CarController : HitteableBehaviour
 
     private void OnCarModelChanged(FixedString32Bytes oldName, FixedString32Bytes newName)
     {
+        GameObject kartVisual = CarSelector.instance.SearchKartModelByName(newName.ToString());
 
+        GameObject kartInstantiated = Instantiate(kartVisual, m_CarModelVisualTransform);
+
+        kartInstantiated.transform.localPosition = Vector3.zero;
     }
 
     #endregion

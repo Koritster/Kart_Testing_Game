@@ -77,7 +77,8 @@ public class NetcodeLobby : NetworkBehaviour
         {
             clientId = clientId,
             playerName = name,
-            spawnIndex = spawnIndex
+            spawnIndex = spawnIndex,
+            playerKart = kart
         });
 
         Transform spawn = spawnPositions[spawnIndex];
@@ -96,7 +97,7 @@ public class NetcodeLobby : NetworkBehaviour
         
         car.playerName.Value = name;
 
-        //Setting Car Model Value
+        car.carModel.Value = kart;
     }
 
     public void StartGame()

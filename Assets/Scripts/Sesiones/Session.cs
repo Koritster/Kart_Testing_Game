@@ -66,6 +66,7 @@ public class Session : MonoBehaviour
             await AuthenticationService.Instance.GetPlayerNameAsync();
             m_UsernameInput.text = AuthenticationService.Instance.PlayerName;
             localPlayerName = AuthenticationService.Instance.PlayerName;
+            localPlayerKart = "defauolt";
             RefreshSessionList();
         }
         catch (Exception e)
@@ -147,6 +148,11 @@ public class Session : MonoBehaviour
         localPlayerName = AuthenticationService.Instance.PlayerName;
     }
 
+    public void RegisterCarSelection(string _kart)
+    {
+        localPlayerKart = _kart;
+    }
+
     #endregion
 
     #region Crear sesiones
@@ -176,6 +182,9 @@ public class Session : MonoBehaviour
         {
             {
                 "PlayerName", new PlayerProperty(AuthenticationService.Instance.PlayerName, VisibilityPropertyOptions.Member)
+            },
+            {
+                "Kart", new PlayerProperty(localPlayerKart, VisibilityPropertyOptions.Member)
             }
         };
 
@@ -218,6 +227,9 @@ public class Session : MonoBehaviour
         {
             {
                 "PlayerName", new PlayerProperty(AuthenticationService.Instance.PlayerName, VisibilityPropertyOptions.Member)
+            },
+            {
+                "Kart", new PlayerProperty(localPlayerKart, VisibilityPropertyOptions.Member)
             }
         };
 
