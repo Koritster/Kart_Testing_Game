@@ -197,6 +197,8 @@ public class CarController : HitteableBehaviour
 
     public void ReceiveItem(ItemClass item)
     {
+        if (!IsOwner) return;
+
         Debug.Log("Recibiendo item");
 
         if (m_ItemIcon == null)
