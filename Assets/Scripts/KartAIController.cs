@@ -1,7 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 
-public class KartAIController : NetworkBehaviour
+public class KartAIController : Kart
 {
     private float itemTimer;
     private float itemUseDelay;

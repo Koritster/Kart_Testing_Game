@@ -9,7 +9,7 @@ using Unity.Collections;
 using UnityEngine.UI;
 using static SpecialEffectItemClass;
 
-public class CarController : HitteableBehaviour
+public class CarController : Kart
 {
     [SerializeField] private GameObject m_Cam;
 

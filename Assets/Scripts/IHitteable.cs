@@ -8,6 +8,52 @@ public interface IHitteable
     public abstract void OnHit();
 }
 
+public class Kart : HitteableBehaviour
+{
+    public NetworkVariable<float> trackProgress = new NetworkVariable<float>(0f,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server);
+
+    public int lap;
+    public int checkpointIndex;
+    
+    private List<Transform> checkpoints;
+
+    public override void OnNetworkSpawn()
+    {
+        if (IsClient)
+        {
+            PositionsManager.instance.RegisterKart(this);
+        }
+    }
+
+    private void Update()
+    {
+        if (!IsServer) return;
+
+        float progress = CalcularProgreso();
+
+        trackProgress.Value = progress;
+
+        int pos = PositionsManager.instance.GetPosition(this);
+    }
+
+    float CalcularProgreso()
+    {
+        Vector3 A = checkpoints[checkpointIndex].position;
+        Vector3 B = checkpoints[(checkpointIndex + 1) % checkpoints.Count].position;
+        Vector3 P = transform.position;
+
+        Vector3 AB = B - A;
+        Vector3 AP = P - A;
+
+        float t = Vector3.Dot(AP, AB) / AB.sqrMagnitude;
+        t = Mathf.Clamp01(t);
+
+        return lap * checkpoints.Count + checkpointIndex + t;
+    }
+}
+
 public class HitteableBehaviour : NetworkBehaviour, IHitteable
 {
     public static List<IHitteable> m_AllHitteables = new List<IHitteable>();

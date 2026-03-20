@@ -88,11 +88,4 @@ public class MoveToWaypoints : NetworkBehaviour
 
         m_ItemObtained = item;
     }
-
-    // Detiene el movimiento de la IA cuando termina la carrera
-    void FinishRace()
-    {
-        canMove = false;
-        Debug.Log("Terminó la carrera");
-    }
 }

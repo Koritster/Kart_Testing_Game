@@ -171,6 +171,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: CajaItems (22)
       objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1590826384
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3296114262
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -875,6 +887,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: CajaItems (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 18351534
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3296114262
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1204,6 +1228,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: CajaItems (20)
       objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2042751985
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3296114262
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1328,6 +1364,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: CajaItems (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2699462356
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3296114262
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1401,6 +1449,18 @@ PrefabInstance:
     - target: {fileID: 3377237245822570238, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
       propertyPath: m_Name
       value: CajaItems (19)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2536896135
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3296114262
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3051,6 +3111,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KartAIController
   ShowTopMostFoldoutHeaderGroup: 1
+  m_MarkerPosition: {fileID: 0}
+  trackProgress:
+    m_InternalValue: 0
+  lap: 0
+  checkpointIndex: 0
   shootingTransform: {fileID: 1599390368}
 --- !u!1001 &591465916
 PrefabInstance:
@@ -3177,6 +3242,18 @@ PrefabInstance:
     - target: {fileID: 3377237245822570238, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
       propertyPath: m_Name
       value: CajaItems (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2360261302
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3296114262
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3375,6 +3452,18 @@ PrefabInstance:
     - target: {fileID: 3377237245822570238, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
       propertyPath: m_Name
       value: CajaItems (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1851267622
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3296114262
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3893,6 +3982,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: CajaItems (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 4077943920
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3296114262
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3966,6 +4067,18 @@ PrefabInstance:
     - target: {fileID: 3377237245822570238, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
       propertyPath: m_Name
       value: CajaItems (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3837075265
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3296114262
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4512,6 +4625,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: CajaItems (16)
       objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 4287709026
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3296114262
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4781,6 +4906,18 @@ PrefabInstance:
     - target: {fileID: 3377237245822570238, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
       propertyPath: m_Name
       value: CajaItems (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2755241237
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3296114262
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5345,6 +5482,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: CajaItems (21)
       objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 445859968
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3296114262
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5550,6 +5699,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: CajaItems (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3875810590
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3296114262
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5578,6 +5739,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KartAIController
   ShowTopMostFoldoutHeaderGroup: 1
+  m_MarkerPosition: {fileID: 0}
+  trackProgress:
+    m_InternalValue: 0
+  lap: 0
+  checkpointIndex: 0
   shootingTransform: {fileID: 1342505203}
 --- !u!1 &1087192558
 GameObject:
@@ -5674,6 +5840,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: CajaItems (13)
       objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2463546721
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3296114262
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5735,6 +5913,18 @@ PrefabInstance:
     - target: {fileID: 3377237245822570238, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
       propertyPath: m_Name
       value: CajaItems (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1600669281
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3296114262
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6097,6 +6287,18 @@ PrefabInstance:
     - target: {fileID: 3377237245822570238, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
       propertyPath: m_Name
       value: CajaItems (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 4110409526
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3296114262
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6931,6 +7133,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KartAIController
   ShowTopMostFoldoutHeaderGroup: 1
+  m_MarkerPosition: {fileID: 0}
+  trackProgress:
+    m_InternalValue: 0
+  lap: 0
+  checkpointIndex: 0
   shootingTransform: {fileID: 1429614184}
 --- !u!1 &1373328543
 GameObject:
@@ -7275,6 +7482,18 @@ PrefabInstance:
     - target: {fileID: 3377237245822570238, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
       propertyPath: m_Name
       value: CajaItems (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2598834333
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3296114262
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7793,6 +8012,18 @@ PrefabInstance:
     - target: {fileID: 3377237245822570238, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
       propertyPath: m_Name
       value: CajaItems (17)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2020042680
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3296114262
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8746,6 +8977,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: CajaItems (12)
       objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 579765805
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3296114262
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8805,6 +9048,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KartAIController
   ShowTopMostFoldoutHeaderGroup: 1
+  m_MarkerPosition: {fileID: 0}
+  trackProgress:
+    m_InternalValue: 0
+  lap: 0
+  checkpointIndex: 0
   shootingTransform: {fileID: 559986142}
 --- !u!1001 &1798161107
 PrefabInstance:
@@ -9993,6 +10241,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: CajaItems (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1117001720
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3296114262
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10093,6 +10353,18 @@ PrefabInstance:
     - target: {fileID: 3377237245822570238, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
       propertyPath: m_Name
       value: CajaItems (14)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3263448932
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3296114262
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10311,6 +10583,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: CajaItems (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 838228045
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3296114262
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10372,6 +10656,18 @@ PrefabInstance:
     - target: {fileID: 3377237245822570238, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
       propertyPath: m_Name
       value: CajaItems (23)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1763927767
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3296114262
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10608,6 +10904,18 @@ PrefabInstance:
     - target: {fileID: 3377237245822570238, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
       propertyPath: m_Name
       value: CajaItems
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1693600843
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917750059654656452, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3296114262
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

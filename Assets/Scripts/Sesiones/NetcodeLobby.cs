@@ -142,5 +142,7 @@ public class NetcodeLobby : NetworkBehaviour
         {
             a.ActivateMovement();
         }
+
+        PositionsManager.instance.started = true;
     }
 }
