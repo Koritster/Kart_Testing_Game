@@ -13,8 +13,6 @@ public class MoveToWaypoints : NetworkBehaviour
 
     bool canMove;
 
-    public int currentLap = 0;
-    public int totalLaps = 3;
     float itemTimer;
     float itemUseDelay;
     private HitteableBehaviour currentTarget;
@@ -71,15 +69,6 @@ public class MoveToWaypoints : NetworkBehaviour
         if (wavepointIndex >= Waypoints.waypoints.Length - 1)
         {
             wavepointIndex = 0;
-            currentLap++;
-
-            Debug.Log("IA completó vuelta: " + currentLap);
-
-            if (currentLap >= totalLaps)
-            {
-                FinishRace();
-                return;
-            }
 
             target = Waypoints.waypoints[wavepointIndex];
         }
