@@ -27,6 +27,7 @@ public class CarController : Kart
 
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI m_PlayerNameTxt;
+    [SerializeField] private TextMeshProUGUI m_PositionTxt;
 
     [SerializeField] private Image m_ItemIcon;
 
@@ -108,6 +109,13 @@ public class CarController : Kart
         m_Cam.SetActive(true);
     }
 
+    private void Update()
+    {
+        if (!IsOwner || NetcodeLobby.instance.GameStarted.Value == false) return;
+
+        UIPosition();
+    }
+
     private void FixedUpdate()
     {
         if (!IsOwner || NetcodeLobby.instance.GameStarted.Value == false) return;
@@ -139,6 +147,11 @@ public class CarController : Kart
                 }
             }
         }
+    }
+
+    private void UIPosition()
+    {
+        m_PositionTxt.text = PositionsManager.instance.GetPosition(this).ToString() + "°";
     }
 
     private bool CheckGround()
