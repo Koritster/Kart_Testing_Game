@@ -8,6 +8,7 @@ public class NetcodeLobby : NetworkBehaviour
 {
     public static NetcodeLobby instance;
 
+    //Datos de jugador
     public struct PlayerNetworkData : INetworkSerializable, IEquatable<PlayerNetworkData>
     {
         public ulong clientId;
@@ -34,6 +35,7 @@ public class NetcodeLobby : NetworkBehaviour
         }
     }
 
+    //Lista de jugadores
     public NetworkList<PlayerNetworkData> players = new NetworkList<PlayerNetworkData>(default, NetworkVariableBase.DefaultReadPerm, NetworkVariableWritePermission.Owner);
     
     public NetworkVariable<bool> GameStarted =
@@ -41,6 +43,7 @@ public class NetcodeLobby : NetworkBehaviour
             NetworkVariableReadPermission.Everyone,
             NetworkVariableWritePermission.Server);
 
+    [Header("References")]
     public List<Transform> spawnPositions;
 
     [SerializeField] private NetworkObject playerPrefab;
@@ -63,6 +66,7 @@ public class NetcodeLobby : NetworkBehaviour
         
     }
 
+    //Registrar jugador al servidor
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     public void AddPlayerServerRpc(
     FixedString32Bytes name,
@@ -73,13 +77,15 @@ public class NetcodeLobby : NetworkBehaviour
 
         int spawnIndex = players.Count;
 
-        players.Add(new PlayerNetworkData
+        /*players.Add(new PlayerNetworkData
         {
             clientId = clientId,
             playerName = name,
             spawnIndex = spawnIndex,
             playerKart = kart
-        });
+        });*/
+
+        players.Add(new PlayerNetworkData(name, kart, spawnIndex, clientId));
 
         Transform spawn = spawnPositions[spawnIndex];
 
@@ -89,15 +95,16 @@ public class NetcodeLobby : NetworkBehaviour
             spawn.rotation
         );
 
+        //Spawnear objeto network manualmente
         player.SpawnAsPlayerObject(clientId);
 
         Debug.Log($"[SERVER] Spawn player for {clientId}");
 
-        CarController car = player.GetComponent<CarController>();
+        CarController carController = player.GetComponent<CarController>();
         
-        car.playerName.Value = name;
+        carController.playerName.Value = name;
 
-        car.carModel.Value = kart;
+        carController.carModel.Value = kart;
     }
 
     public void StartGame()

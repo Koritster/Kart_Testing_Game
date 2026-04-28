@@ -297,6 +297,8 @@ public class CarController : Kart
 
     public void AimObjective()
     {
+        if (m_Hitteables.Count <= 0) return;
+
         HitteableBehaviour nearestObjective = GetNearestHitteableObject();
 
         Vector3 playerVector = transform.forward;

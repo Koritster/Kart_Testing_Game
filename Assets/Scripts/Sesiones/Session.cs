@@ -13,9 +13,11 @@ public class Session : MonoBehaviour
 {
     static public Session Instance { get; private set; }
 
+    [Header("Datos locales")]
     public string localPlayerName = "Player1";
     public string localPlayerKart = "default";
 
+    [Header("Referencias")]
     [SerializeField] private TMP_InputField m_SessionName;
 
     [Header("Lista de sesiones")]
@@ -60,13 +62,14 @@ public class Session : MonoBehaviour
     {
         try
         {
+            //Inicializar servicios
             await UnityServices.InitializeAsync();
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
             Debug.Log($"Sign in anonymously succeeded! PlayerID: {AuthenticationService.Instance.PlayerId}");
             await AuthenticationService.Instance.GetPlayerNameAsync();
             m_UsernameInput.text = AuthenticationService.Instance.PlayerName;
             localPlayerName = AuthenticationService.Instance.PlayerName;
-            localPlayerKart = "defauolt";
+            localPlayerKart = "default";
             RefreshSessionList();
         }
         catch (Exception e)
@@ -178,6 +181,7 @@ public class Session : MonoBehaviour
             }
         };*/
 
+        //Valores del jugador
         var playerData = new Dictionary<string, PlayerProperty>
         {
             {
@@ -190,14 +194,15 @@ public class Session : MonoBehaviour
 
         string sessionName = m_SessionName.text != "" ? m_SessionName.text : localPlayerName; 
 
+        //Opciones de sesión
         var options = new SessionOptions
         {
             Name = sessionName,
             MaxPlayers = 4,
             PlayerProperties = playerData
-            //SessionProperties = playerData
         }.WithRelayNetwork();
 
+        //Crear sesión
         actualSession = await MultiplayerService.Instance.CreateSessionAsync(options);
 
         Debug.Log($"Session {actualSession.Id} created! Join code: {actualSession.Code}");
@@ -223,6 +228,7 @@ public class Session : MonoBehaviour
 
     async Task JoinSessionWithIdTask(string sessionId)
     {
+        //Datos del jugador que se está uniendo
         var playerData = new Dictionary<string, PlayerProperty>
         {
             {
@@ -233,11 +239,13 @@ public class Session : MonoBehaviour
             }
         };
 
+        //Opciones de unión
         var options = new JoinSessionOptions
         {
             PlayerProperties = playerData
         };
 
+        //Unir a la sala
         actualSession = await MultiplayerService.Instance.JoinSessionByIdAsync(sessionId, options);
 
         actualSession.PlayerJoined += PlayerJoinedSession;

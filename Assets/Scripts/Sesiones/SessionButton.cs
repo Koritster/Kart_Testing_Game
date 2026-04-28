@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class SessionButton : MonoBehaviour
 {
+    [Header("Referencias")]
     [SerializeField] private Button m_SessionBtn;
     [SerializeField] private TextMeshProUGUI m_SessionName;
     [SerializeField] private TextMeshProUGUI m_SessionPlayers;

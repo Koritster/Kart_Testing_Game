@@ -6,9 +6,12 @@ using UnityEngine;
 public class ItemBlock : MonoBehaviour
 {
     public List<ItemClass> itemsPool = new List<ItemClass>();
+    bool collected;
 
     private void OnTriggerEnter(Collider other)
     {
+        if (collected) return;
+
         if(other.TryGetComponent<CarController>(out CarController m_Car))
         {
             m_Car.ReceiveItem(GetRandomItem());
@@ -34,6 +37,7 @@ public class ItemBlock : MonoBehaviour
     private void GetItemBlockClientRpc()
     {
         gameObject.SetActive(false);
+        collected = true;
     }
 
     private ItemClass GetRandomItem()
