@@ -14,9 +14,8 @@ public class Kart : HitteableBehaviour
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Server);
 
-    public int lap;
-    public int checkpointIndex;
-    
+    public int actualCheckpoint;
+
     private List<Transform> checkpoints;
 
     public override void OnNetworkSpawn()
@@ -31,26 +30,11 @@ public class Kart : HitteableBehaviour
     {
         if (!IsServer) return;
 
-        float progress = CalcularProgreso();
+        //float progress = ;
 
-        trackProgress.Value = progress;
+        //trackProgress.Value = progress;
 
         int pos = PositionsManager.instance.GetPosition(this);
-    }
-
-    float CalcularProgreso()
-    {
-        Vector3 A = checkpoints[checkpointIndex].position;
-        Vector3 B = checkpoints[(checkpointIndex + 1) % checkpoints.Count].position;
-        Vector3 P = transform.position;
-
-        Vector3 AB = B - A;
-        Vector3 AP = P - A;
-
-        float t = Vector3.Dot(AP, AB) / AB.sqrMagnitude;
-        t = Mathf.Clamp01(t);
-
-        return lap * checkpoints.Count + checkpointIndex + t;
     }
 }
 

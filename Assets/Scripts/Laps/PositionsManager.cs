@@ -22,6 +22,16 @@ public class PositionsManager : MonoBehaviour
         {
             checkpoints[i].index = i;
         }
+
+        foreach (RaceCheckpoint rc in checkpoints)
+        {
+            rc.RestartCheckpoint();
+        }
+    }
+
+    private void Start()
+    {
+        
     }
 
     void Update()
@@ -29,6 +39,22 @@ public class PositionsManager : MonoBehaviour
         if(!started) return;
 
         karts.Sort((a, b) => b.trackProgress.Value.CompareTo(a.trackProgress.Value));
+    }
+
+    public void LocalPlayerPassedLap()
+    {
+        foreach (RaceCheckpoint rc in checkpoints)
+        {
+            rc.RestartCheckpoint();
+        }
+
+        //Checar los puntajes de todos los jugadores, si es que se ha ganado, llamar un RPC que actualice una lista añadiendo al jugador que haya terminado ya la carrera
+        //Al final de la partida mostrar esa lista en orden para saber quién llegó después de quién
+    }
+
+    public void EnableLapCheckpoint()
+    {
+        checkpoints[0].RestartCheckpoint();
     }
 
     public int GetCheckpointCount()
