@@ -4359,7 +4359,7 @@ MonoBehaviour:
   - {fileID: 1417137795}
   - {fileID: 1071233741}
   - {fileID: 1391592141}
-  playerPrefab: {fileID: 6048426339365700775, guid: 5419fb931b1bcbe4ea1260bd1b2a1e4b, type: 3}
+  playerPrefab: {fileID: -5233199857492857670, guid: f4c39bd8a59325b4d9be43421092477c, type: 3}
   _PlayersPanel: {fileID: 1970350537}
 --- !u!114 &1048755437
 MonoBehaviour:

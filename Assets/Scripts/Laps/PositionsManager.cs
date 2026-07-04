@@ -9,7 +9,7 @@ public class PositionsManager : MonoBehaviour
 
     [SerializeField] private List<RaceCheckpoint> checkpoints;
 
-    List<Kart> karts = new List<Kart>();
+    List<PlayerNetworkKart> karts = new List<PlayerNetworkKart>();
 
     private void Awake()
     {
@@ -62,7 +62,7 @@ public class PositionsManager : MonoBehaviour
         return checkpoints.Count;
     }
 
-    public void RegisterKart(Kart kart)
+    public void RegisterKart(PlayerNetworkKart kart)
     {
         if (!karts.Contains(kart))
         {
@@ -70,7 +70,7 @@ public class PositionsManager : MonoBehaviour
         }
     }
 
-    public int GetPosition(Kart kart)
+    public int GetPosition(PlayerNetworkKart kart)
     {
         return karts.IndexOf(kart) + 1;
     }
