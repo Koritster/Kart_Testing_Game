@@ -57,6 +57,15 @@ public class NetcodeLobby : NetworkBehaviour
         }
     }
 
+    private void Start()
+    {
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        
+    }
+
     //Registrar jugador al servidor
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     public void AddPlayerServerRpc(
@@ -91,9 +100,7 @@ public class NetcodeLobby : NetworkBehaviour
 
         Debug.Log($"[SERVER] Spawn player for {clientId}");
 
-        Debug.Log(player.GetComponent<PlayerNetworkKart>());
-
-        PlayerNetworkKart carController = player.GetComponent<PlayerNetworkKart>();
+        CarController carController = player.GetComponent<CarController>();
         
         carController.playerName.Value = name;
 
@@ -132,7 +139,7 @@ public class NetcodeLobby : NetworkBehaviour
         _PlayersPanel.SetActive(false);
         Debug.Log("Starting game");
 
-        PlayerNetworkKart playerObj = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerNetworkKart>();
+        CarController playerObj = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<CarController>();
         playerObj.SetHitteables();
         Transform spawn = spawnPositions[(int) NetworkManager.Singleton.LocalClientId];
 
