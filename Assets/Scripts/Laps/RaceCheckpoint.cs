@@ -15,10 +15,7 @@ public class RaceCheckpoint : NetworkBehaviour
         {
             hasBeenPassed = true;
         }
-    }
 
-    private void Start()
-    {
         Debug.Log(PositionsManager.instance.GetCheckpointCount());
     }
 
@@ -28,7 +25,7 @@ public class RaceCheckpoint : NetworkBehaviour
 
         if (hasBeenPassed) return;
 
-        if(other.TryGetComponent<PlayerNetworkKart>(out PlayerNetworkKart _kart))
+        if(other.TryGetComponent<Kart>(out Kart _kart))
         {
             //Si no ha pasado por el anterior checkpoint no cuenta
             if ((_kart.actualCheckpoint + 1) != index) return;

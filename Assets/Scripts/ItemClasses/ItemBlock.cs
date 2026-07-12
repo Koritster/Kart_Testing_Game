@@ -12,20 +12,19 @@ public class ItemBlock : MonoBehaviour
     {
         if (collected) return;
 
-        if(other.TryGetComponent<PlayerNetworkKart>(out PlayerNetworkKart m_Car))
+        if(other.TryGetComponent<CarController>(out CarController m_Car))
         {
             m_Car.ReceiveItem(GetRandomItem());
 
             GetItemBlockServerRpc();
         }
-        
         //Cambio de script para que la IA tome los items
-        /*if (other.TryGetComponent<KartAIController>(out KartAIController ai))
+        if (other.TryGetComponent<KartAIController>(out KartAIController ai))
         {
             ai.ReceiveItem(GetRandomItem());
 
             GetItemBlockServerRpc();
-        }*/
+        }
     }
     
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]

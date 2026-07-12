@@ -1,7 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 
-/*public class KartAIController : Kart
+public class KartAIController : Kart
 {
     private float itemTimer;
     private float itemUseDelay;
@@ -136,4 +136,4 @@ using Unity.Netcode;
 
         return dot > 0.5f;
     }
-}*/
+}

@@ -9,7 +9,7 @@ using Unity.Collections;
 using UnityEngine.UI;
 using static SpecialEffectItemClass;
 
-/*public class CarController : Kart
+public class CarController : Kart
 {
     [SerializeField] private GameObject m_Cam;
 
@@ -73,9 +73,9 @@ using static SpecialEffectItemClass;
         playerName.OnValueChanged += OnNameChanged;
         carModel.OnValueChanged += OnCarModelChanged;
 
-        //m_AimMarker = Instantiate(m_AimMarkerPrefab, Vector3.zero, Quaternion.identity);
+        m_AimMarker = Instantiate(m_AimMarkerPrefab, Vector3.zero, Quaternion.identity);
         m_AimMarker.SetActive(false);
-        //shieldVisual = Instantiate(m_ShieldPrefab, m_ShieldTransform);
+        shieldVisual = Instantiate(m_ShieldPrefab, m_ShieldTransform);
         shieldVisual.transform.localPosition = Vector3.zero;
         shieldVisual.SetActive(false);
     }
@@ -87,14 +87,10 @@ using static SpecialEffectItemClass;
         carModel.OnValueChanged -= OnCarModelChanged;
     }
 
-    //Al aparecer
     public override void OnNetworkSpawn()
     {
-        base.OnNetworkSpawn();
-
         rb = GetComponent<Rigidbody>();
-        
-        //Actualizar cambios 
+
         if (playerName.Value != default)
         {
             ChangeName(playerName.Value.ToString());
@@ -155,7 +151,7 @@ using static SpecialEffectItemClass;
 
     private void UIPosition()
     {
-        //m_PositionTxt.text = PositionsManager.instance.GetPosition(this).ToString() + "°";
+        m_PositionTxt.text = PositionsManager.instance.GetPosition(this).ToString() + "°";
     }
 
     private bool CheckGround()
@@ -168,15 +164,15 @@ using static SpecialEffectItemClass;
         return false;
     }
 
-    /*public void Teleport(Transform _NewPos)
+    public void Teleport(Transform _NewPos)
     {
         GetComponent<NetworkTransform>().Teleport(
             _NewPos.position,
             _NewPos.rotation,
             transform.localScale
         );
-    }*/
-/*
+    }
+
     public void SetHitteables()
     {
         m_Hitteables = GetAllExcept(this);
@@ -396,7 +392,7 @@ using static SpecialEffectItemClass;
     {
         ShootItemClass m_Projectile = ItemDatabase.Instance.GetProjectileItemById(m_ProjectileId);
 
-        //GameObject projectile = Instantiate(m_Projectile.projectilePrefab, m_ShootingTransform.position, Quaternion.identity);
+        GameObject projectile = Instantiate(m_Projectile.projectilePrefab, m_ShootingTransform.position, Quaternion.identity);
         
         projectile.GetComponent<NetworkObject>().Spawn();
 
@@ -434,4 +430,3 @@ using static SpecialEffectItemClass;
 
     #endregion
 }
-*/
