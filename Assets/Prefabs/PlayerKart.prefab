@@ -561,8 +561,7 @@ MonoBehaviour:
   m_MarkerPosition: {fileID: 100325923224649179}
   trackProgress:
     m_InternalValue: 0
-  lap: 0
-  checkpointIndex: 0
+  actualCheckpoint: 0
   m_Cam: {fileID: 7735321072130867920}
   speed: 20000
   maxAcel: 25

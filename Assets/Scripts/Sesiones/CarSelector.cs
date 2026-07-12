@@ -27,6 +27,7 @@ public class CarSelector : MonoBehaviour
 
     private void Start()
     {
+        //Instancia de botones para seleccionar
         foreach(var car in availableCars)
         {
             Debug.Log("Instanciando boton para el carro " + car.name);
@@ -40,6 +41,7 @@ public class CarSelector : MonoBehaviour
         }
     }
 
+    //Seleccionar un carro por su nombre
     public GameObject SearchKartModelByName(string _kart)
     {
         foreach(var car in availableCars)
