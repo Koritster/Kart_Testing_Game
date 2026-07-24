@@ -3114,8 +3114,7 @@ MonoBehaviour:
   m_MarkerPosition: {fileID: 0}
   trackProgress:
     m_InternalValue: 0
-  lap: 0
-  checkpointIndex: 0
+  actualCheckpoint: 0
   shootingTransform: {fileID: 1599390368}
 --- !u!1001 &591465916
 PrefabInstance:
@@ -5742,8 +5741,7 @@ MonoBehaviour:
   m_MarkerPosition: {fileID: 0}
   trackProgress:
     m_InternalValue: 0
-  lap: 0
-  checkpointIndex: 0
+  actualCheckpoint: 0
   shootingTransform: {fileID: 1342505203}
 --- !u!1 &1087192558
 GameObject:
@@ -7136,8 +7134,7 @@ MonoBehaviour:
   m_MarkerPosition: {fileID: 0}
   trackProgress:
     m_InternalValue: 0
-  lap: 0
-  checkpointIndex: 0
+  actualCheckpoint: 0
   shootingTransform: {fileID: 1429614184}
 --- !u!1 &1373328543
 GameObject:
@@ -9051,8 +9048,7 @@ MonoBehaviour:
   m_MarkerPosition: {fileID: 0}
   trackProgress:
     m_InternalValue: 0
-  lap: 0
-  checkpointIndex: 0
+  actualCheckpoint: 0
   shootingTransform: {fileID: 559986142}
 --- !u!1001 &1798161107
 PrefabInstance:
