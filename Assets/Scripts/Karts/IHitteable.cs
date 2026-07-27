@@ -18,9 +18,10 @@ public class Kart : HitteableBehaviour
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Server);
 
-    public NetworkVariable<float> distanceToNextCheckpoint = new NetworkVariable<float>(0,
-        NetworkVariableReadPermission.Everyone,
-        NetworkVariableWritePermission.Server);
+    public NetworkVariable<int> Position = new(
+    0,
+    NetworkVariableReadPermission.Everyone,
+    NetworkVariableWritePermission.Server);
 
     public override void OnNetworkSpawn()
     {

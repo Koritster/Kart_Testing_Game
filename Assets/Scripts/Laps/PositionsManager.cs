@@ -10,7 +10,7 @@ public class PositionsManager : NetworkBehaviour
 
     [SerializeField] private List<RaceCheckpoint> checkpoints;
 
-    List<Kart> karts = new List<Kart>();
+    [SerializeField] List<Kart> karts = new List<Kart>();
     bool tie;
 
     private void Awake()
@@ -35,16 +35,19 @@ public class PositionsManager : NetworkBehaviour
     {
         if(!started) return;
 
+        if (!IsServer) return;
+
         //Calcular posiciones
         if (tie)
         {
-            CalculatePositions();
+            CalculatePositionsServerRpc();
         }
         //karts.Sort((a, b) => b.trackProgress.Value.CompareTo(a.trackProgress.Value));
 
     }
 
-    public void CalculatePositions()
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Server)]
+    public void CalculatePositionsServerRpc()
     {
         karts.Sort((a, b) =>
         {
@@ -57,6 +60,7 @@ public class PositionsManager : NetworkBehaviour
                     tie = false;
                 }
 
+                Debug.Log("Están en vueltas diferentes");
                 return result;
             }
 
@@ -70,10 +74,13 @@ public class PositionsManager : NetworkBehaviour
                     tie = false;
                 }
 
+                Debug.Log("Están en checkpoints diferentes: " + aCheckpoint + " - " + b.actualCheckpoint.Value);
+
                 return result;
             }
 
             tie = true;
+            Debug.Log("Hay empate");
 
             // 3. Distancia al siguiente checkpoint
             float distA = GetDistanceToNextCheckpoint(a, aCheckpoint);
@@ -81,12 +88,16 @@ public class PositionsManager : NetworkBehaviour
 
             return distA.CompareTo(distB);
         });
+
+        for (int i = 0; i < karts.Count; i++)
+        {
+            karts[i].Position.Value = i + 1;
+        }
     }
 
     float GetDistanceToNextCheckpoint(Kart _kart, int checkpoint)
     {
         float distancia = Vector3.Distance(_kart.transform.position, checkpoints[checkpoint + 1].transform.position);
-        _kart.distanceToNextCheckpoint.Value = distancia;
         return distancia;
     }
 
@@ -97,7 +108,6 @@ public class PositionsManager : NetworkBehaviour
         //Calcular si es la vuelta final
 
         _kart.actualCheckpoint.Value = 0;
-        _kart.distanceToNextCheckpoint.Value = 0;
 
         //Checar los puntajes de todos los jugadores, si es que se ha ganado, llamar un RPC que actualice una lista añadiendo al jugador que haya terminado ya la carrera
         //Al final de la partida mostrar esa lista en orden para saber quién llegó después de quién

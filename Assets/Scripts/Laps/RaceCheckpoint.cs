@@ -23,7 +23,7 @@ public class RaceCheckpoint : NetworkBehaviour
             if ((_kart.actualCheckpoint.Value + 1) != index && (_kart.actualCheckpoint.Value != PositionsManager.instance.GetCheckpointCount() - 1)) return;
 
             Debug.Log("Cruzaste el checpoint " + index);
-            PositionsManager.instance.CalculatePositions();
+            PositionsManager.instance.CalculatePositionsServerRpc();
 
             //Si es la meta
             if (index == 0 && _kart.actualCheckpoint.Value == PositionsManager.instance.GetCheckpointCount() - 1)

@@ -159,6 +159,6 @@ public class NetcodeLobby : NetworkBehaviour
         }*/
 
         PositionsManager.instance.started = true;
-        PositionsManager.instance.CalculatePositions();
+        PositionsManager.instance.CalculatePositionsServerRpc();
     }
 }
