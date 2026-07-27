@@ -145,11 +145,20 @@ public class NetcodeLobby : NetworkBehaviour
 
         playerObj.Teleport(spawn);
 
-        foreach(var a in FindObjectsByType<MoveToWaypoints>(FindObjectsSortMode.None))
+        Kart[] karts = FindObjectsByType<Kart>(FindObjectsSortMode.None);
+
+        foreach( Kart kart in karts)
         {
-            a.ActivateMovement();
+            PositionsManager.instance.RegisterKart(kart);
         }
 
+
+        /*foreach(var a in FindObjectsByType<MoveToWaypoints>(FindObjectsSortMode.None))
+        {
+            a.ActivateMovement();
+        }*/
+
         PositionsManager.instance.started = true;
+        PositionsManager.instance.CalculatePositions();
     }
 }
