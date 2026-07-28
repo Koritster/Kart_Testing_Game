@@ -3745,18 +3745,18 @@ MonoBehaviour:
   Nozzle: {fileID: 0}
   raycastLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2147483648
   m_RaycastDistance: 1
   m_Force: 10
   m_ReverseForce: 8
   m_TurnForce: 10
   m_BoostImmediateForce: 18
   m_MagnitudeTurnLimit: 20
-  m_TurnCounterForce: 5
+  m_TurnCounterForce: 8
   m_GravityConstant: 9.81
   m_RotationAngle: 45
   m_DriftingRotationAngle: 90
-  m_RotationForce: 10
+  m_RotationForce: 5
   m_BoosterTime: 1
   m_BoosterMultiplier: 1.6
   m_DriftThrottleUpperThreshold: 10
