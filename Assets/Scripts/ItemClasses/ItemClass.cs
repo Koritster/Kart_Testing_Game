@@ -26,11 +26,11 @@ public class ItemClassEditor : Editor
 
 public class ItemClass : ScriptableObject
 {
-    public new string name;
+    public string name;
     public int itemId;
     public Sprite itemIcon;
 
-    public virtual void UseItem(PlayerNetworkKart caller)
+    public virtual void UseItem(CarController caller)
     {
         Debug.Log("Used: " + name);
     }

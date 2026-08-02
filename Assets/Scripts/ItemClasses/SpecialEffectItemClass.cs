@@ -53,7 +53,7 @@ public class SpecialEffectItemClass : ItemClass
     public float duration;
     public GameObject prefab;
 
-    public override void UseItem(PlayerNetworkKart caller)
+    public override void UseItem(CarController caller)
     {
         base.UseItem(caller);
     }

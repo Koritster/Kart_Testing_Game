@@ -8,12 +8,11 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - RGKS_Road
+  - 
   - Water
   - UI
   - Ground
   - 
-  - NitroPad
   - 
   - 
   - 
@@ -37,6 +36,7 @@ TagManager:
   - 
   - 
   - 
+  - RGSK_Road
   m_SortingLayers:
   - name: Default
     uniqueID: 0
