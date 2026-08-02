@@ -326,14 +326,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
   m_Enabled: 1
-  serializedVersion: 12
+  serializedVersion: 11
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize2D: {x: 10, y: 10}
+  m_CookieSize: 10
   m_Shadows:
     m_Type: 2
     m_Resolution: -1
@@ -718,9 +718,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ab6871f1a870784da90594ab4efb54b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Session
+  localPlayerName: Player1
+  localPlayerKart: default
+  m_SessionName: {fileID: 0}
   m_SesionBtnPrefab: {fileID: 65420446447052947, guid: 77c1f9ee8631dc44f9d4abaf137be417, type: 3}
   m_ContentParent: {fileID: 100514515}
   m_LobbiesPanel: {fileID: 100514509}
+  m_CreatePanel: {fileID: 0}
   m_SessionJoinedPanel: {fileID: 100514514}
   m_UsernameInput: {fileID: 100514513}
   m_PlayerPrefab: {fileID: 1973064689250559944, guid: 2c958c291772a3f45ad8bf7a9b720cd1, type: 3}

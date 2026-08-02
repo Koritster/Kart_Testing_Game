@@ -103,7 +103,9 @@ public class NewKart : MonoBehaviour
                 m_Rigidbody.AddForce(m_Rigidbody.transform.forward * m_MaxTurnForce, ForceMode.Force);
             }
             else
+            {
                 m_Rigidbody.AddForce(m_Rigidbody.transform.forward * m_MaxForce, ForceMode.Force);
+            }
         }
 
         if(reverse)
