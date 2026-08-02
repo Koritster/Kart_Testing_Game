@@ -158,6 +158,8 @@ public class NetcodeLobby : NetworkBehaviour
             a.ActivateMovement();
         }*/
 
+        if (!IsServer) return;
+
         PositionsManager.instance.started = true;
         PositionsManager.instance.CalculatePositionsServerRpc();
     }

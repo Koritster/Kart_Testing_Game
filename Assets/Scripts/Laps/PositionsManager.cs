@@ -6,11 +6,13 @@ public class PositionsManager : NetworkBehaviour
 {
     public static PositionsManager instance;
 
-    public bool started;
+    public NetworkVariable<bool> started = new NetworkVariable<bool>(false,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server);
 
     [SerializeField] private List<RaceCheckpoint> checkpoints;
 
-    [SerializeField] List<Kart> karts = new List<Kart>();
+    List<Kart> karts = new List<Kart>();
     bool tie;
 
     private void Awake()
@@ -33,9 +35,8 @@ public class PositionsManager : NetworkBehaviour
 
     void Update()
     {
-        if(!started) return;
-
         if (!IsServer) return;
+        if(!started.Value) return;
 
         //Calcular posiciones
         if (tie)
@@ -129,6 +130,6 @@ public class PositionsManager : NetworkBehaviour
 
     public int GetPosition(Kart kart)
     {
-        return karts.IndexOf(kart) + 1;
+        return kart.Position.Value;
     }
 }

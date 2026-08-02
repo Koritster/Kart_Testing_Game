@@ -35,12 +35,6 @@ public class Kart : HitteableBehaviour
     private void Update()
     {
         if (!IsServer) return;
-
-        //float progress = ;
-
-        //trackProgress.Value = progress;
-
-        int pos = PositionsManager.instance.GetPosition(this);
     }
 }
 

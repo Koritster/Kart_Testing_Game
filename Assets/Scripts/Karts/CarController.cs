@@ -89,6 +89,8 @@ public class CarController : Kart
 
     public override void OnNetworkSpawn()
     {
+        base.OnNetworkSpawn();
+
         rb = GetComponent<Rigidbody>();
 
         if (playerName.Value != default)
@@ -151,7 +153,7 @@ public class CarController : Kart
 
     private void UIPosition()
     {
-        m_PositionTxt.text = PositionsManager.instance.GetPosition(this).ToString() + "°";
+        m_PositionTxt.text = Position.Value + "°";
     }
 
     private bool CheckGround()
