@@ -1,9 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class NewKart : MonoBehaviour
+public class NewKart : NetworkBehaviour
 {
+    //Variables network
+    [Header("Network Variables")]
+    public NetworkVariable<int> laps = new NetworkVariable<int>(0,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server);
+
+    public NetworkVariable<int> actualCheckpoint = new NetworkVariable<int>(0,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server);
+
+    public NetworkVariable<int> Position = new(0,
+    NetworkVariableReadPermission.Everyone,
+    NetworkVariableWritePermission.Server);
+
     Rigidbody m_Rigidbody;
     RaycastHit hit;
     bool boostActive, isGrounded;
