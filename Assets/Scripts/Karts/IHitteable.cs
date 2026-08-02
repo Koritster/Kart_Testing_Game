@@ -10,16 +10,22 @@ public interface IHitteable
 
 public class Kart : HitteableBehaviour
 {
-    public NetworkVariable<float> trackProgress = new NetworkVariable<float>(0f,
+    public NetworkVariable<int> laps = new NetworkVariable<int>(0,
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Server);
 
-    public int actualCheckpoint;
+    public NetworkVariable<int> actualCheckpoint = new NetworkVariable<int>(0,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server);
 
-    private List<Transform> checkpoints;
+    public NetworkVariable<int> Position = new(
+    0,
+    NetworkVariableReadPermission.Everyone,
+    NetworkVariableWritePermission.Server);
 
     public override void OnNetworkSpawn()
     {
+        Debug.Log("Spawneando carro");
         if (IsClient)
         {
             PositionsManager.instance.RegisterKart(this);
@@ -29,12 +35,6 @@ public class Kart : HitteableBehaviour
     private void Update()
     {
         if (!IsServer) return;
-
-        //float progress = ;
-
-        //trackProgress.Value = progress;
-
-        int pos = PositionsManager.instance.GetPosition(this);
     }
 }
 

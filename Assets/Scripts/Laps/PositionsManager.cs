@@ -1,15 +1,19 @@
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class PositionsManager : MonoBehaviour
+public class PositionsManager : NetworkBehaviour
 {
     public static PositionsManager instance;
 
-    public bool started;
+    public NetworkVariable<bool> started = new NetworkVariable<bool>(false,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server);
 
     [SerializeField] private List<RaceCheckpoint> checkpoints;
 
     List<Kart> karts = new List<Kart>();
+    bool tie;
 
     private void Awake()
     {
@@ -22,11 +26,6 @@ public class PositionsManager : MonoBehaviour
         {
             checkpoints[i].index = i;
         }
-
-        foreach (RaceCheckpoint rc in checkpoints)
-        {
-            rc.RestartCheckpoint();
-        }
     }
 
     private void Start()
@@ -36,27 +35,85 @@ public class PositionsManager : MonoBehaviour
 
     void Update()
     {
-        if(!started) return;
+        if (!IsServer) return;
+        if(!started.Value) return;
 
-        karts.Sort((a, b) => b.trackProgress.Value.CompareTo(a.trackProgress.Value));
+        //Calcular posiciones
+        if (tie)
+        {
+            CalculatePositionsServerRpc();
+        }
+        //karts.Sort((a, b) => b.trackProgress.Value.CompareTo(a.trackProgress.Value));
+
     }
 
-    public void LocalPlayerPassedLap()
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Server)]
+    public void CalculatePositionsServerRpc()
     {
-        foreach (RaceCheckpoint rc in checkpoints)
+        karts.Sort((a, b) =>
         {
-            rc.RestartCheckpoint();
+            // 1. Vueltas
+            int result = b.laps.Value.CompareTo(a.laps.Value);
+            if (result != 0)
+            {
+                if (tie)
+                {
+                    tie = false;
+                }
+
+                Debug.Log("Están en vueltas diferentes");
+                return result;
+            }
+
+            int aCheckpoint = a.actualCheckpoint.Value;
+            // 2. Checkpoint
+            result = b.actualCheckpoint.Value.CompareTo(aCheckpoint);
+            if (result != 0)
+            {
+                if (tie)
+                {
+                    tie = false;
+                }
+
+                Debug.Log("Están en checkpoints diferentes: " + aCheckpoint + " - " + b.actualCheckpoint.Value);
+
+                return result;
+            }
+
+            tie = true;
+            Debug.Log("Hay empate");
+
+            // 3. Distancia al siguiente checkpoint
+            float distA = GetDistanceToNextCheckpoint(a, aCheckpoint);
+            float distB = GetDistanceToNextCheckpoint(b, aCheckpoint);
+
+            return distA.CompareTo(distB);
+        });
+
+        for (int i = 0; i < karts.Count; i++)
+        {
+            karts[i].Position.Value = i + 1;
         }
+    }
+
+    float GetDistanceToNextCheckpoint(Kart _kart, int checkpoint)
+    {
+        float distancia = Vector3.Distance(_kart.transform.position, checkpoints[checkpoint + 1].transform.position);
+        return distancia;
+    }
+
+    public void PlayerFinishedLap(Kart _kart)
+    {
+        _kart.laps.Value += 1;
+
+        //Calcular si es la vuelta final
+
+        _kart.actualCheckpoint.Value = 0;
 
         //Checar los puntajes de todos los jugadores, si es que se ha ganado, llamar un RPC que actualice una lista añadiendo al jugador que haya terminado ya la carrera
         //Al final de la partida mostrar esa lista en orden para saber quién llegó después de quién
     }
-
-    public void EnableLapCheckpoint()
-    {
-        checkpoints[0].RestartCheckpoint();
-    }
-
+    
     public int GetCheckpointCount()
     {
         return checkpoints.Count;
@@ -64,6 +121,7 @@ public class PositionsManager : MonoBehaviour
 
     public void RegisterKart(Kart kart)
     {
+        Debug.Log("Carro " + kart + " registrado");
         if (!karts.Contains(kart))
         {
             karts.Add(kart);
@@ -72,6 +130,6 @@ public class PositionsManager : MonoBehaviour
 
     public int GetPosition(Kart kart)
     {
-        return karts.IndexOf(kart) + 1;
+        return kart.Position.Value;
     }
 }
