@@ -21,7 +21,7 @@ public class NewKartController : PlayerKart
     [SerializeField] private Transform m_ShieldTransform;
     [SerializeField] private Transform m_CameraOffset;*/
     [Header("Transform References")]
-    //[SerializeField] private Transform m_CarModelVisualTransform;
+    [SerializeField] private Transform m_CarModelVisualTransform;
 
     public NetworkVariable<FixedString32Bytes> playerName = new NetworkVariable<FixedString32Bytes>(default,
         NetworkVariableReadPermission.Everyone,
@@ -345,8 +345,8 @@ public class NewKartController : PlayerKart
     private void ChangeCarModel(string newName)
     {
         GameObject kartVisual = CarSelector.instance.SearchKartModelByName(newName);
-        //GameObject kartInstantiated = Instantiate(kartVisual, m_CarModelVisualTransform);
-        //kartInstantiated.transform.localPosition = Vector3.zero;
+        GameObject kartInstantiated = Instantiate(kartVisual, m_CarModelVisualTransform);
+        kartInstantiated.transform.localPosition = Vector3.zero;
     }
 
     #endregion
