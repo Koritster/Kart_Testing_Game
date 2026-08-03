@@ -100,10 +100,9 @@ public class NetcodeLobby : NetworkBehaviour
 
         Debug.Log($"[SERVER] Spawn player for {clientId}");
 
-        CarController carController = player.GetComponent<CarController>();
+        NewKartController carController = player.GetComponent<NewKartController>();
         
         carController.playerName.Value = name;
-
         carController.carModel.Value = kart;
     }
 
@@ -139,15 +138,15 @@ public class NetcodeLobby : NetworkBehaviour
         _PlayersPanel.SetActive(false);
         Debug.Log("Starting game");
 
-        CarController playerObj = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<CarController>();
-        playerObj.SetHitteables();
+        NewKartController playerObj = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<NewKartController>();
+        //playerObj.SetHitteables();
         Transform spawn = spawnPositions[(int) NetworkManager.Singleton.LocalClientId];
 
         playerObj.Teleport(spawn);
 
-        Kart[] karts = FindObjectsByType<Kart>(FindObjectsSortMode.None);
+        NewKart[] karts = FindObjectsByType<NewKart>(FindObjectsSortMode.None);
 
-        foreach( Kart kart in karts)
+        foreach(NewKart kart in karts)
         {
             PositionsManager.instance.RegisterKart(kart);
         }

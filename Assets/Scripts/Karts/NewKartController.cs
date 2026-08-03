@@ -1,43 +1,26 @@
-using UnityEngine;
-using UnityEngine.InputSystem;
-using Unity.Netcode;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Netcode.Components;
 using TMPro;
 using Unity.Collections;
+using Unity.Netcode.Components;
+using Unity.Netcode;
+using UnityEngine;
 using UnityEngine.UI;
-using static SpecialEffectItemClass;
 
-public class CarController : Kart
+public class NewKartController : PlayerKart
 {
-    [SerializeField] private GameObject m_Cam;
-
-    [Header("Control values")]
-    [SerializeField] private float speed;
-    [SerializeField] private float maxAcel;
-    [SerializeField] private float turnForce;
-    [SerializeField] private float turnForceDrifting;
-    [SerializeField] private float stunTime;
-
-    [Header("CheckGround")]
-    [SerializeField] private Transform m_GroundCheck;
-    [SerializeField] private float groundChkRadius;
-    [SerializeField] private LayerMask groundLayer;
-
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI m_PlayerNameTxt;
     [SerializeField] private TextMeshProUGUI m_PositionTxt;
 
     [SerializeField] private Image m_ItemIcon;
 
-    [Header("Prefabs References")]
+    /*[Header("Prefabs References")]
     [SerializeField] private GameObject m_AimMarkerPrefab;
     [SerializeField] private GameObject m_ShieldPrefab;
-    
-    [Header("Transform References")]
+
     [SerializeField] private Transform m_ShootingTransform;
     [SerializeField] private Transform m_ShieldTransform;
+    [SerializeField] private Transform m_CameraOffset;*/
+    [Header("Transform References")]
     [SerializeField] private Transform m_CarModelVisualTransform;
 
     public NetworkVariable<FixedString32Bytes> playerName = new NetworkVariable<FixedString32Bytes>(default,
@@ -48,97 +31,65 @@ public class CarController : Kart
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Server);
 
-    private GameObject m_AimMarker;
+    [SerializeField] private Camera cam;
+    [SerializeField] private GameObject virtualCam;
+
+    /*private GameObject m_AimMarker;
     private GameObject shieldVisual;
 
-    private float turnInput;
-    private bool accelerationInput;
-    private bool driftingInput;
-    private bool canControl = true;
-
     private int shieldHits = 0;
-    private bool isInvulnerable;
+    private bool isInvulnerable;*/
 
-    private Rigidbody rb;
+    //private ItemClass m_ItemObtained;
 
-    private ItemClass m_ItemObtained;
+    //private List<HitteableBehaviour> m_Hitteables;
 
-    private List<HitteableBehaviour> m_Hitteables;
+    //private HitteableBehaviour m_ActualObjective = null;
 
-    private HitteableBehaviour m_ActualObjective = null;
+    //private HitteableBehaviour m_LocalHitteableBehaviour;
 
-    public override void OnEnable()
+    #region Unity functions
+
+    protected override void OnEnable()
     {
         base.OnEnable();
+
+        //Suscripciones a cambios de variables network
         playerName.OnValueChanged += OnNameChanged;
         carModel.OnValueChanged += OnCarModelChanged;
 
-        m_AimMarker = Instantiate(m_AimMarkerPrefab, Vector3.zero, Quaternion.identity);
+        //Instanciacion de marcadores
+        /*m_AimMarker = Instantiate(m_AimMarkerPrefab, Vector3.zero, Quaternion.identity);
         m_AimMarker.SetActive(false);
         shieldVisual = Instantiate(m_ShieldPrefab, m_ShieldTransform);
         shieldVisual.transform.localPosition = Vector3.zero;
-        shieldVisual.SetActive(false);
+        shieldVisual.SetActive(false);*/
     }
 
-    public override void OnDisable()
+    protected override void OnDisable()
     {
         base.OnDisable();
         playerName.OnValueChanged -= OnNameChanged;
         carModel.OnValueChanged -= OnCarModelChanged;
     }
 
-    public override void OnNetworkSpawn()
+    public override void Update()
     {
-        base.OnNetworkSpawn();
+        base.Update();
 
-        rb = GetComponent<Rigidbody>();
-
-        if (playerName.Value != default)
-        {
-            ChangeName(playerName.Value.ToString());
-        }
-
-        if (carModel.Value != default)
-        {
-            ChangeCarModel(carModel.Value.ToString());
-        }
-
-        if (!IsOwner) return;
-
-        if (Camera.main != null)
-            Camera.main.gameObject.SetActive(false);
-
-        m_Cam.SetActive(true);
-    }
-
-    private void Update()
-    {
         if (!IsOwner || NetcodeLobby.instance.GameStarted.Value == false) return;
 
         UIPosition();
-    }
+        
+        if (!IsServer) return;
+        
+        //float progress = ;
 
-    private void FixedUpdate()
-    {
-        if (!IsOwner || NetcodeLobby.instance.GameStarted.Value == false) return;
+        //trackProgress.Value = progress;
 
-        Vector3 velLocal = transform.InverseTransformDirection(rb.linearVelocity);
+        //int pos = PositionsManager.instance.GetPosition(this);
 
-        if (CheckGround())
-        {
-            //Limita velocidad hacia delante
-            if (velLocal.z < maxAcel && accelerationInput)
-            {
-                rb.AddRelativeForce(Vector3.forward * speed);
-            }
-
-            float force = driftingInput ? turnForceDrifting : turnForce;
-            rb.MoveRotation(rb.rotation * Quaternion.Euler(0f, force * turnInput * Time.deltaTime, 0f));
-        }
-
-        velLocal.x = 0;
-        rb.linearVelocity = transform.TransformDirection(velLocal);
-
+        /*
         if (m_ItemObtained != null)
         {
             if (m_ItemObtained.GetShootItem() != null)
@@ -148,23 +99,12 @@ public class CarController : Kart
                     AimObjective();
                 }
             }
-        }
+        }*/
     }
 
-    private void UIPosition()
-    {
-        m_PositionTxt.text = Position.Value + "°";
-    }
+    #endregion
 
-    private bool CheckGround()
-    {
-        if (Physics.OverlapSphere(m_GroundCheck.position, groundChkRadius, groundLayer) != null)
-        {
-            return true;
-        }
-
-        return false;
-    }
+    #region Utility
 
     public void Teleport(Transform _NewPos)
     {
@@ -175,39 +115,10 @@ public class CarController : Kart
         );
     }
 
-    public void SetHitteables()
-    {
-        m_Hitteables = GetAllExcept(this);
-    }
-
-    public override void OnHit()
-    {
-        base.OnHit();
-
-        OnHitCoroutine();
-    }
-
-    private IEnumerator OnHitCoroutine()
-    {
-        if (isInvulnerable) yield return null;
-
-        if(shieldHits > 0)
-        {
-            shieldHits--;
-            
-            if(shieldHits <= 0)
-            {
-                ChangeShieldClientRpc(false);
-            }
-
-            yield return null;
-        }
-
-        canControl = false;
-        yield return new WaitForSeconds(stunTime);
-        canControl = true;
-    }
-
+    #endregion
+    
+    /*
+    
     #region Items
 
     public void ReceiveItem(ItemClass item)
@@ -230,15 +141,15 @@ public class CarController : Kart
 
     public void UseItem()
     {
-        //m_ItemObtained.UseItem(this);
+        m_ItemObtained.UseItem(this);
 
         if (m_ItemObtained.GetShootItem() != null)
         {
             ShootItemClass projectile = m_ItemObtained.GetShootItem();
-            
+
             Shoot(projectile, m_ActualObjective);
         }
-        else if(m_ItemObtained.GetSpecialEffectItem() != null)
+        else if (m_ItemObtained.GetSpecialEffectItem() != null)
         {
             ActivateSpecialEffectItem(m_ItemObtained.GetSpecialEffectItem());
         }
@@ -250,7 +161,7 @@ public class CarController : Kart
 
     private void ActivateSpecialEffectItem(SpecialEffectItemClass item)
     {
-        if(item.type == EffectType.Shield)
+        if (item.type == EffectType.Shield)
         {
             ActiveShieldServerRpc(item.duration, item.shieldHits);
         }
@@ -284,7 +195,7 @@ public class CarController : Kart
         float max = float.PositiveInfinity;
         HitteableBehaviour nearestObjective = null;
 
-        foreach (HitteableBehaviour item in GetAllExcept(this))
+        foreach (HitteableBehaviour item in HitteableBehaviour.GetAllExcept(m_LocalHitteableBehaviour))
         {
             float distance = Vector3.Distance(transform.position, item.transform.position);
             if (distance < max)
@@ -323,7 +234,7 @@ public class CarController : Kart
             {
                 m_AimMarker.SetActive(false);
             }
-            
+
             m_ActualObjective = null;
         }
     }
@@ -349,53 +260,58 @@ public class CarController : Kart
     }
 
     #endregion
+    
+    */
 
-    #region Inputs
+    #region UI
 
-    public void TurnInput(InputAction.CallbackContext ctx)
+    private void UIPosition()
     {
-        if (!IsOwner) return;
-        if (!canControl) return;
-
-        turnInput = ctx.ReadValue<Vector2>().x;
-    }
-
-    public void DriftInput(InputAction.CallbackContext ctx)
-    {
-        if (!IsOwner) return;
-
-        driftingInput = ctx.performed;
-    }
-
-    public void AccelerationInput(InputAction.CallbackContext ctx)
-    {
-        if (!IsOwner) return;
-        if (!canControl) return;
-
-        accelerationInput = ctx.performed;
-    }
-
-    public void UseItemInput(InputAction.CallbackContext ctx)
-    {
-        if (!IsOwner) return;
-
-        if(ctx.started && m_ItemObtained != null)
-        {
-            UseItem();
-        }
+        m_PositionTxt.text = m_PositionTxt.text = Position.Value + "°";
     }
 
     #endregion
 
     #region Networking
 
-    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+
+        //Registrar kart
+        if (IsClient)
+        {
+            PositionsManager.instance.RegisterKart(this);
+        }
+
+        //Actualizar cambios 
+        if (playerName.Value != default)
+        {
+            ChangeName(playerName.Value.ToString());
+        }
+
+        if (carModel.Value != default)
+        {
+            ChangeCarModel(carModel.Value.ToString());
+        }
+
+        if (IsOwner)
+        {
+            cam.gameObject.SetActive(true);
+            virtualCam.gameObject.SetActive(true);
+
+            if (Camera.main != null)
+                Camera.main.gameObject.SetActive(false);
+        }
+    }
+
+    /*[Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void ShootServerRpc(int m_ProjectileId, NetworkObjectReference targetRef, Vector3 direction)
     {
         ShootItemClass m_Projectile = ItemDatabase.Instance.GetProjectileItemById(m_ProjectileId);
 
         GameObject projectile = Instantiate(m_Projectile.projectilePrefab, m_ShootingTransform.position, Quaternion.identity);
-        
+
         projectile.GetComponent<NetworkObject>().Spawn();
 
         HitteableBehaviour objective = null;
@@ -407,7 +323,9 @@ public class CarController : Kart
 
         projectile.GetComponent<ProjectileBehaviour>().SetProperties(objective, direction, m_Projectile.velocity, m_Projectile.isHoming);
     }
+    */
 
+    //Al cambiar el nombre
     private void OnNameChanged(FixedString32Bytes oldName, FixedString32Bytes newName)
     {
         ChangeName(newName.ToString());
@@ -418,6 +336,7 @@ public class CarController : Kart
         m_PlayerNameTxt.text = name;
     }
 
+    //Al cambiar el modelo de carro
     private void OnCarModelChanged(FixedString32Bytes oldName, FixedString32Bytes newName)
     {
         ChangeCarModel(newName.ToString());
