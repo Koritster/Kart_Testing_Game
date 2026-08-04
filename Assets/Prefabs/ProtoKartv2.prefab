@@ -3833,7 +3833,7 @@ MonoBehaviour:
   m_GravityConstant: 9.81
   m_RotationAngle: 45
   m_DriftingRotationAngle: 90
-  m_RotationForce: 5
+  m_RotationForce: 4
   m_BoosterTime: 1
   m_BoosterMultiplier: 1.6
   m_DriftThrottleUpperThreshold: 10

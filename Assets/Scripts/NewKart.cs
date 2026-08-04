@@ -156,15 +156,11 @@ public class NewKart : NetworkBehaviour
     {
         if (Physics.Raycast(centerOfMass.position, m_Rigidbody.transform.forward, out hit, m_RaycastDistance, raycastLayers) || Physics.Raycast(centerOfMass.position, -m_Rigidbody.transform.up, out hit, m_RaycastDistance, raycastLayers))
         {
-            float angle;
-            if (hit.normal.z <= 0)
-                angle = -Vector3.Angle(Vector3.up, hit.normal);
-            else
-                angle = Vector3.Angle(Vector3.up, hit.normal);
-            Quaternion gravityRotation = Quaternion.Euler(angle, 0f, 0f);
             Quaternion inputRotation = Quaternion.LookRotation(m_Input);
-            Quaternion combinedRotation = gravityRotation * inputRotation;
-            m_Rigidbody.rotation = Quaternion.Lerp(m_Rigidbody.rotation, combinedRotation, Time.fixedDeltaTime * m_RotationForce);
+            Quaternion finalRotation = Quaternion.Lerp(m_Rigidbody.rotation, inputRotation, Time.fixedDeltaTime * m_RotationForce);
+
+            m_Rigidbody.transform.up = Vector3.Lerp(m_Rigidbody.transform.up, hit.normal, Time.fixedDeltaTime * 8f);
+            m_Rigidbody.transform.Rotate(0f, finalRotation.eulerAngles.y, 0f);
         }
         else
         {
