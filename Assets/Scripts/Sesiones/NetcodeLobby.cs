@@ -77,14 +77,6 @@ public class NetcodeLobby : NetworkBehaviour
 
         int spawnIndex = players.Count;
 
-        /*players.Add(new PlayerNetworkData
-        {
-            clientId = clientId,
-            playerName = name,
-            spawnIndex = spawnIndex,
-            playerKart = kart
-        });*/
-
         players.Add(new PlayerNetworkData(name, kart, spawnIndex, clientId));
 
         Transform spawn = spawnPositions[spawnIndex];

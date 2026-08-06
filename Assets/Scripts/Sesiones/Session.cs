@@ -62,19 +62,24 @@ public class Session : MonoBehaviour
     {
         try
         {
-            //Inicializar servicios
+            //Inicializar servicios multijugador
             await UnityServices.InitializeAsync();
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            
             Debug.Log($"Sign in anonymously succeeded! PlayerID: {AuthenticationService.Instance.PlayerId}");
+            
             await AuthenticationService.Instance.GetPlayerNameAsync();
+            
             m_UsernameInput.text = AuthenticationService.Instance.PlayerName;
             localPlayerName = AuthenticationService.Instance.PlayerName;
             localPlayerKart = "default";
+
             RefreshSessionList();
         }
         catch (Exception e)
         {
             Debug.LogException(e);
+            Debug.Log("Iniciando modo sin conexión");
         }
 
         RegisterEvents();
@@ -215,6 +220,18 @@ public class Session : MonoBehaviour
         actualSession.PlayerJoined += PlayerJoinedSession;
 
         RefreshPlayersOnSession(actualSession);
+    }
+
+    public void StartSinglePlayer()
+    {
+        localPlayerName = "Jugador";
+
+        NetworkManager.Singleton.StartHost();
+
+        m_LobbiesPanel.SetActive(false);
+        m_SessionJoinedPanel.SetActive(true);
+
+        m_StartGameBtn.SetActive(true);
     }
 
     #endregion
