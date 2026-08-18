@@ -1,3 +1,5 @@
+//#define DEBUG_FEATURE
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +7,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerKart : NewKart
 {
+
+
     PlayerInput kartInput;
     InputAction moveAction, throttleAction, reverseAction, driftAction;
 
@@ -51,15 +55,19 @@ public class PlayerKart : NewKart
 
     public void OnMove(InputAction.CallbackContext context)
     {
+#if DEBUG_FEATURE
         if (!IsOwner) return;
+#endif
 
         move = context.ReadValue<Vector2>();
     }
 
     public void OnReverse(InputAction.CallbackContext context)
     {
+#if DEBUG_FEATURE
         if (!IsOwner) return;
-     
+#endif
+
         if (context.performed)
         {
             throttle = false;
@@ -69,8 +77,10 @@ public class PlayerKart : NewKart
 
     public void OnStopReverse(InputAction.CallbackContext context)
     {
+#if DEBUG_FEATURE
         if (!IsOwner) return;
-       
+#endif
+
         if (context.canceled)
         {
             reverse = false;
@@ -79,8 +89,10 @@ public class PlayerKart : NewKart
 
     public void OnThrottle(InputAction.CallbackContext context)
     {
+#if DEBUG_FEATURE
         if (!IsOwner) return;
-        
+#endif
+
         if (context.performed)
         {
             throttle = true;
@@ -90,8 +102,10 @@ public class PlayerKart : NewKart
 
     public void OnStopThrottle(InputAction.CallbackContext context)
     {
+#if DEBUG_FEATURE
         if (!IsOwner) return;
-        
+#endif
+
         if (context.canceled)
         {
             throttle = false;
@@ -100,8 +114,10 @@ public class PlayerKart : NewKart
 
     public void OnDrift(InputAction.CallbackContext context)
     {
+#if DEBUG_FEATURE
         if (!IsOwner) return;
-        
+#endif
+
         if (context.performed)
         {
             drift = true;
@@ -110,8 +126,10 @@ public class PlayerKart : NewKart
 
     public void OnStopDrift(InputAction.CallbackContext context)
     {
+#if DEBUG_FEATURE
         if (!IsOwner) return;
-        
+#endif
+
         if (context.canceled)
         {
             drift = false;
