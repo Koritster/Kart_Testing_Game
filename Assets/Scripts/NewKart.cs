@@ -19,10 +19,10 @@ public class NewKart : NetworkBehaviour
     NetworkVariableReadPermission.Everyone,
     NetworkVariableWritePermission.Server);
 
-    Rigidbody m_Rigidbody;
     RaycastHit hit;
     bool boostActive, isGrounded, groundBoostActive, driftBoostActive, driftInitiated;
 
+    protected Rigidbody m_Rigidbody;
     protected Vector2 move;
     protected Vector3 m_Input;
     protected bool throttle, reverse, drift;
@@ -69,6 +69,8 @@ public class NewKart : NetworkBehaviour
 
         if (driftInitiated)
             ReduceDriftingTimer();
+
+        CalculateMoveInput();
     }
 
     public virtual void FixedUpdate()
@@ -79,24 +81,7 @@ public class NewKart : NetworkBehaviour
         ApplyDrift();
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer("NitroPad"))
-        {
-            ApplyBoost();
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (groundBoostActive && isGrounded)
-        {
-            ApplyGroundBoost();
-        }
-    }
-
-
-    void InitializeKart()
+    protected virtual void InitializeKart()
     {
         m_MaxForce = m_Force;
         m_MaxTurnForce = m_TurnForce;
@@ -112,6 +97,26 @@ public class NewKart : NetworkBehaviour
         m_MaxBoosterTime = 0;
         m_MaxDriftingTime = m_DriftingTime;
         m_MaxBoosterMultiplier = 1;
+    }
+
+    protected virtual void CalculateMoveInput() { }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("NitroPad"))
+        {
+            ApplyBoost();
+        }
+
+        Debug.Log(actualCheckpoint.Value);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (groundBoostActive && isGrounded)
+        {
+            ApplyGroundBoost();
+        }
     }
 
     void ReduceBoosterTimer()
@@ -260,6 +265,8 @@ public class NewKart : NetworkBehaviour
         if (driftBoostActive && !drift /*&& move.x < 0.75f && move.x > -0.75f*/)
         {
             ApplyDriftBoost();
+            m_MaxRotationAngle = m_RotationAngle;
+            m_MaxDriftingTime = m_DriftingTime;
 
             driftInitiated = false;
 

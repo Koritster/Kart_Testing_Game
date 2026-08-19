@@ -7,8 +7,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerKart : NewKart
 {
-
-
     PlayerInput kartInput;
     InputAction moveAction, throttleAction, reverseAction, driftAction;
 
@@ -47,6 +45,11 @@ public class PlayerKart : NewKart
     public override void Update()
     {
         base.Update();
+    }
+
+    protected override void CalculateMoveInput()
+    {
+        base.CalculateMoveInput();
 
         float angleLimit = Mathf.Clamp(Mathf.Atan2(move.x, move.y) * Mathf.Rad2Deg, -m_MaxRotationAngle, m_MaxRotationAngle);
         float targetAngle = angleLimit + Camera.main.transform.eulerAngles.y;

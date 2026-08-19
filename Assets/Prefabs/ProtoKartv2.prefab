@@ -18228,25 +18228,25 @@ MonoBehaviour:
   rightParticles: {fileID: 6367780099118731456}
   leftParticles: {fileID: 4515069374993128054}
   exhaustVFX: {fileID: 4474405623471744796}
-  m_RaycastDistance: 1
-  m_AccelerationRate: 8
-  m_TargetSpeed: 10
+  m_RaycastDistance: 0.5
+  m_AccelerationRate: 3
+  m_TargetSpeed: 20
   m_Force: 10
-  m_ReverseForce: 8
-  m_TurnForce: 10
-  m_BoostImmediateForce: 18
-  m_MagnitudeTurnLimit: 20
-  m_TurnCounterForce: 8
+  m_ReverseForce: 10
+  m_TurnForce: 12
+  m_BoostImmediateForce: 14
+  m_MagnitudeTurnLimit: 10
+  m_TurnCounterForce: 0.4
   m_GravityConstant: 9.81
   m_RotationAngle: 45
-  m_DriftingRotationAngle: 90
-  m_DriftingTime: 1
+  m_DriftingRotationAngle: 65
+  m_DriftingTime: 0.5
   m_RotationForce: 4
-  m_BoosterTime: 1
-  m_BoosterMultiplier: 1.6
+  m_BoosterTime: 0.3
+  m_BoosterMultiplier: 1.5
   m_AirMultiplier: 0.5
   m_DriftThrottleUpperThreshold: 10
-  m_DriftThrottleLowerThreshold: 10
+  m_DriftThrottleLowerThreshold: 8
 --- !u!1 &8852320416513257911
 GameObject:
   m_ObjectHideFlags: 0
