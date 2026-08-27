@@ -8,6 +8,7 @@ using Unity.Services.Multiplayer;
 using TMPro;
 using Unity.Netcode;
 using Unity.Collections;
+using UnityEngine.SceneManagement;
 
 public class Session : MonoBehaviour
 {
@@ -56,6 +57,8 @@ public class Session : MonoBehaviour
             Destroy(Instance);
             Instance = this;
         }
+
+        DontDestroyOnLoad(gameObject);
     }
 
     async void Start()
@@ -211,6 +214,8 @@ public class Session : MonoBehaviour
         actualSession = await MultiplayerService.Instance.CreateSessionAsync(options);
 
         Debug.Log($"Session {actualSession.Id} created! Join code: {actualSession.Code}");
+
+        NetworkManager.Singleton.SceneManager.LoadScene("MapaCambio", LoadSceneMode.Single);
 
         m_LobbiesPanel.SetActive(false);
         m_SessionJoinedPanel.SetActive(true);

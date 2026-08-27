@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Netcode;
+using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NetcodeLobby : NetworkBehaviour
 {
@@ -37,7 +39,9 @@ public class NetcodeLobby : NetworkBehaviour
 
     //Lista de jugadores
     public NetworkList<PlayerNetworkData> players = new NetworkList<PlayerNetworkData>(default, NetworkVariableBase.DefaultReadPerm, NetworkVariableWritePermission.Owner);
-    
+
+    private PlayerNetworkData localPlayerData;
+
     public NetworkVariable<bool> GameStarted =
         new NetworkVariable<bool>(false,
             NetworkVariableReadPermission.Everyone,
@@ -57,13 +61,22 @@ public class NetcodeLobby : NetworkBehaviour
         }
     }
 
-    private void Start()
+    private void OnDisable()
     {
+        if (NetworkManager.Singleton != null)
+        {
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= OnSceneLoaded;
+        }
     }
 
-    public override void OnNetworkSpawn()
+    private void SetSpawnpoints()
     {
-        
+        GameObject[] spawnpointsGO = GameObject.FindGameObjectsWithTag("Spawnpoint");
+
+        foreach(GameObject spawn in spawnpointsGO)
+        {
+            spawnPositions.Add(spawn.transform);
+        }
     }
 
     //Registrar jugador al servidor
@@ -77,25 +90,50 @@ public class NetcodeLobby : NetworkBehaviour
 
         int spawnIndex = players.Count;
 
-        players.Add(new PlayerNetworkData(name, kart, spawnIndex, clientId));
+        localPlayerData = new PlayerNetworkData(name, kart, spawnIndex, clientId);
+        players.Add(localPlayerData);
 
-        Transform spawn = spawnPositions[spawnIndex];
+        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(
+    string sceneName,
+    LoadSceneMode loadSceneMode,
+    List<ulong> clientsCompleted,
+    List<ulong> clientsTimedOut)
+    {
+        Debug.Log($"ESCENA CARGADA: {sceneName}");
+
+        if (!IsServer)
+            return;
+
+        InstantiatePlayers();
+    }
+
+    private void InstantiatePlayers()
+    {
+        SetSpawnpoints();
+        Transform spawn = spawnPositions[localPlayerData.spawnIndex];
 
         NetworkObject player = Instantiate(
             playerPrefab,
             spawn.position,
             spawn.rotation
         );
-
+        
         //Spawnear objeto network manualmente
-        player.SpawnAsPlayerObject(clientId);
+        player.SpawnAsPlayerObject(localPlayerData.clientId);
 
-        Debug.Log($"[SERVER] Spawn player for {clientId}");
+        Debug.Log($"[SERVER] Spawn player for {localPlayerData.clientId}");
 
         NewKartController carController = player.GetComponent<NewKartController>();
-        
-        carController.playerName.Value = name;
-        carController.carModel.Value = kart;
+
+        carController.Teleport(spawn);
+
+        carController.playerName.Value = localPlayerData.playerName;
+        carController.carModel.Value = localPlayerData.playerKart;
+
+        carController.transform.forward = spawn.forward;
     }
 
     public void StartGame()
