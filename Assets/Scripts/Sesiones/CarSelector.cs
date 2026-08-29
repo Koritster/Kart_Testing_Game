@@ -50,4 +50,15 @@ public class CarSelector : MonoBehaviour
 
         return null;
     }
+
+    public CarModel SearchKartModelDataByName(string _kart)
+    {
+        foreach (CarModel car in availableCars)
+        {
+            if (car.name == _kart)
+                return car;
+        }
+
+        return null;
+    }
 }
