@@ -51,17 +51,14 @@ public class NetcodeLobby : NetworkBehaviour
     [SerializeField] private NetworkObject playerPrefab;
     [SerializeField] private GameObject _PlayersPanel;
 
+    private bool sceneEventSubscribed = false;
+
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
         }
-    }
-
-    private void Start()
-    {
-        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnSceneLoaded;
     }
 
     private void OnDisable()
@@ -99,6 +96,13 @@ public class NetcodeLobby : NetworkBehaviour
         if (SceneManager.GetActiveScene().name == "MapaCambio")
         {
             InstantiatePlayer(playerData);
+        }
+
+        if (!sceneEventSubscribed)
+        {
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnSceneLoaded;
+
+            sceneEventSubscribed = true;
         }
     }
 
