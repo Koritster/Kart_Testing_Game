@@ -79,7 +79,7 @@ public class NetcodeLobby : NetworkBehaviour
         }
     }
 
-    //Registrar jugador al servidor
+    //Registrar jugador al servidor, se llama cada que un jugador entra a la sesión
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     public void AddPlayerServerRpc(
     FixedString32Bytes name,
@@ -90,8 +90,14 @@ public class NetcodeLobby : NetworkBehaviour
 
         int spawnIndex = players.Count;
 
-        localPlayerData = new PlayerNetworkData(name, kart, spawnIndex, clientId);
-        players.Add(localPlayerData);
+        PlayerNetworkData playerData = new PlayerNetworkData(name, kart, spawnIndex, clientId);
+        players.Add(playerData);
+
+        //Almacenar los datos del jugador local
+        if (IsOwner)
+        {
+            localPlayerData = playerData;
+        }
 
         NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnSceneLoaded;
     }
@@ -104,13 +110,10 @@ public class NetcodeLobby : NetworkBehaviour
     {
         Debug.Log($"ESCENA CARGADA: {sceneName}");
 
-        if (!IsServer)
-            return;
-
-        InstantiatePlayers();
+        InstantiatePlayer(localPlayerData);
     }
 
-    private void InstantiatePlayers()
+    private void InstantiatePlayer(PlayerNetworkData clientData)
     {
         SetSpawnpoints();
         Transform spawn = spawnPositions[localPlayerData.spawnIndex];
@@ -122,16 +125,16 @@ public class NetcodeLobby : NetworkBehaviour
         );
         
         //Spawnear objeto network manualmente
-        player.SpawnAsPlayerObject(localPlayerData.clientId);
+        player.SpawnAsPlayerObject(clientData.clientId);
 
-        Debug.Log($"[SERVER] Spawn player for {localPlayerData.clientId}");
+        Debug.Log($"[SERVER] Spawn player for {clientData.clientId}");
 
         NewKartController carController = player.GetComponent<NewKartController>();
 
         carController.Teleport(spawn);
 
-        carController.playerName.Value = localPlayerData.playerName;
-        carController.carModel.Value = localPlayerData.playerKart;
+        carController.playerName.Value = clientData.playerName;
+        carController.carModel.Value = clientData.playerKart;
 
         carController.transform.forward = spawn.forward;
     }
