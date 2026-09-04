@@ -40,8 +40,6 @@ public class NetcodeLobby : NetworkBehaviour
     //Lista de jugadores
     public NetworkList<PlayerNetworkData> players = new NetworkList<PlayerNetworkData>(default, NetworkVariableBase.DefaultReadPerm, NetworkVariableWritePermission.Owner);
 
-    private PlayerNetworkData localPlayerData;
-
     public NetworkVariable<bool> GameStarted =
         new NetworkVariable<bool>(false,
             NetworkVariableReadPermission.Everyone,
@@ -59,6 +57,11 @@ public class NetcodeLobby : NetworkBehaviour
         {
             instance = this;
         }
+    }
+
+    private void Start()
+    {
+        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnSceneLoaded;
     }
 
     private void OnDisable()
@@ -93,13 +96,10 @@ public class NetcodeLobby : NetworkBehaviour
         PlayerNetworkData playerData = new PlayerNetworkData(name, kart, spawnIndex, clientId);
         players.Add(playerData);
 
-        //Almacenar los datos del jugador local
-        if (IsOwner)
+        if (SceneManager.GetActiveScene().name == "MapaCambio")
         {
-            localPlayerData = playerData;
+            InstantiatePlayer(playerData);
         }
-
-        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnSceneLoaded;
     }
 
     private void OnSceneLoaded(
@@ -110,13 +110,16 @@ public class NetcodeLobby : NetworkBehaviour
     {
         Debug.Log($"ESCENA CARGADA: {sceneName}");
 
-        InstantiatePlayer(localPlayerData);
+        foreach (PlayerNetworkData playerData in players)
+        {
+            InstantiatePlayer(playerData);
+        }
     }
 
     private void InstantiatePlayer(PlayerNetworkData clientData)
     {
         SetSpawnpoints();
-        Transform spawn = spawnPositions[localPlayerData.spawnIndex];
+        Transform spawn = spawnPositions[clientData.spawnIndex];
 
         NetworkObject player = Instantiate(
             playerPrefab,
