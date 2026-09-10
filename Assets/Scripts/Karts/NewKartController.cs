@@ -278,6 +278,8 @@ public class NewKartController : PlayerKart
     {
         base.OnNetworkSpawn();
 
+        Debug.Log("OnNetworkSpawn");
+
         //Registrar kart
         if (IsClient)
         {
@@ -344,6 +346,7 @@ public class NewKartController : PlayerKart
 
     private void ChangeCarModel(string newName)
     {
+        Debug.Log("Setteando modelo del carro");
         GameObject kartVisual = CarSelector.instance.SearchKartModelByName(newName);
         GameObject kartInstantiated = Instantiate(kartVisual, m_CarModelVisualTransform);
         kartInstantiated.transform.localPosition = Vector3.zero;

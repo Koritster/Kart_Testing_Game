@@ -77,6 +77,8 @@ public class NetcodeLobby : NetworkBehaviour
         {
             spawnPositions.Add(spawn.transform);
         }
+
+        spawnPositions.Sort();
     }
 
     //Registrar jugador al servidor, se llama cada que un jugador entra a la sesión
@@ -137,8 +139,6 @@ public class NetcodeLobby : NetworkBehaviour
         Debug.Log($"[SERVER] Spawn player for {clientData.clientId}");
 
         NewKartController carController = player.GetComponent<NewKartController>();
-
-        carController.Teleport(spawn);
 
         carController.playerName.Value = clientData.playerName;
         carController.carModel.Value = clientData.playerKart;
