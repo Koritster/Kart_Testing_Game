@@ -6,10 +6,14 @@ public class CPUKart : NewKart
     public int actualTrackTarget;
     public float targetDistanceThreshold = 1.0f;
     public float obstacleAvoidanceDistance = 5f;
+    public float obstacleAvoidanceForce = 1f;
+    public float maxDriftTimer = 1f;
+    public float checkDriftAngle = 30f;
 
     private Transform targetsParent;
     private Transform trackTargetTransform;
     private Vector3 directionToTrackTarget;
+    private float driftTimer, angleToDrift;
 
     protected virtual void OnEnable()
     {
@@ -26,17 +30,22 @@ public class CPUKart : NewKart
         base.Start();
 
         //DEBUG 
-        throttle = true;
+        //throttle = true;
     }
 
     public override void Update()
     {
         base.Update();
 
+        Throttle();
+        Break();
         CalculateTrackTargetDirection();
         CalculateTrackTargetDistance();
 
-        Debug.Log(actualTrackTarget);
+        if (driftTimer > 0)
+            ReduceDriftCooldown();
+        else
+            CheckIfDrift();
     }
 
     protected override void InitializeKart()
@@ -46,6 +55,7 @@ public class CPUKart : NewKart
         targetsParent = GameObject.Find("CPUTargets").transform;
         actualTrackTarget = 0;
         directionToTrackTarget = Vector3.zero;
+        driftTimer = 0;
         FindNextTrackTargetTransform();
     }
 
@@ -57,7 +67,44 @@ public class CPUKart : NewKart
         Vector3 avoidance = ObstacleAvoidance();
         m_Input = new Vector3(directionToTrackTarget.x, 0f, directionToTrackTarget.z);
         m_Input += new Vector3(avoidance.x, 0f, avoidance.z);
-        //m_Input = new Vector3(-1, 0, 0);
+        if(driftTimer <= 0)
+        {
+            move.x = Vector3.Angle(m_Input, m_Rigidbody.transform.right) < 90 ? 1 : -1;
+        }
+    }
+    
+    private void ReduceDriftCooldown()
+    {
+        driftTimer -= Time.deltaTime;
+    }
+
+    private void CheckIfDrift()
+    {
+        angleToDrift = Vector3.Angle(directionToTrackTarget, m_Rigidbody.transform.forward);
+        if (angleToDrift > checkDriftAngle)
+        {
+            driftTimer = Time.deltaTime;
+            drift = true;
+        }
+        else 
+            drift = false;
+    }
+
+    private void Throttle()
+    {
+        if (m_Rigidbody.linearVelocity.magnitude > m_TargetSpeed && angleToDrift > checkDriftAngle)
+            throttle = false;
+        else
+            throttle = true;
+    }
+
+    private void Break()
+    {
+        if (m_Rigidbody.linearVelocity.magnitude > m_TargetSpeed * 0.5f && angleToDrift > checkDriftAngle * 2f)
+            reverse = true;
+
+        if (angleToDrift < checkDriftAngle)
+            reverse = false;
     }
 
     private Vector3 AvoidanceForce(Vector3 v)
@@ -69,7 +116,7 @@ public class CPUKart : NewKart
     {
         RaycastHit hit;
         if (Physics.Raycast(m_Rigidbody.transform.position, m_Rigidbody.transform.forward, out hit, obstacleAvoidanceDistance))
-            return AvoidanceForce(hit.transform.position);
+            return AvoidanceForce(hit.transform.position) * obstacleAvoidanceForce;
         else
             return Vector3.zero;
     }

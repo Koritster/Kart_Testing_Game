@@ -108,7 +108,7 @@ public class NewKart : NetworkBehaviour
             ApplyBoost();
         }
 
-        Debug.Log(actualCheckpoint.Value);
+        //Debug.Log(actualCheckpoint.Value);
     }
 
     private void OnCollisionEnter(Collision collision)
