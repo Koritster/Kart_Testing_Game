@@ -100,7 +100,7 @@ public class CPUKart : NewKart
 
     private void Break()
     {
-        if (m_Rigidbody.linearVelocity.magnitude > m_TargetSpeed * 0.5f && angleToDrift > checkDriftAngle * 2f)
+        if (m_Rigidbody.linearVelocity.magnitude > m_TargetSpeed && angleToDrift > checkDriftAngle * 0.5f)
             reverse = true;
 
         if (angleToDrift < checkDriftAngle)
