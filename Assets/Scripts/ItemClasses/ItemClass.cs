@@ -30,7 +30,7 @@ public class ItemClass : ScriptableObject
     public int itemId;
     public Sprite itemIcon;
 
-    public virtual void UseItem(CarController caller)
+    public virtual void UseItem(NewKartController caller)
     {
         Debug.Log("Used: " + name);
     }

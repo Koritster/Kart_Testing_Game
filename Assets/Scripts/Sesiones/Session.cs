@@ -8,6 +8,7 @@ using Unity.Services.Multiplayer;
 using TMPro;
 using Unity.Netcode;
 using Unity.Collections;
+using UnityEngine.SceneManagement;
 
 public class Session : MonoBehaviour
 {
@@ -56,25 +57,32 @@ public class Session : MonoBehaviour
             Destroy(Instance);
             Instance = this;
         }
+
+        DontDestroyOnLoad(gameObject);
     }
 
     async void Start()
     {
         try
         {
-            //Inicializar servicios
+            //Inicializar servicios multijugador
             await UnityServices.InitializeAsync();
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            
             Debug.Log($"Sign in anonymously succeeded! PlayerID: {AuthenticationService.Instance.PlayerId}");
+            
             await AuthenticationService.Instance.GetPlayerNameAsync();
+            
             m_UsernameInput.text = AuthenticationService.Instance.PlayerName;
             localPlayerName = AuthenticationService.Instance.PlayerName;
             localPlayerKart = "default";
+
             RefreshSessionList();
         }
         catch (Exception e)
         {
             Debug.LogException(e);
+            Debug.Log("Iniciando modo sin conexión");
         }
 
         RegisterEvents();
@@ -207,6 +215,8 @@ public class Session : MonoBehaviour
 
         Debug.Log($"Session {actualSession.Id} created! Join code: {actualSession.Code}");
 
+        NetworkManager.Singleton.SceneManager.LoadScene("MapaCambio", LoadSceneMode.Single);
+
         m_LobbiesPanel.SetActive(false);
         m_SessionJoinedPanel.SetActive(true);
 
@@ -215,6 +225,18 @@ public class Session : MonoBehaviour
         actualSession.PlayerJoined += PlayerJoinedSession;
 
         RefreshPlayersOnSession(actualSession);
+    }
+
+    public void StartSinglePlayer()
+    {
+        localPlayerName = "Jugador";
+
+        NetworkManager.Singleton.StartHost();
+
+        m_LobbiesPanel.SetActive(false);
+        m_SessionJoinedPanel.SetActive(true);
+
+        m_StartGameBtn.SetActive(true);
     }
 
     #endregion

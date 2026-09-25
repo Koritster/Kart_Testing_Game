@@ -16,7 +16,7 @@ public class RaceCheckpoint : NetworkBehaviour
     {
         if (!IsServer) return;
 
-        if (other.TryGetComponent<Kart>(out Kart _kart))
+        if (other.TryGetComponent<NewKart>(out NewKart _kart))
         {
             //Si no ha pasado por el anterior checkpoint no cuenta
             //Si es el último checkpoint, igual checa

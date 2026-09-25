@@ -8,7 +8,7 @@ public class PlayerKart : NewKart
     PlayerInput kartInput;
     InputAction moveAction, throttleAction, reverseAction, driftAction;
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         kartInput = GetComponent<PlayerInput>();
         moveAction = kartInput.actions["Move"];
@@ -24,7 +24,7 @@ public class PlayerKart : NewKart
         driftAction.canceled += OnStopDrift;
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         moveAction.performed -= OnMove;
         throttleAction.performed -= OnThrottle;
@@ -51,11 +51,15 @@ public class PlayerKart : NewKart
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (!IsOwner) return;
+
         move = context.ReadValue<Vector2>();
     }
 
     public void OnReverse(InputAction.CallbackContext context)
     {
+        if (!IsOwner) return;
+     
         if (context.performed)
         {
             throttle = false;
@@ -65,6 +69,8 @@ public class PlayerKart : NewKart
 
     public void OnStopReverse(InputAction.CallbackContext context)
     {
+        if (!IsOwner) return;
+       
         if (context.canceled)
         {
             reverse = false;
@@ -73,6 +79,8 @@ public class PlayerKart : NewKart
 
     public void OnThrottle(InputAction.CallbackContext context)
     {
+        if (!IsOwner) return;
+        
         if (context.performed)
         {
             throttle = true;
@@ -82,6 +90,8 @@ public class PlayerKart : NewKart
 
     public void OnStopThrottle(InputAction.CallbackContext context)
     {
+        if (!IsOwner) return;
+        
         if (context.canceled)
         {
             throttle = false;
@@ -90,6 +100,8 @@ public class PlayerKart : NewKart
 
     public void OnDrift(InputAction.CallbackContext context)
     {
+        if (!IsOwner) return;
+        
         if (context.performed)
         {
             drift = true;
@@ -98,6 +110,8 @@ public class PlayerKart : NewKart
 
     public void OnStopDrift(InputAction.CallbackContext context)
     {
+        if (!IsOwner) return;
+        
         if (context.canceled)
         {
             drift = false;

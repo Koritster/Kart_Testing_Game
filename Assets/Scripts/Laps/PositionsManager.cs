@@ -12,7 +12,7 @@ public class PositionsManager : NetworkBehaviour
 
     [SerializeField] private List<RaceCheckpoint> checkpoints;
 
-    List<Kart> karts = new List<Kart>();
+    List<NewKart> karts = new List<NewKart>();
     bool tie;
 
     private void Awake()
@@ -96,13 +96,13 @@ public class PositionsManager : NetworkBehaviour
         }
     }
 
-    float GetDistanceToNextCheckpoint(Kart _kart, int checkpoint)
+    float GetDistanceToNextCheckpoint(NewKart _kart, int checkpoint)
     {
         float distancia = Vector3.Distance(_kart.transform.position, checkpoints[checkpoint + 1].transform.position);
         return distancia;
     }
 
-    public void PlayerFinishedLap(Kart _kart)
+    public void PlayerFinishedLap(NewKart _kart)
     {
         _kart.laps.Value += 1;
 
@@ -119,7 +119,7 @@ public class PositionsManager : NetworkBehaviour
         return checkpoints.Count;
     }
 
-    public void RegisterKart(Kart kart)
+    public void RegisterKart(NewKart kart)
     {
         Debug.Log("Carro " + kart + " registrado");
         if (!karts.Contains(kart))
@@ -128,7 +128,7 @@ public class PositionsManager : NetworkBehaviour
         }
     }
 
-    public int GetPosition(Kart kart)
+    public int GetPosition(NewKart kart)
     {
         return kart.Position.Value;
     }

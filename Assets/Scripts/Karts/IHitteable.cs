@@ -28,7 +28,7 @@ public class Kart : HitteableBehaviour
         Debug.Log("Spawneando carro");
         if (IsClient)
         {
-            PositionsManager.instance.RegisterKart(this);
+            //PositionsManager.instance.RegisterKart(this);
         }
     }
 

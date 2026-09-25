@@ -9,7 +9,7 @@ public class ShootItemClass : ItemClass
     public bool isHoming;
     public GameObject projectilePrefab;
 
-    public override void UseItem(CarController caller)
+    public override void UseItem(NewKartController caller)
     {
         base.UseItem(caller);
     }

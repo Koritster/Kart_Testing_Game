@@ -12,9 +12,9 @@ public class ItemBlock : MonoBehaviour
     {
         if (collected) return;
 
-        if(other.TryGetComponent<CarController>(out CarController m_Car))
+        if(other.TryGetComponent<NewKartController>(out NewKartController m_Car))
         {
-            m_Car.ReceiveItem(GetRandomItem());
+            //m_Car.ReceiveItem(GetRandomItem());
 
             GetItemBlockServerRpc();
         }
