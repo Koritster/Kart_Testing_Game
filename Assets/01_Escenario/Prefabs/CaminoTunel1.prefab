@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2933232712152208141}
   - component: {fileID: 1400403613102932149}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: paredDerecha (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63,7 +63,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1599093973450541928}
   - component: {fileID: 3837262607539658736}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: paredDerecha (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5415085839808844976}
   - component: {fileID: 3015931757204087912}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: paredIzquierda (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1544675562132367586}
   - component: {fileID: 4343638680991206510}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: paredIzquierda
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +222,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1422725686854084780}
   - component: {fileID: 7904034886578063974}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: paredDerecha
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +275,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2654684436957502526}
   - component: {fileID: 9147250535813301242}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: paredDerecha (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -328,7 +328,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4497134848303077169}
   - component: {fileID: 9180364065406305220}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: paredIzquierda (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -398,7 +398,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6320473666580884728}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+  m_LocalRotation: {x: -0.7069834, y: 0, z: 0, w: 0.7072302}
   m_LocalPosition: {x: 150.43445, y: -24.559896, z: -276.52045}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
@@ -414,7 +414,7 @@ Transform:
   - {fileID: 5415085839808844976}
   - {fileID: 2654684436957502526}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
 --- !u!33 &1603801841135784730
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -503,7 +503,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8561842753153994523}
   - component: {fileID: 974399548417022037}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: paredIzquierda (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -556,7 +556,7 @@ GameObject:
   m_Component:
   - component: {fileID: 283418632432934245}
   - component: {fileID: 8556285705395816944}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: paredIzquierda (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -609,7 +609,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4843620702687502657}
   - component: {fileID: 6368301970572881494}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: paredDerecha (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

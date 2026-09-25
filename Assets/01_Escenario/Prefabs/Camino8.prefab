@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5790639918943986053}
   - component: {fileID: 7217314347247061209}
   - component: {fileID: 6645420023061548203}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: Camino8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2416006536982151154}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+  m_LocalRotation: {x: -0.7069834, y: 0, z: 0, w: 0.7072302}
   m_LocalPosition: {x: -210.20901, y: -4.0821524, z: -347.81503}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
@@ -35,7 +35,7 @@ Transform:
   - {fileID: 7961145951194208553}
   - {fileID: 5441510501152181398}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
 --- !u!33 &5790639918943986053
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -124,7 +124,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7961145951194208553}
   - component: {fileID: 7024498231599045358}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: paredIzquierda
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5441510501152181398}
   - component: {fileID: 6190792572797166891}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: paredIzquierda (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
