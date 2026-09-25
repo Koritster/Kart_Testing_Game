@@ -132,15 +132,8 @@ public class CPUKart : NewKart
         float distance = Vector3.Distance(m_Rigidbody.transform.position, trackTargetTransform.position);
         if(distance < targetDistanceThreshold)
         {
-            FindNextTrackTargetIndex();
             FindNextTrackTargetTransform();
         }
-    }
-
-    private void FindNextTrackTargetIndex()
-    {
-        //Change this in the future when evaluating targets weights
-        actualTrackTarget++;
     }
 
     private void FindNextTrackTargetTransform()
@@ -151,13 +144,14 @@ public class CPUKart : NewKart
             int i = target.index;
             if(i == actualTrackTarget)
             {
-                //DEBUG
                 if(target.weight == 100)
                 {
                     trackTargetTransform = target.transform;
+                    actualTrackTarget++;
                     return;
                 }
             }
         }
+        actualTrackTarget = 0;
     }
 }
