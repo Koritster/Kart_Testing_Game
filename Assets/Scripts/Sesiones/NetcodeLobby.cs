@@ -77,8 +77,6 @@ public class NetcodeLobby : NetworkBehaviour
         {
             spawnPositions.Add(spawn.transform);
         }
-
-        spawnPositions.Sort();
     }
 
     //Registrar jugador al servidor, se llama cada que un jugador entra a la sesión
