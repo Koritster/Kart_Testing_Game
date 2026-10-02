@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerLobby : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI m_PlayerName;
+    private string playerId;
 
     private void Awake()
     {
@@ -12,6 +13,7 @@ public class PlayerLobby : MonoBehaviour
 
     public void SetSession(IReadOnlyPlayer m_player)
     {
+        playerId = m_player.Id;
         m_PlayerName.text = m_player.Id;
 
         Debug.LogWarning("Setteando nombre");
@@ -24,5 +26,10 @@ public class PlayerLobby : MonoBehaviour
         }
 
         m_PlayerName.text = m_playerNameProperty.Value;
+    }
+
+    public string GetId()
+    {
+        return playerId;
     }
 }
