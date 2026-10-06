@@ -20,13 +20,19 @@ public class NewKart : NetworkBehaviour
     NetworkVariableWritePermission.Server);
 
     RaycastHit hit;
-    bool boostActive, isGrounded, groundBoostActive, driftBoostActive, driftInitiated;
+    bool boostActive, isGrounded, groundBoostActive, driftBoostActive, driftInitiated, exhaustVFXActive, rightParticlesActive, leftParticlesActive;
 
     protected Rigidbody m_Rigidbody;
     protected Vector2 move;
     protected Vector3 m_Input;
     protected bool throttle, reverse, drift;
     protected float m_MaxForce, m_MaxTurnForce, m_MaxTurnCounterForce, m_MaxDriftingTime, m_MaxBoosterTime, m_MaxBoosterMultiplier, m_MaxRotationAngle;
+
+    protected KartStateMachine stateMachine;
+    protected InitialKartState initialKartState;
+    protected DriveKartState driveKartState;
+    protected ThrottleKartState throttleKartState;
+    protected ReverseKartState reverseKartState;
 
     public Transform centerOfMass;
     public Transform Nozzle;
@@ -57,28 +63,33 @@ public class NewKart : NetworkBehaviour
         //Fetch the Rigidbody from the GameObject with this script attached
         m_Rigidbody = GetComponent<Rigidbody>();
 
+        initialKartState = new InitialKartState();
+        driveKartState = new DriveKartState();
+        throttleKartState = new ThrottleKartState();
+        reverseKartState = new ReverseKartState();
+
         InitializeKart();
     }
 
     public virtual void Update()
     {
         CheckIfGrounded();
+        CalculateMoveInput();
 
         if (boostActive)
             ReduceBoosterTimer();
-
         if (driftInitiated)
             ReduceDriftingTimer();
-
-        CalculateMoveInput();
     }
 
     public virtual void FixedUpdate()
     {
-        ApplyThrottle();
-        ApplyRotation();
-        ApplyTrackGravity();
+        stateMachine.currentState.ApplyThrottle(m_Rigidbody, throttle, isGrounded, driftInitiated, reverse, m_MaxForce, m_MaxTurnForce, m_ReverseForce, m_AirMultiplier, m_TargetSpeed, m_MaxBoosterMultiplier, m_AccelerationRate, m_MaxTurnCounterForce);
+        stateMachine.currentState.ApplyRotation(m_Rigidbody, centerOfMass.position, m_Input, m_RaycastDistance, m_RotationForce, raycastLayers);
+        stateMachine.currentState.ApplyTrackGravity(m_Rigidbody, centerOfMass.position, m_RaycastDistance, m_GravityConstant, raycastLayers);
+        //stateMachine.currentState.ApplyDrift(m_Rigidbody, move, drift, isGrounded, boostActive, driftBoostActive, out exhaustVFXActive, out rightParticlesActive, out leftParticlesActive, out driftInitiated, m_BoostImmediateForce, m_DriftThrottleUpperThreshold, m_DriftThrottleLowerThreshold, out m_MaxRotationAngle, out m_MaxDriftingTime, out m_MaxBoosterTime, out m_MaxBoosterMultiplier, m_BoosterTime, m_BoosterMultiplier, m_RotationAngle, m_DriftingRotationAngle, m_DriftingTime);
         ApplyDrift();
+        ShowParticleEffects(exhaustVFXActive, rightParticlesActive, leftParticlesActive);
     }
 
     protected virtual void InitializeKart()
@@ -94,9 +105,15 @@ public class NewKart : NetworkBehaviour
         drift = false;
         isGrounded = false;
         driftInitiated = false;
+        exhaustVFXActive = false;
+        rightParticlesActive = false;
+        leftParticlesActive = false;
         m_MaxBoosterTime = 0;
         m_MaxDriftingTime = m_DriftingTime;
         m_MaxBoosterMultiplier = 1;
+
+        stateMachine = new KartStateMachine(initialKartState);
+        stateMachine.ChangeState(throttleKartState);
     }
 
     protected virtual void CalculateMoveInput() { }
@@ -105,18 +122,28 @@ public class NewKart : NetworkBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("NitroPad"))
         {
-            ApplyBoost();
+            //APPLY NITRO PAD BOOST
+            stateMachine.currentState.ApplyBoost(m_Rigidbody, m_BoostImmediateForce, 1f, out boostActive, out m_MaxBoosterTime, out m_MaxBoosterMultiplier, m_BoosterTime, m_BoosterMultiplier);
+            exhaustVFXActive = boostActive;
         }
-
-        //Debug.Log(actualCheckpoint.Value);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (groundBoostActive && isGrounded)
+        if (groundBoostActive && isGrounded && stateMachine.currentState == throttleKartState)
         {
-            ApplyGroundBoost();
+            //APPLY GROUND LANDING BOOST
+            stateMachine.currentState.ApplyBoost(m_Rigidbody, m_BoostImmediateForce * 0.5f, 0.5f, out boostActive, out m_MaxBoosterTime, out m_MaxBoosterMultiplier, m_BoosterTime, m_BoosterMultiplier);
+            exhaustVFXActive = boostActive;
+            groundBoostActive = false;
         }
+    }
+
+    private void ShowParticleEffects(bool exhaustVFXActive, bool rightParticlesActive, bool leftParticlesActive)
+    {
+        exhaustVFX.gameObject.SetActive(exhaustVFXActive);
+        rightParticles.gameObject.SetActive(rightParticlesActive);
+        leftParticles.gameObject.SetActive(leftParticlesActive);
     }
 
     void ReduceBoosterTimer()
@@ -133,7 +160,7 @@ public class NewKart : NetworkBehaviour
             m_MaxBoosterTime = 0;
             m_MaxBoosterMultiplier = 1;
             boostActive = false;
-            exhaustVFX.gameObject.SetActive(false);
+            exhaustVFXActive = false;
         }
     }
 
@@ -149,129 +176,38 @@ public class NewKart : NetworkBehaviour
         }
     }
 
-    void ApplyThrottle()
-    {
-        Vector3 velocity = Vector3.zero;
-
-        //NEW FORCE MOVEMENT
-        if (throttle)
-        {
-            velocity = m_Rigidbody.transform.forward * m_MaxForce;
-        }
-
-        if (driftInitiated)
-        {
-            m_Rigidbody.AddForce(-m_Rigidbody.linearVelocity * m_MaxTurnCounterForce, ForceMode.Force);
-            velocity = m_Rigidbody.transform.forward * m_MaxTurnForce;
-        }
-
-        if (reverse)
-        {
-            velocity = -m_Rigidbody.transform.forward * m_ReverseForce;
-        }
-
-        if (!isGrounded)
-        {
-            velocity *= m_AirMultiplier;
-        }
-
-        if (m_Rigidbody.linearVelocity.magnitude < m_TargetSpeed)
-            m_Rigidbody.AddForce(velocity * m_MaxBoosterMultiplier * m_AccelerationRate, ForceMode.Force);
-    }
-
-    void ApplyBoost()
-    {
-        m_Rigidbody.AddForce(m_Rigidbody.linearVelocity.normalized * m_BoostImmediateForce, ForceMode.VelocityChange);
-        m_MaxBoosterTime = m_BoosterTime;
-        m_MaxBoosterMultiplier = m_BoosterMultiplier;
-        boostActive = true;
-        exhaustVFX.gameObject.SetActive(true);
-    }
-
-    void ApplyGroundBoost()
-    {
-        m_Rigidbody.AddForce(m_Rigidbody.transform.forward * m_BoostImmediateForce * 0.5f, ForceMode.VelocityChange);
-        m_MaxBoosterTime = m_BoosterTime * 0.5f;
-        m_MaxBoosterMultiplier = m_BoosterMultiplier;
-        boostActive = true;
-        groundBoostActive = false;
-        exhaustVFX.gameObject.SetActive(true);
-    }
-
-    void ApplyDriftBoost()
-    {
-        m_Rigidbody.AddForce(m_Rigidbody.transform.forward * m_BoostImmediateForce * 0.8f, ForceMode.VelocityChange);
-        m_MaxBoosterTime = m_BoosterTime;
-        m_MaxBoosterMultiplier = m_BoosterMultiplier;
-        boostActive = true;
-        driftBoostActive = false;
-        exhaustVFX.gameObject.SetActive(true);
-    }
-
-    void ApplyTrackGravity()
-    {
-        if (Physics.Raycast(centerOfMass.position, m_Rigidbody.transform.forward, out hit, m_RaycastDistance, raycastLayers) || Physics.Raycast(centerOfMass.position, -m_Rigidbody.transform.up, out hit, m_RaycastDistance, raycastLayers))
-        {
-            m_Rigidbody.AddForce(-hit.normal * m_GravityConstant, ForceMode.Acceleration);
-        }
-        else
-        {
-            m_Rigidbody.AddForce(Vector3.down * m_GravityConstant, ForceMode.Acceleration);
-        }
-    }
-
-    void ApplyRotation()
-    {
-        if (Physics.Raycast(centerOfMass.position, m_Rigidbody.transform.forward, out hit, m_RaycastDistance, raycastLayers) || Physics.Raycast(centerOfMass.position, -m_Rigidbody.transform.up, out hit, m_RaycastDistance, raycastLayers))
-        {
-            //Quaternion finalRotation = Quaternion.Lerp(m_Rigidbody.rotation, Quaternion.LookRotation(m_Input), Time.fixedDeltaTime * m_RotationForce);
-
-            //m_Rigidbody.transform.up = Vector3.Lerp(m_Rigidbody.transform.up, hit.normal, Time.fixedDeltaTime * 8f);
-            //m_Rigidbody.transform.Rotate(Vector3.up, finalRotation.eulerAngles.y, Space.Self);
-
-            //float angle = Vector3.Angle(Vector3.up, hit.normal);
-            //Quaternion gravityRotation = Quaternion.Euler(angle, 0f, 0f);
-
-            Quaternion gravityRotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
-            Quaternion inputRotation = Quaternion.LookRotation(m_Input);
-            Quaternion combinedRotation = gravityRotation * inputRotation;
-            m_Rigidbody.rotation = Quaternion.Lerp(m_Rigidbody.rotation, combinedRotation, Time.fixedDeltaTime * m_RotationForce);
-        }
-        else
-        {
-            m_Rigidbody.rotation = Quaternion.Lerp(m_Rigidbody.rotation, Quaternion.LookRotation(m_Input), Time.fixedDeltaTime * m_RotationForce);
-        }
-    }
-
     void ApplyDrift()
     {
         if (drift && isGrounded && m_Rigidbody.linearVelocity.magnitude > m_DriftThrottleUpperThreshold)
         {
-            //m_MaxRotationAngle = m_DriftingRotationAngle;
             driftInitiated = true;
         }
 
-        if (/*!drift || */!isGrounded || m_Rigidbody.linearVelocity.magnitude < m_DriftThrottleLowerThreshold)
+        if (!isGrounded || m_Rigidbody.linearVelocity.magnitude < m_DriftThrottleLowerThreshold)
         {
             m_MaxRotationAngle = m_RotationAngle;
             m_MaxDriftingTime = m_DriftingTime;
 
             driftInitiated = false;
 
-            rightParticles.gameObject.SetActive(false);
-            leftParticles.gameObject.SetActive(false);
+            rightParticlesActive = false;
+            leftParticlesActive = false;
         }
 
-        if (driftBoostActive && !drift /*&& move.x < 0.75f && move.x > -0.75f*/)
+        if (driftBoostActive && !drift)
         {
-            ApplyDriftBoost();
+            //APPLY DRIFT BOOST
+            //ApplyDriftBoost();
+            stateMachine.currentState.ApplyDriftBoost(m_Rigidbody, m_BoostImmediateForce * 0.8f, 0.8f, out boostActive, out driftBoostActive, out m_MaxBoosterTime, out m_MaxBoosterMultiplier, m_BoosterTime, m_BoosterMultiplier);
+            exhaustVFXActive = boostActive;
+
             m_MaxRotationAngle = m_RotationAngle;
             m_MaxDriftingTime = m_DriftingTime;
 
             driftInitiated = false;
 
-            rightParticles.gameObject.SetActive(false);
-            leftParticles.gameObject.SetActive(false);
+            rightParticlesActive = false;
+            leftParticlesActive = false;
         }
 
         if (driftInitiated)
@@ -285,18 +221,18 @@ public class NewKart : NetworkBehaviour
 
                 driftInitiated = false;
 
-                rightParticles.gameObject.SetActive(false);
-                leftParticles.gameObject.SetActive(false);
+                rightParticlesActive = false;
+                leftParticlesActive = false;
             }
             else if (move.x > 0f)
             {
-                rightParticles.gameObject.SetActive(true);
-                leftParticles.gameObject.SetActive(false);
+                rightParticlesActive = true;
+                leftParticlesActive = false;
             }
             else if(move.x < 0f)
             {
-                leftParticles.gameObject.SetActive(true);
-                rightParticles.gameObject.SetActive(false);
+                rightParticlesActive = false;
+                leftParticlesActive = true;
             }    
         }
     }
