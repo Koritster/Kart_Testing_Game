@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class ReverseKartState : DriveKartState
 {
-    public override void ApplyReverse(Rigidbody kartRB, bool isReversing, bool isGrounded, float reverseForce, float airMultiplier, float maxBoosterMultiplier, float accelerationRate)
+    public override void ApplyReverse(Rigidbody kartRB, bool isReversing, bool isGrounded, float reverseForce, float airMultiplier, float targetSpeed, float maxBoosterMultiplier, float accelerationRate)
     {
-        base.ApplyReverse(kartRB, isReversing, isGrounded, reverseForce, airMultiplier, maxBoosterMultiplier, accelerationRate);
+        base.ApplyReverse(kartRB, isReversing, isGrounded, reverseForce, airMultiplier, targetSpeed, maxBoosterMultiplier, accelerationRate);
 
         Vector3 velocity = Vector3.zero;
 
@@ -18,6 +18,7 @@ public class ReverseKartState : DriveKartState
             velocity *= airMultiplier;
         }
 
-        kartRB.AddForce(velocity * maxBoosterMultiplier * accelerationRate, ForceMode.Force);
+        if (kartRB.linearVelocity.magnitude < targetSpeed)
+            kartRB.AddForce(velocity * maxBoosterMultiplier * accelerationRate, ForceMode.Force);
     }
 }

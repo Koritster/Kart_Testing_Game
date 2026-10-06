@@ -75,6 +75,8 @@ public class PlayerKart : NewKart
         {
             throttle = false;
             reverse = true;
+
+            stateMachine.ChangeState(reverseKartState);
         }
     }
 
@@ -100,6 +102,8 @@ public class PlayerKart : NewKart
         {
             throttle = true;
             reverse = false;
+
+            stateMachine.ChangeState(throttleKartState);
         }
     }
 

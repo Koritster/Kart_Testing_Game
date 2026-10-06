@@ -33,67 +33,65 @@ public class ThrottleKartState : DriveKartState
             kartRB.AddForce(velocity * maxBoosterMultiplier * accelerationRate, ForceMode.Force);
     }
 
-    public override void ApplyDrift(Rigidbody kartRB, Vector2 move, bool isDrifting, bool isGrounded, bool boostActive, bool driftBoostActive, out bool exhaustVFXActive, out bool rightParticlesActive, out bool leftParticlesActive, out bool driftInitiated, float boostImmediateForce, float driftThrottleUpperThreshold, float driftThrottleLowerThreshold, out float maxRotationAngle, out float maxDriftingTime, out float maxBoosterTime, out float maxBoosterMultiplier, float boosterTime, float boosterMultiplier, float rotationAngle, float driftingRotationAngle, float driftingTime)
-    {
-        base.ApplyDrift(kartRB, move, isDrifting, isGrounded, boostActive, driftBoostActive, out exhaustVFXActive, out rightParticlesActive, out leftParticlesActive, out driftInitiated, boostImmediateForce, driftThrottleUpperThreshold, driftThrottleLowerThreshold, out maxRotationAngle, out maxDriftingTime, out maxBoosterTime, out maxBoosterMultiplier, boosterTime, boosterMultiplier, rotationAngle, driftingRotationAngle, driftingTime);
-        if (isDrifting && isGrounded && kartRB.linearVelocity.magnitude > driftThrottleUpperThreshold)
-        {
-            driftInitiated = true;
-        }
+    //public override void ApplyDrift(Rigidbody kartRB, Vector2 move, bool isDrifting, bool isGrounded, bool boostActive, bool driftBoostActive, out bool exhaustVFXActive, bool exhaustVFX, out bool rightParticlesActive, bool rightParticles, out bool leftParticlesActive, bool leftParticles, out bool driftInitiated, float boostImmediateForce, float driftThrottleUpperThreshold, float driftThrottleLowerThreshold, out float maxRotationAngle, out float maxDriftingTime, out float maxBoosterTime, out float maxBoosterMultiplier, float boosterTime, float boosterMultiplier, float rotationAngle, float driftingRotationAngle, float driftingTime)
+    //{
+    //    base.ApplyDrift(kartRB, move, isDrifting, isGrounded, boostActive, driftBoostActive, out exhaustVFXActive, exhaustVFX, out rightParticlesActive, rightParticles, out leftParticlesActive, leftParticles, out driftInitiated, boostImmediateForce, driftThrottleUpperThreshold, driftThrottleLowerThreshold, out maxRotationAngle, out maxDriftingTime, out maxBoosterTime, out maxBoosterMultiplier, boosterTime, boosterMultiplier, rotationAngle, driftingRotationAngle, driftingTime);
+    //    if (isDrifting && isGrounded && kartRB.linearVelocity.magnitude > driftThrottleUpperThreshold)
+    //    {
+    //        driftInitiated = true;
+    //    }
 
-        if (!isGrounded || kartRB.linearVelocity.magnitude < driftThrottleLowerThreshold)
-        {
-            maxRotationAngle = rotationAngle;
-            maxDriftingTime = driftingTime;
+    //    if (!isGrounded || kartRB.linearVelocity.magnitude < driftThrottleLowerThreshold)
+    //    {
+    //        maxRotationAngle = rotationAngle;
+    //        maxDriftingTime = driftingTime;
 
-            driftInitiated = false;
+    //        driftInitiated = false;
 
-            rightParticlesActive = false;
-            leftParticlesActive = false;
-        }
+    //        rightParticlesActive = false;
+    //        leftParticlesActive = false;
+    //    }
 
-        if (driftBoostActive && !isDrifting)
-        {
-            //APPLY DRIFT BOOST
-            //ApplyDriftBoost();
-            ApplyDriftBoost(kartRB, boostImmediateForce * 0.8f, 0.8f, out boostActive, out driftBoostActive, out maxBoosterTime, out maxBoosterMultiplier, boosterTime, boosterMultiplier);
-            exhaustVFXActive = boostActive;
+    //    if (driftBoostActive && !isDrifting)
+    //    {
+    //        ApplyDriftBoost(kartRB, boostImmediateForce * 0.8f, 0.8f, out boostActive, out driftBoostActive, out maxBoosterTime, out maxBoosterMultiplier, boosterTime, boosterMultiplier);
+    //        exhaustVFXActive = boostActive;
 
-            maxRotationAngle = rotationAngle;
-            maxDriftingTime = driftingTime;
+    //        maxRotationAngle = rotationAngle;
+    //        maxDriftingTime = driftingTime;
 
-            driftInitiated = false;
+    //        driftInitiated = false;
 
-            rightParticlesActive = false;
-            leftParticlesActive = false;
-        }
+    //        rightParticlesActive = false;
+    //        leftParticlesActive = false;
+    //    }
 
-        if (driftInitiated)
-        {
-            maxRotationAngle = driftingRotationAngle;
+    //    if (driftInitiated)
+    //    {
+    //        maxRotationAngle = driftingRotationAngle;
 
-            if (move.x == 0f)
-            {
-                maxRotationAngle = rotationAngle;
-                maxDriftingTime = driftingTime;
+    //        if (move.x == 0f)
+    //        {
+    //            maxRotationAngle = rotationAngle;
+    //            maxDriftingTime = driftingTime;
 
-                driftInitiated = false;
+    //            driftInitiated = false;
 
-                rightParticlesActive = false;
-                leftParticlesActive = false;
-            }
-            else if (move.x > 0f)
-            {
-                rightParticlesActive = true;
-                leftParticlesActive = false;
-            }
-            else if (move.x < 0f)
-            {
-                rightParticlesActive = false;
-                leftParticlesActive = true;
-            }
-        }
-    }
+    //            rightParticlesActive = false;
+    //            leftParticlesActive = false;
+    //        }
+    //        else if (move.x > 0f)
+    //        {
+    //            rightParticlesActive = true;
+    //            leftParticlesActive = false;
+    //        }
+    //        else if (move.x < 0f)
+    //        {
+    //            rightParticlesActive = false;
+    //            leftParticlesActive = true;
+    //        }
+    //    }
+    //}
 
     public override void ApplyDriftBoost(Rigidbody kartRB, float boostImmediateForce, float boostTimeMultiplier, out bool boostActive, out bool driftBoostActive, out float maxBoosterTime, out float maxBoosterMultiplier, float boosterTime, float boosterMultiplier)
     {

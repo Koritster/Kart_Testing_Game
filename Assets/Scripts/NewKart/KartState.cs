@@ -4,25 +4,23 @@ public class KartState
 {
     public virtual void ApplyThrottle(Rigidbody kartRB, bool isThrottling, bool isGrounded, bool isDrifting, bool isReversing, float maxForce, float maxTurnForce, float reverseForce, float airMultiplier, float targetSpeed, float maxBoosterMultiplier, float accelerationRate, float maxTurnCounterForce) { }
 
-    public virtual void ApplyReverse(Rigidbody kartRB, bool isReversing, bool isGrounded, float reverseForce, float airMultiplier, float maxBoosterMultiplier, float accelerationRate) { }
+    public virtual void ApplyReverse(Rigidbody kartRB, bool isReversing, bool isGrounded, float reverseForce, float airMultiplier, float targetSpeed, float maxBoosterMultiplier, float accelerationRate) { }
 
     public virtual void ApplyRotation(Rigidbody kartRB, Vector3 centerOfMass, Vector3 input, float raycastDistance, float rotationForce, LayerMask raycastLayers) { }
 
-    public virtual void ApplyDrift(Rigidbody kartRB, Vector2 move, bool isDrifting, bool isGrounded, bool boostActive, bool driftBoostActive, out bool exhaustVFXActive, out bool rightParticlesActive, out bool leftParticlesActive, out bool driftInitiated, float boostImmediateForce, float driftThrottleUpperThreshold, float driftThrottleLowerThreshold, out float maxRotationAngle, out float maxDriftingTime, out float maxBoosterTime, out float maxBoosterMultiplier, float boosterTime, float boosterMultiplier, float rotationAngle, float driftingRotationAngle, float driftingTime)
+    public virtual void ApplyDrift(Rigidbody kartRB, Vector2 move, bool isDrifting, bool isGrounded, bool boostActive, bool driftBoostActive, out bool exhaustVFXActive, bool exhaustVFX, out bool rightParticlesActive, bool rightParticles, out bool leftParticlesActive, bool leftParticles, out bool driftInitiated, float boostImmediateForce, float driftThrottleUpperThreshold, float driftThrottleLowerThreshold, out float maxRotationAngle, out float maxDriftingTime, out float maxBoosterTime, out float maxBoosterMultiplier, float boosterTime, float boosterMultiplier, float rotationAngle, float driftingRotationAngle, float driftingTime)
     {
         maxRotationAngle = rotationAngle;
         maxDriftingTime = driftingTime;
-        boostActive = false;
         driftBoostActive = false;
         isGrounded = false;
         driftInitiated = false;
-        exhaustVFXActive = false;
-        rightParticlesActive = false;
-        leftParticlesActive = false;
+        exhaustVFXActive = exhaustVFX;
+        rightParticlesActive = rightParticles;
+        leftParticlesActive = leftParticles;
         maxBoosterTime = boosterTime;
         maxBoosterMultiplier = boosterMultiplier;
         boostActive = false;
-        exhaustVFXActive = false;
     }
 
     public virtual void ApplyTrackGravity(Rigidbody kartRB, Vector3 centerOfMass, float raycastDistance, float gravityConstant, LayerMask layerMask)

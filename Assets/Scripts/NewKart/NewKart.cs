@@ -85,9 +85,11 @@ public class NewKart : NetworkBehaviour
     public virtual void FixedUpdate()
     {
         stateMachine.currentState.ApplyThrottle(m_Rigidbody, throttle, isGrounded, driftInitiated, reverse, m_MaxForce, m_MaxTurnForce, m_ReverseForce, m_AirMultiplier, m_TargetSpeed, m_MaxBoosterMultiplier, m_AccelerationRate, m_MaxTurnCounterForce);
+        stateMachine.currentState.ApplyReverse(m_Rigidbody, reverse, isGrounded, m_ReverseForce, m_AirMultiplier, m_TargetSpeed, m_MaxBoosterMultiplier, m_AccelerationRate);
         stateMachine.currentState.ApplyRotation(m_Rigidbody, centerOfMass.position, m_Input, m_RaycastDistance, m_RotationForce, raycastLayers);
         stateMachine.currentState.ApplyTrackGravity(m_Rigidbody, centerOfMass.position, m_RaycastDistance, m_GravityConstant, raycastLayers);
-        //stateMachine.currentState.ApplyDrift(m_Rigidbody, move, drift, isGrounded, boostActive, driftBoostActive, out exhaustVFXActive, out rightParticlesActive, out leftParticlesActive, out driftInitiated, m_BoostImmediateForce, m_DriftThrottleUpperThreshold, m_DriftThrottleLowerThreshold, out m_MaxRotationAngle, out m_MaxDriftingTime, out m_MaxBoosterTime, out m_MaxBoosterMultiplier, m_BoosterTime, m_BoosterMultiplier, m_RotationAngle, m_DriftingRotationAngle, m_DriftingTime);
+        //stateMachine.currentState.ApplyDrift(m_Rigidbody, move, drift, isGrounded, boostActive, driftBoostActive, out exhaustVFXActive, exhaustVFXActive, out rightParticlesActive, rightParticlesActive, out leftParticlesActive, leftParticlesActive, out driftInitiated, m_BoostImmediateForce, m_DriftThrottleUpperThreshold, m_DriftThrottleLowerThreshold, out m_MaxRotationAngle, out m_MaxDriftingTime, out m_MaxBoosterTime, out m_MaxBoosterMultiplier, m_BoosterTime, m_BoosterMultiplier, m_RotationAngle, m_DriftingRotationAngle, m_DriftingTime);
+        if(stateMachine.currentState == throttleKartState)
         ApplyDrift();
         ShowParticleEffects(exhaustVFXActive, rightParticlesActive, leftParticlesActive);
     }
@@ -197,7 +199,6 @@ public class NewKart : NetworkBehaviour
         if (driftBoostActive && !drift)
         {
             //APPLY DRIFT BOOST
-            //ApplyDriftBoost();
             stateMachine.currentState.ApplyDriftBoost(m_Rigidbody, m_BoostImmediateForce * 0.8f, 0.8f, out boostActive, out driftBoostActive, out m_MaxBoosterTime, out m_MaxBoosterMultiplier, m_BoosterTime, m_BoosterMultiplier);
             exhaustVFXActive = boostActive;
 
