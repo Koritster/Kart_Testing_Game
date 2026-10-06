@@ -19,6 +19,8 @@ public class NewKart : NetworkBehaviour
     NetworkVariableReadPermission.Everyone,
     NetworkVariableWritePermission.Server);
 
+    public KartStateMachine stateMachine {  get; private set; }
+
     RaycastHit hit;
     bool boostActive, isGrounded, groundBoostActive, driftBoostActive, driftInitiated, exhaustVFXActive, rightParticlesActive, leftParticlesActive;
 
@@ -28,7 +30,6 @@ public class NewKart : NetworkBehaviour
     protected bool throttle, reverse, drift;
     protected float m_MaxForce, m_MaxTurnForce, m_MaxTurnCounterForce, m_MaxDriftingTime, m_MaxBoosterTime, m_MaxBoosterMultiplier, m_MaxRotationAngle;
 
-    protected KartStateMachine stateMachine;
     protected InitialKartState initialKartState;
     protected DriveKartState driveKartState;
     protected ThrottleKartState throttleKartState;
@@ -115,7 +116,7 @@ public class NewKart : NetworkBehaviour
         m_MaxBoosterMultiplier = 1;
 
         stateMachine = new KartStateMachine(initialKartState);
-        stateMachine.ChangeState(throttleKartState);
+        stateMachine.ChangeState(driveKartState);
     }
 
     protected virtual void CalculateMoveInput() { }

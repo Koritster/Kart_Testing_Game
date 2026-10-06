@@ -71,6 +71,9 @@ public class PlayerKart : NewKart
         if (!IsOwner) return;
 #endif
 
+        if (stateMachine.currentState == initialKartState)
+            return;
+
         if (context.performed)
         {
             throttle = false;
@@ -86,9 +89,14 @@ public class PlayerKart : NewKart
         if (!IsOwner) return;
 #endif
 
+        if (stateMachine.currentState == initialKartState)
+            return;
+
         if (context.canceled)
         {
             reverse = false;
+
+            stateMachine.ChangeState(driveKartState);
         }
     }
 
@@ -97,6 +105,9 @@ public class PlayerKart : NewKart
 #if DEBUG_FEATURE
         if (!IsOwner) return;
 #endif
+
+        if (stateMachine.currentState == initialKartState)
+            return;
 
         if (context.performed)
         {
@@ -113,9 +124,14 @@ public class PlayerKart : NewKart
         if (!IsOwner) return;
 #endif
 
+        if (stateMachine.currentState == initialKartState)
+            return;
+
         if (context.canceled)
         {
             throttle = false;
+
+            stateMachine.ChangeState(driveKartState);
         }
     }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
@@ -11,6 +12,12 @@ public class PositionsManager : NetworkBehaviour
         NetworkVariableWritePermission.Server);
 
     [SerializeField] private List<RaceCheckpoint> checkpoints;
+
+    //HERI
+    [SerializeField]
+    private float fallLimitYValue = -100f;
+    public StateMachineManager stateMachineManager { get; private set; }
+    //HERI
 
     List<NewKart> karts = new List<NewKart>();
     bool tie;
@@ -30,13 +37,17 @@ public class PositionsManager : NetworkBehaviour
 
     private void Start()
     {
-        
+        //HERI
+        stateMachineManager = new StateMachineManager(checkpoints.ToArray());
+
+        Transform checkpointParent = GameObject.Find("Checkpoints").transform;
+        //HERI
     }
 
     void Update()
     {
         if (!IsServer) return;
-        if(!started.Value) return;
+        if (!started.Value) return;
 
         //Calcular posiciones
         if (tie)
@@ -45,6 +56,9 @@ public class PositionsManager : NetworkBehaviour
         }
         //karts.Sort((a, b) => b.trackProgress.Value.CompareTo(a.trackProgress.Value));
 
+        //HERI
+        stateMachineManager.CheckForFallenKarts(karts.ToArray(), fallLimitYValue);
+        //HERI
     }
 
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Server)]

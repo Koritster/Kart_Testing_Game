@@ -7,6 +7,7 @@ public class KartStateMachine
 
     public KartStateMachine(KartState state)
     {
+        previousState = null;
         currentState = state;
     }
 
