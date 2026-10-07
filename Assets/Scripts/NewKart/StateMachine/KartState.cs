@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class KartState
 {
+    public virtual void ApplyZeroVelocity(Rigidbody kartRB)
+    {
+        kartRB.linearVelocity = Vector3.zero;
+    }
+
     public virtual void ApplyThrottle(Rigidbody kartRB, bool isThrottling, bool isGrounded, bool isDrifting, bool isReversing, float maxForce, float maxTurnForce, float reverseForce, float airMultiplier, float targetSpeed, float maxBoosterMultiplier, float accelerationRate, float maxTurnCounterForce) { }
 
     public virtual void ApplyReverse(Rigidbody kartRB, bool isReversing, bool isGrounded, float reverseForce, float airMultiplier, float targetSpeed, float maxBoosterMultiplier, float accelerationRate) { }
@@ -47,5 +52,11 @@ public class KartState
     {
         ApplyBoost(kartRB, boostImmediateForce, boostTimeMultiplier, out boostActive, out maxBoosterTime, out maxBoosterMultiplier, boosterTime, boosterMultiplier);
         driftBoostActive = true;
+    }
+
+    public virtual bool CheckIfKartIsStuck(Rigidbody kartRB, bool isThrottling, float stuckTime, out float maxStuckTime, float currentStuckTime, float targetSpeed)
+    {
+        maxStuckTime = currentStuckTime;
+        return false;
     }
 }

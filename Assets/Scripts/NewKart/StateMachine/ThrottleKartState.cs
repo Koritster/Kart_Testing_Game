@@ -98,4 +98,20 @@ public class ThrottleKartState : DriveKartState
         base.ApplyDriftBoost(kartRB, boostImmediateForce, boostTimeMultiplier, out boostActive, out driftBoostActive, out maxBoosterTime, out maxBoosterMultiplier, boosterTime, boosterMultiplier);
         driftBoostActive = false;
     }
+
+    public override bool CheckIfKartIsStuck(Rigidbody kartRB, bool isThrottling, float stuckTime, out float maxStuckTime, float currentStuckTime, float targetSpeed)
+    {
+        if (kartRB.linearVelocity.magnitude < targetSpeed * 0.5f && isThrottling)
+        {
+            if (currentStuckTime > 0)
+                maxStuckTime = currentStuckTime;
+            else
+                maxStuckTime = stuckTime;
+            return true;
+        }
+        else
+        {
+            return base.CheckIfKartIsStuck(kartRB, isThrottling, stuckTime, out maxStuckTime, currentStuckTime, targetSpeed);
+        }
+    }
 }

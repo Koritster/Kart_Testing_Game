@@ -49,6 +49,10 @@ public class PlayerKart : NewKart
 
     protected override void CalculateMoveInput()
     {
+#if DEBUG_FEATURE
+        if (!IsOwner) return;
+#endif
+
         base.CalculateMoveInput();
 
         float angleLimit = Mathf.Clamp(Mathf.Atan2(move.x, move.y) * Mathf.Rad2Deg, -m_MaxRotationAngle, m_MaxRotationAngle);

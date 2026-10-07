@@ -18,9 +18,15 @@ public class StateMachineManager
             if(karts[i].transform.position.y <= fallLimitYValue)
             {
                 //Debug.Log("ENTERS HERE");
-                karts[i].transform.position = raceCheckpoints[karts[i].actualCheckpoint.Value].transform.position;
-                karts[i].transform.forward = raceCheckpoints[karts[i].actualCheckpoint.Value].transform.forward;
+                RespawnKart(karts[i]);
+                //karts[i].transform.forward = raceCheckpoints[karts[i].actualCheckpoint.Value].transform.forward;
             }
         }
+    }
+
+    public void RespawnKart(NewKart kart)
+    {
+        kart.stateMachine.currentState.ApplyZeroVelocity(kart.m_Rigidbody);
+        kart.transform.position = raceCheckpoints[kart.actualCheckpoint.Value].transform.position;
     }
 }

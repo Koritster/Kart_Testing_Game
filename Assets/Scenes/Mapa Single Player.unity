@@ -12711,12 +12711,14 @@ MonoBehaviour:
   m_AirMultiplier: 0.5
   m_DriftThrottleUpperThreshold: 10
   m_DriftThrottleLowerThreshold: 8
+  m_StuckTime: 3
   actualTrackTarget: 0
   targetDistanceThreshold: 10
   obstacleAvoidanceDistance: 5
   obstacleAvoidanceForce: 1
   maxDriftTimer: 2
   checkDriftAngle: 30
+  unstuckKartTime: 1
 --- !u!114 &461657510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22175,6 +22177,7 @@ MonoBehaviour:
   - {fileID: 1557114805}
   - {fileID: 732952465}
   - {fileID: 1681388858}
+  fallLimitYValue: -50
 --- !u!4 &977542525
 Transform:
   m_ObjectHideFlags: 0
@@ -23299,7 +23302,7 @@ Transform:
   m_GameObject: {fileID: 1134816724}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -153, y: 0, z: 5}
+  m_LocalPosition: {x: -192, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -32997,12 +33000,14 @@ MonoBehaviour:
   m_AirMultiplier: 0.5
   m_DriftThrottleUpperThreshold: 10
   m_DriftThrottleLowerThreshold: 8
+  m_StuckTime: 3
   actualTrackTarget: 0
   targetDistanceThreshold: 10
   obstacleAvoidanceDistance: 5
   obstacleAvoidanceForce: 1
   maxDriftTimer: 2
   checkDriftAngle: 30
+  unstuckKartTime: 1
 --- !u!114 &1537583188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34754,7 +34759,7 @@ Transform:
   m_GameObject: {fileID: 1682830586}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -77, y: 0, z: 5}
+  m_LocalPosition: {x: -90, y: 0, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -70123,12 +70128,14 @@ MonoBehaviour:
   m_AirMultiplier: 0.5
   m_DriftThrottleUpperThreshold: 10
   m_DriftThrottleLowerThreshold: 8
+  m_StuckTime: 3
   actualTrackTarget: 0
   targetDistanceThreshold: 10
   obstacleAvoidanceDistance: 5
   obstacleAvoidanceForce: 1
   maxDriftTimer: 2
   checkDriftAngle: 30
+  unstuckKartTime: 1
 --- !u!1001 &9057546649203157497
 PrefabInstance:
   m_ObjectHideFlags: 0

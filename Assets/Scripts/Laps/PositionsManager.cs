@@ -1,3 +1,4 @@
+//#define DEBUG_FEATURE
 using System;
 using System.Collections.Generic;
 using Unity.Netcode;
@@ -46,8 +47,10 @@ public class PositionsManager : NetworkBehaviour
 
     void Update()
     {
-        if (!IsServer) return;
+#if DEBUG_FEATURE
+if (!IsServer) return;
         if (!started.Value) return;
+#endif
 
         //Calcular posiciones
         if (tie)

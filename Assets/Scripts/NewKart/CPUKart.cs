@@ -1,5 +1,7 @@
+//#define DEBUG_FEATURE
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.Switch;
 
 public class CPUKart : NewKart
 {
@@ -9,10 +11,12 @@ public class CPUKart : NewKart
     public float obstacleAvoidanceForce = 1f;
     public float maxDriftTimer = 1f;
     public float checkDriftAngle = 30f;
+    public float unstuckKartTime = 1f;
 
     private Transform targetsParent;
     private Transform trackTargetTransform;
     private Vector3 directionToTrackTarget;
+    private Vector3 avoidance;
     private float driftTimer, angleToDrift;
 
     protected virtual void OnEnable()
@@ -30,22 +34,34 @@ public class CPUKart : NewKart
         base.Start();
 
         //DEBUG 
-        //throttle = true;
+        stateMachine.ChangeState(throttleKartState);
     }
 
     public override void Update()
     {
+        avoidance = ObstacleAvoidance();
         base.Update();
 
-        Throttle();
-        Break();
-        CalculateTrackTargetDirection();
-        CalculateTrackTargetDistance();
+        if(stateMachine.currentState == throttleKartState)
+        {
+            Throttle();
+            Break();
+            CalculateTrackTargetDirection();
+            CalculateTrackTargetDistance();
+        }
+
+        if(stateMachine.currentState == reverseKartState)
+        {
+            Reverse();
+        }
 
         if (driftTimer > 0)
             ReduceDriftCooldown();
         else
             CheckIfDrift();
+
+        if (kartStuck && m_MaxStuckTime <= 0)
+            PositionsManager.instance.stateMachineManager.RespawnKart(this);
     }
 
     protected override void InitializeKart()
@@ -62,9 +78,12 @@ public class CPUKart : NewKart
     //DEBUGGING, MAY CHANGE LATER
     protected override void CalculateMoveInput()
     {
+#if DEBUG_FEATURE
+        if (!IsOwner) return;
+#endif
+
         base.CalculateMoveInput();
 
-        Vector3 avoidance = ObstacleAvoidance();
         m_Input = new Vector3(directionToTrackTarget.x, 0f, directionToTrackTarget.z);
         m_Input += new Vector3(avoidance.x, 0f, avoidance.z);
         if(driftTimer <= 0)
@@ -80,6 +99,10 @@ public class CPUKart : NewKart
 
     private void CheckIfDrift()
     {
+#if DEBUG_FEATURE
+        if (!IsOwner) return;
+#endif
+
         angleToDrift = Vector3.Angle(directionToTrackTarget, m_Rigidbody.transform.forward);
         if (angleToDrift > checkDriftAngle)
         {
@@ -92,6 +115,10 @@ public class CPUKart : NewKart
 
     private void Throttle()
     {
+#if DEBUG_FEATURE
+        if (!IsOwner) return;
+#endif
+
         if (m_Rigidbody.linearVelocity.magnitude > m_TargetSpeed && angleToDrift > checkDriftAngle)
             throttle = false;
         else
@@ -100,11 +127,24 @@ public class CPUKart : NewKart
 
     private void Break()
     {
+#if DEBUG_FEATURE
+        if (!IsOwner) return;
+#endif
+
         if (m_Rigidbody.linearVelocity.magnitude > m_TargetSpeed && angleToDrift > checkDriftAngle * 0.5f)
             reverse = true;
 
         if (angleToDrift < checkDriftAngle)
             reverse = false;
+    }
+
+    private void Reverse()
+    {
+#if DEBUG_FEATURE
+        if (!IsOwner) return;
+#endif
+
+        reverse = true;
     }
 
     private Vector3 AvoidanceForce(Vector3 v)
