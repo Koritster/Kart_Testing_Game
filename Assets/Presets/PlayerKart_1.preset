@@ -6,7 +6,7 @@ Preset:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PlayerKart
+  m_Name: PlayerKart_1
   m_TargetType:
     m_NativeTypeID: 114
     m_ManagedTypePPtr: {fileID: 11500000, guid: 0fa8aab2a0f81924c88ba141d2258295, type: 3}
@@ -139,6 +139,10 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_DriftThrottleLowerThreshold
     value: 8
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_StuckTime
+    value: 5
     objectReference: {fileID: 0}
   m_ExcludedProperties: []
   m_CoupledType:
