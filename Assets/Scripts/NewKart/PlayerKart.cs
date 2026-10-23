@@ -1,3 +1,5 @@
+//#define DEBUG_FEATURE
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,6 +45,15 @@ public class PlayerKart : NewKart
     public override void Update()
     {
         base.Update();
+    }
+
+    protected override void CalculateMoveInput()
+    {
+#if DEBUG_FEATURE
+        if (!IsOwner) return;
+#endif
+
+        base.CalculateMoveInput();
 
         float angleLimit = Mathf.Clamp(Mathf.Atan2(move.x, move.y) * Mathf.Rad2Deg, -m_MaxRotationAngle, m_MaxRotationAngle);
         float targetAngle = angleLimit + Camera.main.transform.eulerAngles.y;
@@ -51,57 +62,89 @@ public class PlayerKart : NewKart
 
     public void OnMove(InputAction.CallbackContext context)
     {
+#if DEBUG_FEATURE
         if (!IsOwner) return;
+#endif
 
         move = context.ReadValue<Vector2>();
     }
 
     public void OnReverse(InputAction.CallbackContext context)
     {
+#if DEBUG_FEATURE
         if (!IsOwner) return;
-     
+#endif
+
+        if (stateMachine.currentState == initialKartState)
+            return;
+
         if (context.performed)
         {
             throttle = false;
             reverse = true;
+
+            stateMachine.ChangeState(reverseKartState);
         }
     }
 
     public void OnStopReverse(InputAction.CallbackContext context)
     {
+#if DEBUG_FEATURE
         if (!IsOwner) return;
-       
+#endif
+
+        if (stateMachine.currentState == initialKartState)
+            return;
+
         if (context.canceled)
         {
             reverse = false;
+
+            stateMachine.ChangeState(driveKartState);
         }
     }
 
     public void OnThrottle(InputAction.CallbackContext context)
     {
+#if DEBUG_FEATURE
         if (!IsOwner) return;
-        
+#endif
+
+        if (stateMachine.currentState == initialKartState)
+            return;
+
         if (context.performed)
         {
             throttle = true;
             reverse = false;
+
+            stateMachine.ChangeState(throttleKartState);
         }
     }
 
     public void OnStopThrottle(InputAction.CallbackContext context)
     {
+#if DEBUG_FEATURE
         if (!IsOwner) return;
-        
+#endif
+
+        if (stateMachine.currentState == initialKartState)
+            return;
+
         if (context.canceled)
         {
             throttle = false;
+
+            stateMachine.ChangeState(driveKartState);
         }
     }
 
     public void OnDrift(InputAction.CallbackContext context)
     {
+#if DEBUG_FEATURE
         if (!IsOwner) return;
-        
+#endif
+
         if (context.performed)
         {
             drift = true;
@@ -110,8 +153,10 @@ public class PlayerKart : NewKart
 
     public void OnStopDrift(InputAction.CallbackContext context)
     {
+#if DEBUG_FEATURE
         if (!IsOwner) return;
-        
+#endif
+
         if (context.canceled)
         {
             drift = false;

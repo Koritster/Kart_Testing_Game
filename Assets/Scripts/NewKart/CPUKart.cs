@@ -1,0 +1,197 @@
+//#define DEBUG_FEATURE
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.InputSystem.Switch;
+
+public class CPUKart : NewKart
+{
+    public int actualTrackTarget;
+    public float targetDistanceThreshold = 1.0f;
+    public float obstacleAvoidanceDistance = 5f;
+    public float obstacleAvoidanceForce = 1f;
+    public float maxDriftTimer = 1f;
+    public float checkDriftAngle = 30f;
+    public float unstuckKartTime = 1f;
+
+    private Transform targetsParent;
+    private Transform trackTargetTransform;
+    private Vector3 directionToTrackTarget;
+    private Vector3 avoidance;
+    private float driftTimer, angleToDrift;
+
+    protected virtual void OnEnable()
+    {
+
+    }
+
+    protected virtual void OnDisable()
+    {
+
+    }
+
+    public override void Start()
+    {
+        base.Start();
+
+        //DEBUG 
+        stateMachine.ChangeState(throttleKartState);
+    }
+
+    public override void Update()
+    {
+        avoidance = ObstacleAvoidance();
+        base.Update();
+
+        if(stateMachine.currentState == throttleKartState)
+        {
+            Throttle();
+            Break();
+            CalculateTrackTargetDirection();
+            CalculateTrackTargetDistance();
+        }
+
+        if(stateMachine.currentState == reverseKartState)
+        {
+            Reverse();
+        }
+
+        if (driftTimer > 0)
+            ReduceDriftCooldown();
+        else
+            CheckIfDrift();
+
+        if (kartStuck && m_MaxStuckTime <= 0)
+            PositionsManager.instance.stateMachineManager.RespawnKart(this);
+    }
+
+    protected override void InitializeKart()
+    {
+        base.InitializeKart();
+
+        targetsParent = GameObject.Find("CPUTargets").transform;
+        actualTrackTarget = 0;
+        directionToTrackTarget = Vector3.zero;
+        driftTimer = 0;
+        FindNextTrackTargetTransform();
+    }
+
+    //DEBUGGING, MAY CHANGE LATER
+    protected override void CalculateMoveInput()
+    {
+#if DEBUG_FEATURE
+        if (!IsOwner) return;
+#endif
+
+        base.CalculateMoveInput();
+
+        m_Input = new Vector3(directionToTrackTarget.x, 0f, directionToTrackTarget.z);
+        m_Input += new Vector3(avoidance.x, 0f, avoidance.z);
+        if(driftTimer <= 0)
+        {
+            move.x = Vector3.Angle(m_Input, m_Rigidbody.transform.right) < 90 ? 1 : -1;
+        }
+    }
+    
+    private void ReduceDriftCooldown()
+    {
+        driftTimer -= Time.deltaTime;
+    }
+
+    private void CheckIfDrift()
+    {
+#if DEBUG_FEATURE
+        if (!IsOwner) return;
+#endif
+
+        angleToDrift = Vector3.Angle(directionToTrackTarget, m_Rigidbody.transform.forward);
+        if (angleToDrift > checkDriftAngle)
+        {
+            driftTimer = Time.deltaTime;
+            drift = true;
+        }
+        else 
+            drift = false;
+    }
+
+    private void Throttle()
+    {
+#if DEBUG_FEATURE
+        if (!IsOwner) return;
+#endif
+
+        if (m_Rigidbody.linearVelocity.magnitude > m_TargetSpeed && angleToDrift > checkDriftAngle)
+            throttle = false;
+        else
+            throttle = true;
+    }
+
+    private void Break()
+    {
+#if DEBUG_FEATURE
+        if (!IsOwner) return;
+#endif
+
+        if (m_Rigidbody.linearVelocity.magnitude > m_TargetSpeed && angleToDrift > checkDriftAngle * 0.5f)
+            reverse = true;
+
+        if (angleToDrift < checkDriftAngle)
+            reverse = false;
+    }
+
+    private void Reverse()
+    {
+#if DEBUG_FEATURE
+        if (!IsOwner) return;
+#endif
+
+        reverse = true;
+    }
+
+    private Vector3 AvoidanceForce(Vector3 v)
+    {
+        return (m_Rigidbody.linearVelocity - v).normalized;
+    }
+
+    private Vector3 ObstacleAvoidance()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(m_Rigidbody.transform.position, m_Rigidbody.transform.forward, out hit, obstacleAvoidanceDistance))
+            return AvoidanceForce(hit.transform.position) * obstacleAvoidanceForce;
+        else
+            return Vector3.zero;
+    }
+
+    private void CalculateTrackTargetDirection()
+    {
+        directionToTrackTarget = trackTargetTransform.position - m_Rigidbody.transform.position;
+        directionToTrackTarget.Normalize();
+    }
+
+    private void CalculateTrackTargetDistance()
+    {
+        float distance = Vector3.Distance(m_Rigidbody.transform.position, trackTargetTransform.position);
+        if(distance < targetDistanceThreshold)
+        {
+            FindNextTrackTargetTransform();
+        }
+    }
+
+    private void FindNextTrackTargetTransform()
+    {
+        CPUTrackTarget[] targets = targetsParent.GetComponentsInChildren<CPUTrackTarget>();
+        foreach (var target in targets)
+        {
+            int i = target.index;
+            if(i == actualTrackTarget)
+            {
+                if(target.weight == 100)
+                {
+                    trackTargetTransform = target.transform;
+                    actualTrackTarget++;
+                    return;
+                }
+            }
+        }
+        actualTrackTarget = 0;
+    }
+}
