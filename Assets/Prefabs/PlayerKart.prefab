@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4723351243171593148}
   - component: {fileID: 3701528744009429408}
   - component: {fileID: 6632557167368436284}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: NameCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,7 +111,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1832342416726433274}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: VisualModelCar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 7670803014657530935}
   - component: {fileID: 3179247565695741951}
   - component: {fileID: 5024747474666834000}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -247,7 +247,7 @@ GameObject:
   - component: {fileID: 2623656131723225889}
   - component: {fileID: 7558401257481065263}
   - component: {fileID: 3047029740956820844}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ItemIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -322,7 +322,7 @@ GameObject:
   - component: {fileID: 4870126665788330033}
   - component: {fileID: 754664803064185891}
   - component: {fileID: 2672395703064372272}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PositionsTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -463,7 +463,7 @@ GameObject:
   - component: {fileID: 23733888395508180}
   - component: {fileID: 5865557541037843977}
   - component: {fileID: 3532242226702872334}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerKart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -532,7 +532,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 4219478514
+  GlobalObjectIdHash: 2522855888
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -559,10 +559,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CarController
   ShowTopMostFoldoutHeaderGroup: 1
   m_MarkerPosition: {fileID: 100325923224649179}
-  trackProgress:
+  laps:
     m_InternalValue: 0
-  lap: 0
-  checkpointIndex: 0
+  actualCheckpoint:
+    m_InternalValue: 0
+  Position:
+    m_InternalValue: 0
   m_Cam: {fileID: 7735321072130867920}
   speed: 20000
   maxAcel: 25
@@ -841,7 +843,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1639562464398335733}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GroundChk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -872,7 +874,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 100325923224649179}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MarkerTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -906,7 +908,7 @@ GameObject:
   - component: {fileID: 4585521838053145655}
   - component: {fileID: 4623016552000030708}
   - component: {fileID: 5471016135959936254}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1040,7 +1042,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4759035343831026531}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ShieldTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1073,7 +1075,7 @@ GameObject:
   - component: {fileID: 1675414353544218491}
   - component: {fileID: 4058560406413802688}
   - component: {fileID: 3329457920869262644}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1207,7 +1209,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6772610845970724388}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ShootingTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -5,4 +5,5 @@ public class CarModel : ScriptableObject
 {
     public GameObject carVisual;
     public Sprite carIcon;
+    public Material carIconMinimap;
 }

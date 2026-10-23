@@ -8,6 +8,7 @@ using Unity.Services.Multiplayer;
 using TMPro;
 using Unity.Netcode;
 using Unity.Collections;
+using UnityEngine.SceneManagement;
 
 public class Session : MonoBehaviour
 {
@@ -43,7 +44,7 @@ public class Session : MonoBehaviour
     [Header("Start Game")]
     [SerializeField] private GameObject m_StartGameBtn;
 
-    private IList<GameObject> playersConnectedInstances = new List<GameObject>();
+    [SerializeField] private IList<GameObject> playersConnectedInstances = new List<GameObject>();
 
     private void Awake()
     {
@@ -56,6 +57,8 @@ public class Session : MonoBehaviour
             Destroy(Instance);
             Instance = this;
         }
+
+        DontDestroyOnLoad(gameObject);
     }
 
     async void Start()
@@ -212,12 +215,15 @@ public class Session : MonoBehaviour
 
         Debug.Log($"Session {actualSession.Id} created! Join code: {actualSession.Code}");
 
+        NetworkManager.Singleton.SceneManager.LoadScene("MapaCambio", LoadSceneMode.Single);
+
         m_LobbiesPanel.SetActive(false);
         m_SessionJoinedPanel.SetActive(true);
 
         m_StartGameBtn.SetActive(true);
 
         actualSession.PlayerJoined += PlayerJoinedSession;
+        actualSession.PlayerLeaving += PlayerLeftSession;
 
         RefreshPlayersOnSession(actualSession);
     }
@@ -266,6 +272,7 @@ public class Session : MonoBehaviour
         actualSession = await MultiplayerService.Instance.JoinSessionByIdAsync(sessionId, options);
 
         actualSession.PlayerJoined += PlayerJoinedSession;
+        actualSession.PlayerLeaving += PlayerLeftSession;
 
         m_LobbiesPanel.SetActive(false);
         m_SessionJoinedPanel.SetActive(true);
@@ -318,6 +325,30 @@ public class Session : MonoBehaviour
         }
 
         RefreshPlayersOnSession(actualSession);
+    }
+
+    private void PlayerLeftSession(string m_PlayerId)
+    {
+        Debug.Log($"Player {m_PlayerId} has quitted");
+
+        GameObject objectToRemove = null;
+
+        foreach(var playerUI in playersConnectedInstances)
+        {
+            if (playerUI == null)
+                continue;
+
+            PlayerLobby playerLobby = playerUI.GetComponent<PlayerLobby>();
+
+            if(playerLobby.GetId() == m_PlayerId)
+            {
+                objectToRemove = playerUI;
+                break;
+            }
+        }
+
+        Destroy(objectToRemove);
+        playersConnectedInstances.Remove(objectToRemove);
     }
 
     void OnClientConnected(ulong clientId)

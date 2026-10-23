@@ -1,5 +1,111 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2541684845538299636
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1500327050134479927}
+  - component: {fileID: 5395997094475150082}
+  m_Layer: 7
+  m_Name: paredIzquierda
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1500327050134479927
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2541684845538299636}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.70673287, y: 0.022994243, z: 0.02299425, w: 0.7067328}
+  m_LocalPosition: {x: 0.264, y: -0.642, z: 0.363}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8270217511470860792}
+  m_LocalEulerAnglesHint: {x: 93.72699, y: -90, z: -90}
+--- !u!65 &5395997094475150082
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2541684845538299636}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.045164336, y: 0.32203615, z: 1.0058272}
+  m_Center: {x: -0.35431656, y: -0.33898205, z: -0.67580515}
+--- !u!1 &2733533802947654252
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8145868149942600959}
+  - component: {fileID: 9066651205850763852}
+  m_Layer: 7
+  m_Name: paredDerecha
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8145868149942600959
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2733533802947654252}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.70664316, y: -0.025603604, z: -0.025603604, w: 0.70664304}
+  m_LocalPosition: {x: 0.46, y: -0.69, z: 0.355}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8270217511470860792}
+  m_LocalEulerAnglesHint: {x: 85.85, y: -90, z: -90}
+--- !u!65 &9066651205850763852
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2733533802947654252}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.045164336, y: 0.32203615, z: 1.0058272}
+  m_Center: {x: -0.35431656, y: -0.33898205, z: -0.67580515}
 --- !u!1 &3704706980662641718
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,7 +118,7 @@ GameObject:
   - component: {fileID: 2837763475481140534}
   - component: {fileID: 6305979045121435078}
   - component: {fileID: 7341317220592329079}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: Camino6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,13 +133,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3704706980662641718}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+  m_LocalRotation: {x: -0.7069834, y: 0, z: 0, w: 0.7072302}
   m_LocalPosition: {x: -210.20901, y: 5.5, z: -215.46577}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8145868149942600959}
+  - {fileID: 1500327050134479927}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
 --- !u!33 &2837763475481140534
 MeshFilter:
   m_ObjectHideFlags: 0

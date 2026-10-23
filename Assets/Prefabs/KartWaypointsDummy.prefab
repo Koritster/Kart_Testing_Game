@@ -346,7 +346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3586290455
+  GlobalObjectIdHash: 930871378
   InScenePlacedSourceGlobalObjectIdHash: 3970023852
   DeferredDespawnTick: 0
   Ownership: 1
@@ -474,8 +474,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MoveToWaypoints
   ShowTopMostFoldoutHeaderGroup: 1
   speed: 175
-  currentLap: 0
-  totalLaps: 3
 --- !u!114 &8390072915425280559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -489,6 +487,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KartAIController
   ShowTopMostFoldoutHeaderGroup: 1
+  m_MarkerPosition: {fileID: 0}
+  laps:
+    m_InternalValue: 0
+  actualCheckpoint:
+    m_InternalValue: 0
+  Position:
+    m_InternalValue: 0
   shootingTransform: {fileID: 8325881384938861777}
 --- !u!1 &6121506106559450914
 GameObject:
