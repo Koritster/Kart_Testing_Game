@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "NewKart",
     "maps": [
         {
@@ -36,6 +37,15 @@
                     "name": "Reverse",
                     "type": "Button",
                     "id": "79f36d6b-faea-4efa-bdf6-eb66ec85aca2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UseItems",
+                    "type": "Button",
+                    "id": "098b7834-734d-41d7-81af-d27a95f1b440",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -106,6 +116,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Reverse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "78249cef-932e-44e2-b243-a6d2c7a0d6bb",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseItems",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8c4fe797-49a2-4593-b0dc-1f49d52b8ea3",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseItems",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

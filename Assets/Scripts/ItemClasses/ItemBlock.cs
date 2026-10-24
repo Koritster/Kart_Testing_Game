@@ -14,7 +14,7 @@ public class ItemBlock : MonoBehaviour
 
         if(other.TryGetComponent<NewKartController>(out NewKartController m_Car))
         {
-            //m_Car.ReceiveItem(GetRandomItem());
+            m_Car.ReceiveItem(GetRandomItem());
 
             GetItemBlockServerRpc();
         }
