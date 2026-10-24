@@ -1925,9 +1925,9 @@ GameObject:
   - component: {fileID: 6784735772859011882}
   - component: {fileID: -7923318270349435637}
   - component: {fileID: 4441736576064510811}
-  - component: {fileID: 4877434271813407558}
-  - component: {fileID: 6115277679727672270}
   - component: {fileID: 4770160385763951463}
+  - component: {fileID: 205228780038001051}
+  - component: {fileID: 7083212973928036736}
   m_Layer: 0
   m_Name: ProtoKartv2 network
   m_TagString: Untagged
@@ -2125,7 +2125,12 @@ MonoBehaviour:
   raycastLayers:
     serializedVersion: 2
     m_Bits: 2147483648
+  rightParticles: {fileID: 0}
+  leftParticles: {fileID: 0}
+  exhaustVFX: {fileID: 0}
   m_RaycastDistance: 1
+  m_AccelerationRate: 8
+  m_TargetSpeed: 10
   m_Force: 10
   m_ReverseForce: 8
   m_TurnForce: 10
@@ -2135,11 +2140,14 @@ MonoBehaviour:
   m_GravityConstant: 9.81
   m_RotationAngle: 45
   m_DriftingRotationAngle: 90
+  m_DriftingTime: 1
   m_RotationForce: 5
   m_BoosterTime: 1
   m_BoosterMultiplier: 1.5
+  m_AirMultiplier: 0.5
   m_DriftThrottleUpperThreshold: 10
   m_DriftThrottleLowerThreshold: 10
+  m_StuckTime: 3
   m_PlayerNameTxt: {fileID: 220144219374523701}
   m_PositionTxt: {fileID: 3218376722535432907}
   m_ItemIcon: {fileID: 3400436022586524794}
@@ -2221,7 +2229,7 @@ MonoBehaviour:
         byte0029: 0
   cam: {fileID: 4957525831573528922}
   virtualCam: {fileID: 3126331460264618300}
---- !u!114 &4877434271813407558
+--- !u!114 &4770160385763951463
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2230,9 +2238,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 8751735469305018157}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aabf2282ce5c05945b573a5325ca0824, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ad471a5243487844bfd3fa9e60108dc, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ClientNetworkTransform
+  m_EditorClassIdentifier: Assembly-CSharp::MinimapIcon
+  ShowTopMostFoldoutHeaderGroup: 1
+  icon: {fileID: 8882410412355512929}
+  border: {fileID: 4805828014767943569}
+--- !u!114 &205228780038001051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8751735469305018157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 531ed40d2cf213848a47d74082071388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KartNetworkTransform
   ShowTopMostFoldoutHeaderGroup: 1
   NetworkTransformExpanded: 1
   AutoOwnerAuthorityTickOffset: 1
@@ -2267,7 +2290,7 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &6115277679727672270
+--- !u!114 &7083212973928036736
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2284,21 +2307,6 @@ MonoBehaviour:
   UseRigidBodyForMotion: 0
   AutoUpdateKinematicState: 1
   AutoSetKinematicOnDespawn: 1
---- !u!114 &4770160385763951463
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8751735469305018157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ad471a5243487844bfd3fa9e60108dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MinimapIcon
-  ShowTopMostFoldoutHeaderGroup: 1
-  icon: {fileID: 8882410412355512929}
-  border: {fileID: 4805828014767943569}
 --- !u!1 &9123523432518439427
 GameObject:
   m_ObjectHideFlags: 0

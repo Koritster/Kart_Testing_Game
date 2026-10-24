@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -79,9 +80,15 @@ public class NewKart : NetworkBehaviour
 
     public virtual void Update()
     {
-        CheckIfGrounded();
-        CalculateMoveInput();
+        if(IsOwner)
+        {
+            CalculateMoveInput();
+        }
 
+        if (!IsServer) return;
+     
+        CheckIfGrounded();
+        
         if (boostActive)
             ReduceBoosterTimer();
         if (driftInitiated)
@@ -92,6 +99,8 @@ public class NewKart : NetworkBehaviour
 
     public virtual void FixedUpdate()
     {
+        if (!IsServer) return;
+
         stateMachine.currentState.ApplyThrottle(m_Rigidbody, throttle, isGrounded, driftInitiated, reverse, m_MaxForce, m_MaxTurnForce, m_ReverseForce, m_AirMultiplier, m_TargetSpeed, m_MaxBoosterMultiplier, m_AccelerationRate, m_MaxTurnCounterForce);
         stateMachine.currentState.ApplyReverse(m_Rigidbody, reverse, isGrounded, m_ReverseForce, m_AirMultiplier, m_TargetSpeed, m_MaxBoosterMultiplier, m_AccelerationRate);
         stateMachine.currentState.ApplyRotation(m_Rigidbody, centerOfMass.position, m_Input, m_RaycastDistance, m_RotationForce, raycastLayers);
@@ -101,11 +110,11 @@ public class NewKart : NetworkBehaviour
         if (stateMachine.currentState != reverseKartState)
         {
             ApplyDrift();
-            ShowParticleEffects(exhaustVFXActive, rightParticlesActive, leftParticlesActive);
+            //ShowParticleEffects(exhaustVFXActive, rightParticlesActive, leftParticlesActive);
         }
         if(stateMachine.currentState == driveKartState)
         {
-            ShowParticleEffects(exhaustVFXActive, false, false);
+            //ShowParticleEffects(exhaustVFXActive, false, false);
         }
     }
 
@@ -141,6 +150,8 @@ public class NewKart : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!IsServer) return;
+
         if (other.gameObject.layer == LayerMask.NameToLayer("NitroPad"))
         {
             //APPLY NITRO PAD BOOST
@@ -151,6 +162,8 @@ public class NewKart : NetworkBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (!IsServer) return;
+
         if (groundBoostActive && isGrounded && stateMachine.currentState == throttleKartState)
         {
             //APPLY GROUND LANDING BOOST
@@ -169,6 +182,8 @@ public class NewKart : NetworkBehaviour
 
     void ReduceStuckTime()
     {
+        if (!IsServer) return;
+
         if (m_MaxStuckTime > 0)
         {
             m_MaxStuckTime -= Time.deltaTime;
@@ -181,6 +196,8 @@ public class NewKart : NetworkBehaviour
 
     void ReduceBoosterTimer()
     {
+        if (!IsServer) return;
+
         if (m_MaxBoosterTime > 0)
         {
             m_MaxBoosterTime -= Time.deltaTime;
@@ -199,6 +216,8 @@ public class NewKart : NetworkBehaviour
 
     void ReduceDriftingTimer()
     {
+        if (!IsServer) return;
+     
         if (m_MaxDriftingTime > 0)
         {
             m_MaxDriftingTime -= Time.deltaTime;
@@ -211,6 +230,8 @@ public class NewKart : NetworkBehaviour
 
     void ApplyDrift()
     {
+        if (!IsServer) return;
+ 
         if (!isGrounded || !throttle || m_Rigidbody.linearVelocity.magnitude < m_DriftThrottleLowerThreshold)
         {
             m_MaxRotationAngle = m_RotationAngle;
@@ -274,6 +295,8 @@ public class NewKart : NetworkBehaviour
 
     void CheckIfGrounded()
     {
+        if (!IsServer) return;
+
         if (Physics.Raycast(centerOfMass.position, -m_Rigidbody.transform.up, out hit, m_RaycastDistance))
         {
             isGrounded = true;

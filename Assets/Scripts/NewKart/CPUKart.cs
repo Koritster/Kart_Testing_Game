@@ -79,7 +79,7 @@ public class CPUKart : NewKart
     protected override void CalculateMoveInput()
     {
 #if DEBUG_FEATURE
-        if (!IsOwner) return;
+        if (!IsServer) return;
 #endif
 
         base.CalculateMoveInput();
@@ -100,7 +100,7 @@ public class CPUKart : NewKart
     private void CheckIfDrift()
     {
 #if DEBUG_FEATURE
-        if (!IsOwner) return;
+        if (!IsServer) return;
 #endif
 
         angleToDrift = Vector3.Angle(directionToTrackTarget, m_Rigidbody.transform.forward);
@@ -116,7 +116,7 @@ public class CPUKart : NewKart
     private void Throttle()
     {
 #if DEBUG_FEATURE
-        if (!IsOwner) return;
+        if (!IsServer) return;
 #endif
 
         if (m_Rigidbody.linearVelocity.magnitude > m_TargetSpeed && angleToDrift > checkDriftAngle)
@@ -128,7 +128,7 @@ public class CPUKart : NewKart
     private void Break()
     {
 #if DEBUG_FEATURE
-        if (!IsOwner) return;
+        if (!IsServer) return;
 #endif
 
         if (m_Rigidbody.linearVelocity.magnitude > m_TargetSpeed && angleToDrift > checkDriftAngle * 0.5f)
@@ -141,7 +141,7 @@ public class CPUKart : NewKart
     private void Reverse()
     {
 #if DEBUG_FEATURE
-        if (!IsOwner) return;
+        if (!IsServer) return;
 #endif
 
         reverse = true;
