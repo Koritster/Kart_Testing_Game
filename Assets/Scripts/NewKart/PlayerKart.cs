@@ -67,6 +67,8 @@ public class PlayerKart : NewKart
 #endif
 
         move = context.ReadValue<Vector2>();
+
+        SendInputServerRpc(move, throttle, reverse, drift);
     }
 
     public void OnReverse(InputAction.CallbackContext context)
@@ -83,7 +85,8 @@ public class PlayerKart : NewKart
             throttle = false;
             reverse = true;
 
-            stateMachine.ChangeState(reverseKartState);
+            //stateMachine.ChangeState(reverseKartState);
+            SendInputServerRpc(move, throttle, reverse, drift);
         }
     }
 
@@ -100,7 +103,8 @@ public class PlayerKart : NewKart
         {
             reverse = false;
 
-            stateMachine.ChangeState(driveKartState);
+            //stateMachine.ChangeState(driveKartState);
+            SendInputServerRpc(move, throttle, reverse, drift);
         }
     }
 
@@ -118,7 +122,8 @@ public class PlayerKart : NewKart
             throttle = true;
             reverse = false;
 
-            stateMachine.ChangeState(throttleKartState);
+            //stateMachine.ChangeState(throttleKartState);
+            SendInputServerRpc(move, throttle, reverse, drift);
         }
     }
 
@@ -135,7 +140,8 @@ public class PlayerKart : NewKart
         {
             throttle = false;
 
-            stateMachine.ChangeState(driveKartState);
+            //stateMachine.ChangeState(driveKartState);
+            SendInputServerRpc(move, throttle, reverse, drift);
         }
     }
 
@@ -148,6 +154,7 @@ public class PlayerKart : NewKart
         if (context.performed)
         {
             drift = true;
+            SendInputServerRpc(move, throttle, reverse, drift);
         }
     }
 
@@ -160,6 +167,28 @@ public class PlayerKart : NewKart
         if (context.canceled)
         {
             drift = false;
+            SendInputServerRpc(move, throttle, reverse, drift);
+        }
+    }
+
+    protected void SendInputServerRpc(Vector2 moveInput, bool throttleInput, bool reverseInput, bool driftInput)
+    {
+        move = moveInput;
+        throttle = throttleInput;
+        reverse = reverseInput;
+        drift = driftInput;
+
+        if (reverse)
+        {
+            stateMachine.ChangeState(reverseKartState);
+        }
+        else if(throttle) 
+        {
+            stateMachine.ChangeState(throttleKartState);
+        }
+        else
+        {
+            stateMachine.ChangeState(driveKartState);
         }
     }
 }

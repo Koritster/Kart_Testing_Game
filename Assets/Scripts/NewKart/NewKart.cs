@@ -110,11 +110,11 @@ public class NewKart : NetworkBehaviour
         if (stateMachine.currentState != reverseKartState)
         {
             ApplyDrift();
-            ShowParticleEffects(exhaustVFXActive, rightParticlesActive, leftParticlesActive);
+            //ShowParticleEffects(exhaustVFXActive, rightParticlesActive, leftParticlesActive);
         }
         if(stateMachine.currentState == driveKartState)
         {
-            ShowParticleEffects(exhaustVFXActive, false, false);
+            //ShowParticleEffects(exhaustVFXActive, false, false);
         }
     }
 
