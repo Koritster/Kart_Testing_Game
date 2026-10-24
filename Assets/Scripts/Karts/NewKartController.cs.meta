@@ -1,2 +1,24 @@
 fileFormatVersion: 2
 guid: 1bede6fe321355247a671c9c9d741440
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - centerOfMass: {instanceID: 0}
+  - Nozzle: {instanceID: 0}
+  - m_PlayerNameTxt: {instanceID: 0}
+  - m_PositionTxt: {instanceID: 0}
+  - m_ItemIcon: {instanceID: 0}
+  - m_AimMarkerPrefab: {instanceID: 0}
+  - m_ShieldPrefab: {fileID: 6204870892257718096, guid: fad0eb1963241cf41bdbf07aa62a1055, type: 3}
+  - m_ShootingTransform: {instanceID: 0}
+  - m_ShieldTransform: {instanceID: 0}
+  - m_CameraOffset: {instanceID: 0}
+  - m_CarModelVisualTransform: {instanceID: 0}
+  - cam: {instanceID: 0}
+  - virtualCam: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

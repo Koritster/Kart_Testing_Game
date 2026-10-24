@@ -92,7 +92,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &4026454106913831568
 BoxCollider:
@@ -128,9 +127,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemBlock
   itemsPool:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 1d94c2cc753c02b4ca647d410db453fe, type: 2}
+  - {fileID: 11400000, guid: 6323f98f3d552f14d9ee4f62dc3a5f1b, type: 2}
+  - {fileID: 11400000, guid: 410fa1d58eacf0d49a81becf2186966e, type: 2}
 --- !u!114 &1340483781387883442
 MonoBehaviour:
   m_ObjectHideFlags: 0
