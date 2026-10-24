@@ -15,8 +15,6 @@ public class StateMachineManager
     {
         for (int i = 0; i < karts.Length; i++)
         {
-            if (karts[i] == null) continue;
-
             if(karts[i].transform.position.y <= fallLimitYValue)
             {
                 //Debug.Log("ENTERS HERE");

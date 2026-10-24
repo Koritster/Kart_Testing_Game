@@ -114,8 +114,6 @@ public class NetcodeLobby : NetworkBehaviour
     {
         Debug.Log($"ESCENA CARGADA: {sceneName}");
 
-        SetSpawnpoints();
-
         foreach (PlayerNetworkData playerData in players)
         {
             InstantiatePlayer(playerData);
@@ -124,6 +122,7 @@ public class NetcodeLobby : NetworkBehaviour
 
     private void InstantiatePlayer(PlayerNetworkData clientData)
     {
+        SetSpawnpoints();
         Transform spawn = spawnPositions[clientData.spawnIndex];
 
         NetworkObject player = Instantiate(

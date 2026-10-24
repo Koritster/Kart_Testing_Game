@@ -58,7 +58,7 @@ public class PlayerKart : NewKart
         float angleLimit = Mathf.Clamp(Mathf.Atan2(move.x, move.y) * Mathf.Rad2Deg, -m_MaxRotationAngle, m_MaxRotationAngle);
         float targetAngle = angleLimit + Camera.main.transform.eulerAngles.y;
         m_Input = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-    } 
+    }
 
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -67,8 +67,6 @@ public class PlayerKart : NewKart
 #endif
 
         move = context.ReadValue<Vector2>();
-
-        SendInputServerRpc(move, throttle, reverse, drift);
     }
 
     public void OnReverse(InputAction.CallbackContext context)
@@ -85,8 +83,7 @@ public class PlayerKart : NewKart
             throttle = false;
             reverse = true;
 
-            //stateMachine.ChangeState(reverseKartState);
-            SendInputServerRpc(move, throttle, reverse, drift);
+            stateMachine.ChangeState(reverseKartState);
         }
     }
 
@@ -103,8 +100,7 @@ public class PlayerKart : NewKart
         {
             reverse = false;
 
-            //stateMachine.ChangeState(driveKartState);
-            SendInputServerRpc(move, throttle, reverse, drift);
+            stateMachine.ChangeState(driveKartState);
         }
     }
 
@@ -122,8 +118,7 @@ public class PlayerKart : NewKart
             throttle = true;
             reverse = false;
 
-            //stateMachine.ChangeState(throttleKartState);
-            SendInputServerRpc(move, throttle, reverse, drift);
+            stateMachine.ChangeState(throttleKartState);
         }
     }
 
@@ -140,8 +135,7 @@ public class PlayerKart : NewKart
         {
             throttle = false;
 
-            //stateMachine.ChangeState(driveKartState);
-            SendInputServerRpc(move, throttle, reverse, drift);
+            stateMachine.ChangeState(driveKartState);
         }
     }
 
@@ -154,7 +148,6 @@ public class PlayerKart : NewKart
         if (context.performed)
         {
             drift = true;
-            SendInputServerRpc(move, throttle, reverse, drift);
         }
     }
 
@@ -167,28 +160,6 @@ public class PlayerKart : NewKart
         if (context.canceled)
         {
             drift = false;
-            SendInputServerRpc(move, throttle, reverse, drift);
-        }
-    }
-
-    protected void SendInputServerRpc(Vector2 moveInput, bool throttleInput, bool reverseInput, bool driftInput)
-    {
-        move = moveInput;
-        throttle = throttleInput;
-        reverse = reverseInput;
-        drift = driftInput;
-
-        if (reverse)
-        {
-            stateMachine.ChangeState(reverseKartState);
-        }
-        else if(throttle) 
-        {
-            stateMachine.ChangeState(throttleKartState);
-        }
-        else
-        {
-            stateMachine.ChangeState(driveKartState);
         }
     }
 }
