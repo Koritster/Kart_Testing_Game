@@ -58,7 +58,7 @@ public class PlayerKart : NewKart
         float angleLimit = Mathf.Clamp(Mathf.Atan2(move.x, move.y) * Mathf.Rad2Deg, -m_MaxRotationAngle, m_MaxRotationAngle);
         float targetAngle = angleLimit + Camera.main.transform.eulerAngles.y;
         m_Input = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-    }
+    } 
 
     public void OnMove(InputAction.CallbackContext context)
     {
