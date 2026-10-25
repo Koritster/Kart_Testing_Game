@@ -269,7 +269,19 @@ public class Session : MonoBehaviour
         };
 
         //Unir a la sala
-        actualSession = await MultiplayerService.Instance.JoinSessionByIdAsync(sessionId, options);
+        try
+        {
+            actualSession = await MultiplayerService.Instance.JoinSessionByIdAsync(sessionId, options);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Error al unirte {ex}");
+
+            if(ex.InnerException != null)
+            {
+                Debug.LogError($"Error interno {ex.InnerException}");
+            }
+        }
 
         actualSession.PlayerJoined += PlayerJoinedSession;
         actualSession.PlayerLeaving += PlayerLeftSession;

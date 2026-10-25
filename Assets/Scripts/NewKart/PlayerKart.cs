@@ -51,7 +51,7 @@ public class PlayerKart : NewKart
     protected override void CalculateMoveInput()
     {
 #if DEBUG_FEATURE
-        if (!IsOwner) return;
+        if (!IsServer) return;
 #endif
 
         base.CalculateMoveInput();
