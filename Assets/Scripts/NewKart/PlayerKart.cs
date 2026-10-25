@@ -1,7 +1,8 @@
-//#define DEBUG_FEATURE
+#define DEBUG_FEATURE
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -171,6 +172,7 @@ public class PlayerKart : NewKart
         }
     }
 
+    [Rpc(SendTo.Server)]
     protected void SendInputServerRpc(Vector2 moveInput, bool throttleInput, bool reverseInput, bool driftInput)
     {
         move = moveInput;
