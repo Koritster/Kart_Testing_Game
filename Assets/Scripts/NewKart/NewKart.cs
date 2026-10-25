@@ -80,12 +80,9 @@ public class NewKart : NetworkBehaviour
 
     public virtual void Update()
     {
-        if(IsOwner)
-        {
-            CalculateMoveInput();
-        }
-
         if (!IsServer) return;
+        
+        CalculateMoveInput();
      
         CheckIfGrounded();
         
