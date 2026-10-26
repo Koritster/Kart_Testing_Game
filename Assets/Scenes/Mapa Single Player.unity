@@ -12141,19 +12141,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_Force
-      value: 10
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
+      propertyPath: exhaustVFX
+      value: 
+      objectReference: {fileID: 595704616}
+    - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
+      propertyPath: m_StuckTime
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_TurnForce
-      value: 12
+      value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
+      propertyPath: centerOfMass
+      value: 
+      objectReference: {fileID: 1754328854}
+    - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
+      propertyPath: leftParticles
+      value: 
+      objectReference: {fileID: 1349846451}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_BoosterTime
       value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_TargetSpeed
-      value: 20
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_DriftingTime
@@ -12161,15 +12177,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_ReverseForce
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
+      propertyPath: rightParticles
+      value: 
+      objectReference: {fileID: 1054805221}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_AirMultiplier
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
+      propertyPath: m_RotationAngle
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_RotationForce
-      value: 4
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
+      propertyPath: m_GravityConstant
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_RaycastDistance
@@ -12177,11 +12205,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_AccelerationRate
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_TurnCounterForce
-      value: 0.4
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_BoosterMultiplier
@@ -12189,11 +12217,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_MagnitudeTurnLimit
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_BoostImmediateForce
-      value: 14
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_DriftingRotationAngle
@@ -13837,6 +13865,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 588039089}
   m_Mesh: {fileID: 6292234572163675417, guid: 758a5f3a124310049932eb1adb695b97, type: 3}
+--- !u!198 &595704616 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4474405623471744796, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
+  m_PrefabInstance: {fileID: 412543408}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &603493217
 GameObject:
   m_ObjectHideFlags: 0
@@ -22652,6 +22685,11 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!198 &1054805221 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6367780099118731456, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
+  m_PrefabInstance: {fileID: 412543408}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1056736859
 GameObject:
   m_ObjectHideFlags: 0
@@ -26331,6 +26369,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 92b986ba3a8b99341a2479c8a4182a1a, type: 3}
   m_PrefabInstance: {fileID: 1348772826}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &1349846451 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4515069374993128054, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
+  m_PrefabInstance: {fileID: 412543408}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1351953997
 GameObject:
@@ -35026,6 +35069,11 @@ Transform:
   - {fileID: 147146501}
   m_Father: {fileID: 1049544753}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1754328854 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1691451409165826975, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
+  m_PrefabInstance: {fileID: 412543408}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1758962587
 GameObject:
   m_ObjectHideFlags: 0
