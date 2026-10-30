@@ -4,6 +4,7 @@ using Unity.Collections;
 using Unity.Netcode;
 using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class NetcodeLobby : NetworkBehaviour
@@ -135,7 +136,7 @@ public class NetcodeLobby : NetworkBehaviour
         //Spawnear objeto network manualmente
         player.SpawnAsPlayerObject(clientData.clientId);
 
-        Debug.Log($"[SERVER] Spawn player for {clientData.clientId}");
+        Debug.Log($"[SERVER] Spawn player for {clientData.clientId} is Owner? {clientData.clientId == OwnerClientId}");
 
         NewKartController carController = player.GetComponent<NewKartController>();
 
@@ -143,6 +144,12 @@ public class NetcodeLobby : NetworkBehaviour
         carController.carModel.Value = clientData.playerKart;
 
         carController.transform.forward = spawn.forward;
+
+        //Si no es owner
+        if (clientData.clientId != OwnerClientId)
+        {
+            Destroy(player.GetComponent<PlayerInput>());
+        }
     }
 
     public void StartGame()

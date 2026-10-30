@@ -11,6 +11,8 @@ public class PlayerKart : NewKart
     PlayerInput kartInput;
     InputAction moveAction, throttleAction, reverseAction, driftAction;
 
+    Camera playerCam;
+
     protected virtual void OnEnable()
     {
         kartInput = GetComponent<PlayerInput>();
@@ -25,6 +27,8 @@ public class PlayerKart : NewKart
         reverseAction.canceled += OnStopReverse;
         driftAction.performed += OnDrift;
         driftAction.canceled += OnStopDrift;
+
+        Camera playerCam = GetComponentInChildren<Camera>();
     }
 
     protected virtual void OnDisable()
@@ -57,7 +61,7 @@ public class PlayerKart : NewKart
         base.CalculateMoveInput();
 
         float angleLimit = Mathf.Clamp(Mathf.Atan2(move.x, move.y) * Mathf.Rad2Deg, -m_MaxRotationAngle, m_MaxRotationAngle);
-        float targetAngle = angleLimit + Camera.main.transform.eulerAngles.y;
+        float targetAngle = angleLimit + playerCam.transform.eulerAngles.y;
         m_Input = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
         
         Debug.Log($"m_Input {m_Input}");
