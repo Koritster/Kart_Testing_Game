@@ -31,9 +31,6 @@ public class NewKartController : PlayerKart
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Server);
 
-    [SerializeField] private Camera cam;
-    [SerializeField] private GameObject virtualCam;
-
     /*private GameObject m_AimMarker;
     private GameObject shieldVisual;
 
@@ -83,12 +80,6 @@ public class NewKartController : PlayerKart
         
         if (!IsServer) return;
         
-        //float progress = ;
-
-        //trackProgress.Value = progress;
-
-        //int pos = PositionsManager.instance.GetPosition(this);
-
         /*
         if (m_ItemObtained != null)
         {

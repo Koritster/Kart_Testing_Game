@@ -148,7 +148,9 @@ public class NetcodeLobby : NetworkBehaviour
         //Si no es owner
         if (clientData.clientId != OwnerClientId)
         {
-            Destroy(player.GetComponent<PlayerInput>());
+            PlayerInput _playerInput = player.GetComponent<PlayerInput>();
+
+            Destroy(_playerInput);
         }
     }
 

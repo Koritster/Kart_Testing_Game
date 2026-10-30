@@ -2068,6 +2068,8 @@ MonoBehaviour:
   m_DriftThrottleUpperThreshold: 10
   m_DriftThrottleLowerThreshold: 10
   m_StuckTime: 3
+  cam: {fileID: 4957525831573528922}
+  virtualCam: {fileID: 3126331460264618300}
   m_PlayerNameTxt: {fileID: 220144219374523701}
   m_PositionTxt: {fileID: 3218376722535432907}
   m_ItemIcon: {fileID: 3400436022586524794}
@@ -2142,8 +2144,6 @@ MonoBehaviour:
         byte0027: 0
         byte0028: 0
         byte0029: 0
-  cam: {fileID: 4957525831573528922}
-  virtualCam: {fileID: 3126331460264618300}
 --- !u!114 &4770160385763951463
 MonoBehaviour:
   m_ObjectHideFlags: 0
