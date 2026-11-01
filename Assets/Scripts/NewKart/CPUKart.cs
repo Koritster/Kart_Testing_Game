@@ -1,4 +1,4 @@
-//#define DEBUG_FEATURE
+#define DEBUG_FEATURE
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.Switch;

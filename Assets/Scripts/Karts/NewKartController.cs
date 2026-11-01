@@ -4,8 +4,6 @@ using Unity.Netcode.Components;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
-using System.Collections.Generic;
 
 public class NewKartController : PlayerKart
 {
@@ -15,13 +13,13 @@ public class NewKartController : PlayerKart
 
     [SerializeField] private Image m_ItemIcon;
 
-    [Header("Prefabs References")]
+    /*[Header("Prefabs References")]
     [SerializeField] private GameObject m_AimMarkerPrefab;
     [SerializeField] private GameObject m_ShieldPrefab;
 
     [SerializeField] private Transform m_ShootingTransform;
     [SerializeField] private Transform m_ShieldTransform;
-    [SerializeField] private Transform m_CameraOffset;
+    [SerializeField] private Transform m_CameraOffset;*/
     [Header("Transform References")]
     [SerializeField] private Transform m_CarModelVisualTransform;
 
@@ -33,22 +31,19 @@ public class NewKartController : PlayerKart
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Server);
 
-    [SerializeField] private Camera cam;
-    [SerializeField] private GameObject virtualCam;
-
-    private GameObject m_AimMarker;
+    /*private GameObject m_AimMarker;
     private GameObject shieldVisual;
 
     private int shieldHits = 0;
-    private bool isInvulnerable;
+    private bool isInvulnerable;*/
 
-    private ItemClass m_ItemObtained;
+    //private ItemClass m_ItemObtained;
 
-    private List<HitteableBehaviour> m_Hitteables;
+    //private List<HitteableBehaviour> m_Hitteables;
 
-    private HitteableBehaviour m_ActualObjective = null;
+    //private HitteableBehaviour m_ActualObjective = null;
 
-    private HitteableBehaviour m_LocalHitteableBehaviour;
+    //private HitteableBehaviour m_LocalHitteableBehaviour;
 
     #region Unity functions
 
@@ -56,23 +51,16 @@ public class NewKartController : PlayerKart
     {
         base.OnEnable();
 
-        // Suscripciones a cambios de variables network
+        //Suscripciones a cambios de variables network
         playerName.OnValueChanged += OnNameChanged;
         carModel.OnValueChanged += OnCarModelChanged;
 
-        // Instanciación segura de marcadores
-        if (m_AimMarkerPrefab != null)
-        {
-            m_AimMarker = Instantiate(m_AimMarkerPrefab, Vector3.zero, Quaternion.identity);
-            m_AimMarker.SetActive(false);
-        }
-
-        if (m_ShieldPrefab != null && m_ShieldTransform != null)
-        {
-            shieldVisual = Instantiate(m_ShieldPrefab, m_ShieldTransform);
-            shieldVisual.transform.localPosition = Vector3.zero;
-            shieldVisual.SetActive(false);
-        }
+        //Instanciacion de marcadores
+        /*m_AimMarker = Instantiate(m_AimMarkerPrefab, Vector3.zero, Quaternion.identity);
+        m_AimMarker.SetActive(false);
+        shieldVisual = Instantiate(m_ShieldPrefab, m_ShieldTransform);
+        shieldVisual.transform.localPosition = Vector3.zero;
+        shieldVisual.SetActive(false);*/
     }
 
     protected override void OnDisable()
@@ -92,12 +80,6 @@ public class NewKartController : PlayerKart
         
         if (!IsServer) return;
         
-        //float progress = ;
-
-        //trackProgress.Value = progress;
-
-        //int pos = PositionsManager.instance.GetPosition(this);
-
         /*
         if (m_ItemObtained != null)
         {
@@ -126,7 +108,7 @@ public class NewKartController : PlayerKart
 
     #endregion
     
-    
+    /*
     
     #region Items
 
@@ -148,56 +130,29 @@ public class NewKartController : PlayerKart
             m_ItemIcon.sprite = item.itemIcon;
     }
 
-    public void UseItem(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-
-        if (!context.performed) return;
-
-        if (m_ItemObtained == null)
-        {
-            Debug.LogWarning("No hay ningún ítem guardado.");
-            return;
-        }
-
-        Debug.Log("Intentando usar item: " + m_ItemObtained.name);
-        m_ItemObtained.UseItem(this);
-
-        if (m_ItemObtained.GetShootItem() != null)
-        {
-            ShootItemClass projectile = m_ItemObtained.GetShootItem();
-            Shoot(projectile, m_ActualObjective);
-        }
-        else if (m_ItemObtained.GetSpecialEffectItem() != null)
-        {
-            ActivateSpecialEffectItem(m_ItemObtained.GetSpecialEffectItem());
-        }
-
-        RemoveItem();
-    }
-
     public void UseItem()
     {
-        if (m_ItemObtained == null) return;
-
-        Debug.Log("Intentando usar item");
         m_ItemObtained.UseItem(this);
 
         if (m_ItemObtained.GetShootItem() != null)
         {
             ShootItemClass projectile = m_ItemObtained.GetShootItem();
+
             Shoot(projectile, m_ActualObjective);
         }
         else if (m_ItemObtained.GetSpecialEffectItem() != null)
         {
             ActivateSpecialEffectItem(m_ItemObtained.GetSpecialEffectItem());
         }
-
+        else
+        {
+        }
         RemoveItem();
     }
 
     private void ActivateSpecialEffectItem(SpecialEffectItemClass item)
     {
-        if (item.type == SpecialEffectItemClass.EffectType.Shield)
+        if (item.type == EffectType.Shield)
         {
             ActiveShieldServerRpc(item.duration, item.shieldHits);
         }
@@ -223,14 +178,7 @@ public class NewKartController : PlayerKart
     [Rpc(SendTo.ClientsAndHost)]
     private void ChangeShieldClientRpc(bool activated)
     {
-        if (shieldVisual != null)
-        {
-            shieldVisual.SetActive(activated);
-        }
-        else
-        {
-            Debug.LogWarning("El escudo visual (shieldVisual) no ha sido instanciado o asignado.");
-        }
+        shieldVisual.SetActive(activated);
     }
 
     private HitteableBehaviour GetNearestHitteableObject()
@@ -296,20 +244,15 @@ public class NewKartController : PlayerKart
 
     private void RemoveItem()
     {
-        if (m_ItemIcon != null)
-            m_ItemIcon.sprite = null;
-
+        m_ItemIcon.sprite = null;
         m_ItemObtained = null;
-
-        if (m_AimMarker != null)
-            m_AimMarker.SetActive(false);
-
+        m_AimMarker.SetActive(false);
         m_ActualObjective = null;
     }
 
     #endregion
-
-
+    
+    */
 
     #region UI
 
@@ -355,7 +298,7 @@ public class NewKartController : PlayerKart
         }
     }
 
-    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    /*[Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void ShootServerRpc(int m_ProjectileId, NetworkObjectReference targetRef, Vector3 direction)
     {
         ShootItemClass m_Projectile = ItemDatabase.Instance.GetProjectileItemById(m_ProjectileId);
@@ -373,7 +316,7 @@ public class NewKartController : PlayerKart
 
         projectile.GetComponent<ProjectileBehaviour>().SetProperties(objective, direction, m_Projectile.velocity, m_Projectile.isHoming);
     }
-    
+    */
 
     //Al cambiar el nombre
     private void OnNameChanged(FixedString32Bytes oldName, FixedString32Bytes newName)
@@ -399,5 +342,6 @@ public class NewKartController : PlayerKart
         GameObject kartInstantiated = Instantiate(kartVisual, m_CarModelVisualTransform);
         kartInstantiated.transform.localPosition = Vector3.zero;
     }
+
     #endregion
 }
