@@ -27,6 +27,6 @@ public class StateMachineManager
     public void RespawnKart(NewKart kart)
     {
         kart.stateMachine.currentState.ApplyZeroVelocity(kart.m_Rigidbody);
-        kart.transform.position = raceCheckpoints[kart.actualCheckpoint.Value].transform.position;
+        kart.transform.position = raceCheckpoints[kart.actualCheckpoint].transform.position;
     }
 }

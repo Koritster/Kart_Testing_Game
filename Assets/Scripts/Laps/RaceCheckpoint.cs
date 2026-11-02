@@ -1,9 +1,10 @@
+//#define DEBUG_FEATURE
 using System.Globalization;
 using Unity.Netcode;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
-public class RaceCheckpoint : NetworkBehaviour
+public class RaceCheckpoint : MonoBehaviour
 {
     public int index;
 
@@ -14,24 +15,26 @@ public class RaceCheckpoint : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        #if DEBUG_FEATURE
         if (!IsServer) return;
+#endif
 
         if (other.TryGetComponent<NewKart>(out NewKart _kart))
         {
             //Si no ha pasado por el anterior checkpoint no cuenta
             //Si es el último checkpoint, igual checa
-            if ((_kart.actualCheckpoint.Value + 1) != index && (_kart.actualCheckpoint.Value != PositionsManager.instance.GetCheckpointCount() - 1)) return;
+            if ((_kart.actualCheckpoint + 1) != index && (_kart.actualCheckpoint != PositionsManager.instance.GetCheckpointCount() - 1)) return;
 
-            Debug.Log("Cruzaste el checpoint " + index);
+            Debug.Log("Cruzaste el checkpoint " + index);
 
             //Si es la meta
-            if (index == 0 && _kart.actualCheckpoint.Value == PositionsManager.instance.GetCheckpointCount() - 1)
+            if (index == 0 && _kart.actualCheckpoint == PositionsManager.instance.GetCheckpointCount() - 1)
             {
                 Debug.Log("Cruzaste la meta");
                 PositionsManager.instance.PlayerFinishedLap(_kart);
             }
 
-            _kart.actualCheckpoint.Value = index;
+            _kart.SetActualCheckpoint(index);
 
             PositionsManager.instance.CalculatePositionsServerRpc();
         }

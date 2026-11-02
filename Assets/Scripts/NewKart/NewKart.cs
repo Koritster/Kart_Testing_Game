@@ -1,12 +1,13 @@
+//#define DEBUG_FEATURE
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
-using Unity.Netcode;
 using UnityEngine;
 
-public class NewKart : NetworkBehaviour
+public class NewKart : MonoBehaviour
 {
-    //Variables network
+#if DEBUG_FEATURE
+    Variables network
     [Header("Network Variables")]
     public NetworkVariable<int> laps = new NetworkVariable<int>(0,
         NetworkVariableReadPermission.Everyone,
@@ -19,6 +20,11 @@ public class NewKart : NetworkBehaviour
     public NetworkVariable<int> Position = new(0,
     NetworkVariableReadPermission.Everyone,
     NetworkVariableWritePermission.Server);
+#endif
+
+    public int laps {  get; private set; }
+    public int actualCheckpoint {  get; private set; }
+    public int position {  get; private set; }
 
     public KartStateMachine stateMachine {  get; private set; }
     public Rigidbody m_Rigidbody {  get; private set; }
@@ -38,7 +44,8 @@ public class NewKart : NetworkBehaviour
 
     public Transform centerOfMass;
     public Transform Nozzle;
-    public LayerMask raycastLayers;
+    public LayerMask gravityLayers;
+    public LayerMask rotationLayers;
     public ParticleSystem rightParticles, leftParticles, exhaustVFX;
     public float m_RaycastDistance = 1f;
     public float m_AccelerationRate = 8f;
@@ -74,13 +81,17 @@ public class NewKart : NetworkBehaviour
         InitializeKart();
 
         //ONLY FOR TESTING SINGLE PLAYER, WILL REMOVE LATER
-        if(!IsServer)
-        PositionsManager.instance.RegisterKart(this);
+#if DEBUG_FEATURE
+        if (!IsServer)
+#endif
+            PositionsManager.instance.RegisterKart(this);
     }
 
     public virtual void Update()
     {
+        #if DEBUG_FEATURE
         if (!IsServer) return;
+#endif
         
         CalculateMoveInput();
      
@@ -96,12 +107,14 @@ public class NewKart : NetworkBehaviour
 
     public virtual void FixedUpdate()
     {
+        #if DEBUG_FEATURE
         if (!IsServer) return;
+#endif
 
-        stateMachine.currentState.ApplyThrottle(m_Rigidbody, throttle, isGrounded, driftInitiated, reverse, m_MaxForce, m_MaxTurnForce, m_ReverseForce, m_AirMultiplier, m_TargetSpeed, m_MaxBoosterMultiplier, m_AccelerationRate, m_MaxTurnCounterForce);
+        stateMachine.currentState.ApplyThrottle(m_Rigidbody, centerOfMass.position, throttle, isGrounded, driftInitiated, reverse, m_RaycastDistance, m_MaxForce, m_MaxTurnForce, m_ReverseForce, m_AirMultiplier, m_TargetSpeed, m_MaxBoosterMultiplier, m_AccelerationRate, m_MaxTurnCounterForce, rotationLayers, gravityLayers);
         stateMachine.currentState.ApplyReverse(m_Rigidbody, reverse, isGrounded, m_ReverseForce, m_AirMultiplier, m_TargetSpeed, m_MaxBoosterMultiplier, m_AccelerationRate);
-        stateMachine.currentState.ApplyRotation(m_Rigidbody, centerOfMass.position, m_Input, m_RaycastDistance, m_RotationForce, raycastLayers);
-        stateMachine.currentState.ApplyTrackGravity(m_Rigidbody, centerOfMass.position, m_RaycastDistance, m_GravityConstant, raycastLayers);
+        stateMachine.currentState.ApplyRotation(m_Rigidbody, centerOfMass.position, m_Input, throttle, m_RaycastDistance, m_RotationForce, m_TargetSpeed, rotationLayers, gravityLayers);
+        stateMachine.currentState.ApplyTrackGravity(m_Rigidbody, centerOfMass.position, m_RaycastDistance, m_GravityConstant, rotationLayers, gravityLayers);
         kartStuck = stateMachine.currentState.CheckIfKartIsStuck(m_Rigidbody, throttle, m_StuckTime, out m_MaxStuckTime, m_MaxStuckTime, m_TargetSpeed);
         //stateMachine.currentState.ApplyDrift(m_Rigidbody, move, drift, isGrounded, boostActive, driftBoostActive, out exhaustVFXActive, exhaustVFXActive, out rightParticlesActive, rightParticlesActive, out leftParticlesActive, leftParticlesActive, out driftInitiated, m_BoostImmediateForce, m_DriftThrottleUpperThreshold, m_DriftThrottleLowerThreshold, out m_MaxRotationAngle, out m_MaxDriftingTime, out m_MaxBoosterTime, out m_MaxBoosterMultiplier, m_BoosterTime, m_BoosterMultiplier, m_RotationAngle, m_DriftingRotationAngle, m_DriftingTime);
         if (stateMachine.currentState != reverseKartState)
@@ -114,6 +127,12 @@ public class NewKart : NetworkBehaviour
             //ShowParticleEffects(exhaustVFXActive, false, false);
         }
     }
+
+    public virtual void SetActualCheckpoint(int checkpoint) { actualCheckpoint = checkpoint; }
+    public virtual void SetLaps(int newLaps) { laps = newLaps; }
+    public virtual void AddLaps(int newLaps) { laps += newLaps; }
+    public virtual void SetPosition(int newPosition) { position = newPosition; }
+    public virtual void AddPosition(int newPosition) { position += newPosition; }
 
     protected virtual void InitializeKart()
     {
@@ -138,6 +157,10 @@ public class NewKart : NetworkBehaviour
         m_MaxBoosterMultiplier = 1;
         m_MaxStuckTime = m_StuckTime;
 
+        SetActualCheckpoint(0);
+        SetLaps(0);
+        SetPosition(0);
+
         stateMachine = new KartStateMachine(initialKartState);
         //vv THIS WILL BE HANDLED BY A MANAGER OR EVENT HANDLER LATER vv
         stateMachine.ChangeState(driveKartState);
@@ -147,7 +170,9 @@ public class NewKart : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        #if DEBUG_FEATURE
         if (!IsServer) return;
+#endif
 
         if (other.gameObject.layer == LayerMask.NameToLayer("NitroPad"))
         {
@@ -159,7 +184,9 @@ public class NewKart : NetworkBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        #if DEBUG_FEATURE
         if (!IsServer) return;
+#endif
 
         if (groundBoostActive && isGrounded && stateMachine.currentState == throttleKartState)
         {
@@ -179,7 +206,9 @@ public class NewKart : NetworkBehaviour
 
     void ReduceStuckTime()
     {
+        #if DEBUG_FEATURE
         if (!IsServer) return;
+#endif
 
         if (m_MaxStuckTime > 0)
         {
@@ -193,7 +222,9 @@ public class NewKart : NetworkBehaviour
 
     void ReduceBoosterTimer()
     {
+        #if DEBUG_FEATURE
         if (!IsServer) return;
+#endif
 
         if (m_MaxBoosterTime > 0)
         {
@@ -213,7 +244,9 @@ public class NewKart : NetworkBehaviour
 
     void ReduceDriftingTimer()
     {
+        #if DEBUG_FEATURE
         if (!IsServer) return;
+#endif
      
         if (m_MaxDriftingTime > 0)
         {
@@ -227,7 +260,9 @@ public class NewKart : NetworkBehaviour
 
     void ApplyDrift()
     {
+        #if DEBUG_FEATURE
         if (!IsServer) return;
+#endif
  
         if (!isGrounded || !throttle || m_Rigidbody.linearVelocity.magnitude < m_DriftThrottleLowerThreshold)
         {
@@ -292,7 +327,9 @@ public class NewKart : NetworkBehaviour
 
     void CheckIfGrounded()
     {
+        #if DEBUG_FEATURE
         if (!IsServer) return;
+#endif
 
         if (Physics.Raycast(centerOfMass.position, -m_Rigidbody.transform.up, out hit, m_RaycastDistance))
         {

@@ -74,11 +74,11 @@ public class NewKartController : PlayerKart
     {
         base.Update();
 
-        if (!IsOwner || NetcodeLobby.instance.GameStarted.Value == false) return;
+        //if (!IsOwner || NetcodeLobby.instance.GameStarted.Value == false) return;
 
-        UIPosition();
+        //UIPosition();
         
-        if (!IsServer) return;
+        //if (!IsServer) return;
         
         /*
         if (m_ItemObtained != null)
@@ -256,47 +256,47 @@ public class NewKartController : PlayerKart
 
     #region UI
 
-    private void UIPosition()
-    {
-        m_PositionTxt.text = m_PositionTxt.text = Position.Value + "°";
-    }
+    //private void UIPosition()
+    //{
+    //    m_PositionTxt.text = m_PositionTxt.text = Position.Value + "°";
+    //}
 
     #endregion
 
     #region Networking
 
-    public override void OnNetworkSpawn()
-    {
-        base.OnNetworkSpawn();
+    //public override void OnNetworkSpawn()
+    //{
+    //    base.OnNetworkSpawn();
 
-        Debug.Log("OnNetworkSpawn");
+    //    Debug.Log("OnNetworkSpawn");
 
-        //Registrar kart
-        if (IsClient)
-        {
-            PositionsManager.instance.RegisterKart(this);
-        }
+    //    //Registrar kart
+    //    if (IsClient)
+    //    {
+    //        PositionsManager.instance.RegisterKart(this);
+    //    }
 
-        //Actualizar cambios 
-        if (playerName.Value != default)
-        {
-            ChangeName(playerName.Value.ToString());
-        }
+    //    //Actualizar cambios 
+    //    if (playerName.Value != default)
+    //    {
+    //        ChangeName(playerName.Value.ToString());
+    //    }
 
-        if (carModel.Value != default)
-        {
-            ChangeCarModel(carModel.Value.ToString());
-        }
+    //    if (carModel.Value != default)
+    //    {
+    //        ChangeCarModel(carModel.Value.ToString());
+    //    }
 
-        if (IsOwner)
-        {
-            cam.gameObject.SetActive(true);
-            virtualCam.gameObject.SetActive(true);
+    //    if (IsOwner)
+    //    {
+    //        cam.gameObject.SetActive(true);
+    //        virtualCam.gameObject.SetActive(true);
 
-            if (Camera.main != null)
-                Camera.main.gameObject.SetActive(false);
-        }
-    }
+    //        if (Camera.main != null)
+    //            Camera.main.gameObject.SetActive(false);
+    //    }
+    //}
 
     /*[Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void ShootServerRpc(int m_ProjectileId, NetworkObjectReference targetRef, Vector3 direction)

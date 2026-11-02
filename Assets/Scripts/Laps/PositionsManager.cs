@@ -4,13 +4,17 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class PositionsManager : NetworkBehaviour
+public class PositionsManager : MonoBehaviour
 {
     public static PositionsManager instance;
 
+#if DEBUG_FEATURE
     public NetworkVariable<bool> started = new NetworkVariable<bool>(false,
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Server);
+#endif
+
+    public bool started {  get; private set; }
 
     [SerializeField] private List<RaceCheckpoint> checkpoints;
 
@@ -64,13 +68,18 @@ if (!IsServer) return;
         //HERI
     }
 
+    public void SetStarted(bool started)
+    {
+        this.started = started;
+    }    
+
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Server)]
     public void CalculatePositionsServerRpc()
     {
         karts.Sort((a, b) =>
         {
             // 1. Vueltas
-            int result = b.laps.Value.CompareTo(a.laps.Value);
+            int result = b.laps.CompareTo(a.laps);
             if (result != 0)
             {
                 if (tie)
@@ -82,9 +91,9 @@ if (!IsServer) return;
                 return result;
             }
 
-            int aCheckpoint = a.actualCheckpoint.Value;
+            int aCheckpoint = a.actualCheckpoint;
             // 2. Checkpoint
-            result = b.actualCheckpoint.Value.CompareTo(aCheckpoint);
+            result = b.actualCheckpoint.CompareTo(aCheckpoint);
             if (result != 0)
             {
                 if (tie)
@@ -92,7 +101,7 @@ if (!IsServer) return;
                     tie = false;
                 }
 
-                Debug.Log("Están en checkpoints diferentes: " + aCheckpoint + " - " + b.actualCheckpoint.Value);
+                Debug.Log("Están en checkpoints diferentes: " + aCheckpoint + " - " + b.actualCheckpoint);
 
                 return result;
             }
@@ -109,7 +118,7 @@ if (!IsServer) return;
 
         for (int i = 0; i < karts.Count; i++)
         {
-            karts[i].Position.Value = i + 1;
+            karts[i].AddPosition(1);
         }
     }
 
@@ -121,11 +130,11 @@ if (!IsServer) return;
 
     public void PlayerFinishedLap(NewKart _kart)
     {
-        _kart.laps.Value += 1;
+        _kart.AddLaps(1);
 
         //Calcular si es la vuelta final
 
-        _kart.actualCheckpoint.Value = 0;
+        _kart.SetActualCheckpoint(0);
 
         //Checar los puntajes de todos los jugadores, si es que se ha ganado, llamar un RPC que actualice una lista añadiendo al jugador que haya terminado ya la carrera
         //Al final de la partida mostrar esa lista en orden para saber quién llegó después de quién
@@ -147,6 +156,6 @@ if (!IsServer) return;
 
     public int GetPosition(NewKart kart)
     {
-        return kart.Position.Value;
+        return kart.position;
     }
 }

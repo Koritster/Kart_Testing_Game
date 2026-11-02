@@ -9,11 +9,13 @@ public class KartStateMachine
     {
         previousState = null;
         currentState = state;
+        currentState.InitializeState();
     }
 
     public void ChangeState(KartState state)
     {
         previousState = currentState;
         currentState = state;
+        currentState.InitializeState();
     }
 }

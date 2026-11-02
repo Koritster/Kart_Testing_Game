@@ -2,16 +2,25 @@ using UnityEngine;
 
 public class KartState
 {
+    protected float gravityVariable;
+    protected float accelerationVariable;
+
+    public virtual void InitializeState()
+    {
+        gravityVariable = 0;
+        accelerationVariable = 0;
+    }
+
     public virtual void ApplyZeroVelocity(Rigidbody kartRB)
     {
         kartRB.linearVelocity = Vector3.zero;
     }
 
-    public virtual void ApplyThrottle(Rigidbody kartRB, bool isThrottling, bool isGrounded, bool isDrifting, bool isReversing, float maxForce, float maxTurnForce, float reverseForce, float airMultiplier, float targetSpeed, float maxBoosterMultiplier, float accelerationRate, float maxTurnCounterForce) { }
+    public virtual void ApplyThrottle(Rigidbody kartRB, Vector3 centerOfMass, bool isThrottling, bool isGrounded, bool isDrifting, bool isReversing, float raycastDistance, float maxForce, float maxTurnForce, float reverseForce, float airMultiplier, float targetSpeed, float maxBoosterMultiplier, float accelerationRate, float maxTurnCounterForce, LayerMask rotationLayers, LayerMask gravityLayers) { }
 
     public virtual void ApplyReverse(Rigidbody kartRB, bool isReversing, bool isGrounded, float reverseForce, float airMultiplier, float targetSpeed, float maxBoosterMultiplier, float accelerationRate) { }
 
-    public virtual void ApplyRotation(Rigidbody kartRB, Vector3 centerOfMass, Vector3 input, float raycastDistance, float rotationForce, LayerMask raycastLayers) { }
+    public virtual void ApplyRotation(Rigidbody kartRB, Vector3 centerOfMass, Vector3 input, bool isThrottling, float raycastDistance, float rotationForce, float targetSpeed, LayerMask rotationLayers, LayerMask gravityLayers) { }
 
     public virtual void ApplyDrift(Rigidbody kartRB, Vector2 move, bool isDrifting, bool isGrounded, bool boostActive, bool driftBoostActive, out bool exhaustVFXActive, bool exhaustVFX, out bool rightParticlesActive, bool rightParticles, out bool leftParticlesActive, bool leftParticles, out bool driftInitiated, float boostImmediateForce, float driftThrottleUpperThreshold, float driftThrottleLowerThreshold, out float maxRotationAngle, out float maxDriftingTime, out float maxBoosterTime, out float maxBoosterMultiplier, float boosterTime, float boosterMultiplier, float rotationAngle, float driftingRotationAngle, float driftingTime)
     {
@@ -28,10 +37,25 @@ public class KartState
         boostActive = false;
     }
 
-    public virtual void ApplyTrackGravity(Rigidbody kartRB, Vector3 centerOfMass, float raycastDistance, float gravityConstant, LayerMask layerMask)
+    public virtual void ApplyTrackGravity(Rigidbody kartRB, Vector3 centerOfMass, float raycastDistance, float gravityConstant, LayerMask rotationLayers, LayerMask gravityLayers)
     {
+        //RaycastHit gravityHit, rotationHit;
+        //bool gravity = Physics.Raycast(centerOfMass, -kartRB.transform.up, out gravityHit, raycastDistance, gravityLayers);
+        //bool rotation = Physics.Raycast(centerOfMass, -kartRB.transform.up, out rotationHit, raycastDistance, rotationLayers);
+
+        //if (rotation && !gravity)
+        //{
+        //    gravityVariable = Mathf.Lerp(gravityVariable, gravityConstant * 5f, Time.fixedDeltaTime);
+        //    kartRB.AddForce(Vector3.down * gravityVariable, ForceMode.Acceleration);
+        //    return;
+        //}
+        //if(gravity)
+        //{
+        //    gravityVariable = gravityConstant;
+        //}
+
         RaycastHit hit;
-        if (Physics.Raycast(centerOfMass, kartRB.transform.forward, out hit, raycastDistance, layerMask) || Physics.Raycast(centerOfMass, -kartRB.transform.up, out hit, raycastDistance, layerMask))
+        if (Physics.Raycast(centerOfMass, kartRB.transform.forward, out hit, raycastDistance, gravityLayers) || Physics.Raycast(centerOfMass, -kartRB.transform.up, out hit, raycastDistance, gravityLayers))
         {
             kartRB.AddForce(-hit.normal * gravityConstant, ForceMode.Acceleration);
         }

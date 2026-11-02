@@ -206,7 +206,7 @@ public class NetcodeLobby : NetworkBehaviour
 
         if (!IsServer) return;
 
-        PositionsManager.instance.started.Value = true;
+        PositionsManager.instance.SetStarted(true);
         PositionsManager.instance.CalculatePositionsServerRpc();
     }
 }

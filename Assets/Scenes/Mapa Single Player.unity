@@ -288,7 +288,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e7e025d8bdd374e93355fb4f0e9ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RaceCheckpoint
-  ShowTopMostFoldoutHeaderGroup: 1
   index: 5
 --- !u!114 &24146304
 MonoBehaviour:
@@ -6427,6 +6426,99 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2713892456430955657, guid: 51e8a35ceb963984aa4c0b7ca7d42082, type: 3}
   m_PrefabInstance: {fileID: 229092328}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &242611443
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 242611444}
+  - component: {fileID: 242611446}
+  - component: {fileID: 242611445}
+  m_Layer: 6
+  m_Name: Terrain
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &242611444
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 242611443}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -449, y: -35, z: -679}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 647821229}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!154 &242611445
+TerrainCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 242611443}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_TerrainData: {fileID: 15600000, guid: 163b6949a67054a45991dc4e63ffec3e, type: 2}
+  m_EnableTreeColliders: 1
+--- !u!218 &242611446
+Terrain:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 242611443}
+  m_Enabled: 1
+  serializedVersion: 6
+  m_TerrainData: {fileID: 15600000, guid: 163b6949a67054a45991dc4e63ffec3e, type: 2}
+  m_TreeDistance: 5000
+  m_TreeBillboardDistance: 50
+  m_TreeCrossFadeLength: 5
+  m_TreeMaximumFullLODCount: 50
+  m_DetailObjectDistance: 80
+  m_DetailObjectDensity: 1
+  m_HeightmapPixelError: 5
+  m_SplatMapDistance: 1000
+  m_HeightmapMinimumLODSimplification: 0
+  m_HeightmapMaximumLOD: 0
+  m_ShadowCastingMode: 2
+  m_DrawHeightmap: 1
+  m_DrawInstanced: 0
+  m_DrawTreesAndFoliage: 1
+  m_StaticShadowCaster: 0
+  m_IgnoreQualitySettings: 0
+  m_ReflectionProbeUsage: 1
+  m_MaterialTemplate: {fileID: 2100000, guid: 594ea882c5a793440b60ff72d896021e, type: 2}
+  m_BakeLightProbesForTrees: 1
+  m_PreserveTreePrototypeLayers: 0
+  m_DeringLightProbesForTrees: 1
+  m_ReceiveGI: 1
+  m_ScaleInLightmap: 0.0256
+  m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
+  m_GroupingID: 0
+  m_RenderingLayerMask: 1
+  m_AllowAutoConnect: 1
+  m_EnableHeightmapRayTracing: 1
+  m_EnableTreesAndDetailsRayTracing: 0
+  m_TreeMotionVectorModeOverride: 3
 --- !u!1 &251051011
 GameObject:
   m_ObjectHideFlags: 0
@@ -12140,6 +12232,10 @@ PrefabInstance:
       value: 0.0000000022972797
       objectReference: {fileID: 0}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 985221259}
+    - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_Force
       value: 12
       objectReference: {fileID: 0}
@@ -12147,6 +12243,10 @@ PrefabInstance:
       propertyPath: exhaustVFX
       value: 
       objectReference: {fileID: 595704616}
+    - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
+      propertyPath: virtualCam
+      value: 
+      objectReference: {fileID: 1737110040}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_StuckTime
       value: 5
@@ -12193,11 +12293,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_RotationForce
-      value: 8
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_GravityConstant
-      value: 12
+      value: 27
       objectReference: {fileID: 0}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_RaycastDistance
@@ -12216,12 +12316,24 @@ PrefabInstance:
       value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
+      propertyPath: gravityLayers.m_Bits
+      value: 2147485696
+      objectReference: {fileID: 0}
+    - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_MagnitudeTurnLimit
       value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
+      propertyPath: raycastLayers.m_Bits
+      value: 2147483648
+      objectReference: {fileID: 0}
+    - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_BoostImmediateForce
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
+      propertyPath: rotationLayers.m_Bits
+      value: 2147486784
       objectReference: {fileID: 0}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_DriftingRotationAngle
@@ -12705,18 +12817,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e477c7622bbb2ac4cae67136ef28dc09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CPUKart
-  ShowTopMostFoldoutHeaderGroup: 1
-  laps:
-    m_InternalValue: 0
-  actualCheckpoint:
-    m_InternalValue: 0
-  Position:
-    m_InternalValue: 0
   centerOfMass: {fileID: 97688485}
   Nozzle: {fileID: 0}
-  raycastLayers:
+  gravityLayers:
     serializedVersion: 2
-    m_Bits: 2147483648
+    m_Bits: 0
+  rotationLayers:
+    serializedVersion: 2
+    m_Bits: 0
   rightParticles: {fileID: 2009199646}
   leftParticles: {fileID: 1422326784}
   exhaustVFX: {fileID: 962696088}
@@ -13774,7 +13882,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e7e025d8bdd374e93355fb4f0e9ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RaceCheckpoint
-  ShowTopMostFoldoutHeaderGroup: 1
   index: 0
 --- !u!1 &588039089
 GameObject:
@@ -14269,6 +14376,7 @@ Transform:
   - {fileID: 1132293131}
   - {fileID: 1076288446}
   - {fileID: 1664019317}
+  - {fileID: 242611444}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &669452427
@@ -15118,7 +15226,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e7e025d8bdd374e93355fb4f0e9ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RaceCheckpoint
-  ShowTopMostFoldoutHeaderGroup: 1
   index: 15
 --- !u!65 &732952466
 BoxCollider:
@@ -15490,7 +15597,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e7e025d8bdd374e93355fb4f0e9ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RaceCheckpoint
-  ShowTopMostFoldoutHeaderGroup: 1
   index: 12
 --- !u!65 &772184303
 BoxCollider:
@@ -16517,7 +16623,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e7e025d8bdd374e93355fb4f0e9ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RaceCheckpoint
-  ShowTopMostFoldoutHeaderGroup: 1
   index: 13
 --- !u!65 &889605877
 BoxCollider:
@@ -16607,7 +16712,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e7e025d8bdd374e93355fb4f0e9ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RaceCheckpoint
-  ShowTopMostFoldoutHeaderGroup: 1
   index: 6
 --- !u!114 &891872018
 MonoBehaviour:
@@ -16767,7 +16871,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e7e025d8bdd374e93355fb4f0e9ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RaceCheckpoint
-  ShowTopMostFoldoutHeaderGroup: 1
   index: 8
 --- !u!114 &926794831
 MonoBehaviour:
@@ -22189,9 +22292,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c421618551040be4a8c43f0e4d19ae43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PositionsManager
-  ShowTopMostFoldoutHeaderGroup: 1
-  started:
-    m_InternalValue: 0
   checkpoints:
   - {fileID: 582238419}
   - {fileID: 1303976260}
@@ -22251,6 +22351,11 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!20 &985221259 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 4957525831573528922, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
+  m_PrefabInstance: {fileID: 412543408}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &994448223
 GameObject:
   m_ObjectHideFlags: 0
@@ -22575,7 +22680,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e7e025d8bdd374e93355fb4f0e9ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RaceCheckpoint
-  ShowTopMostFoldoutHeaderGroup: 1
   index: 3
 --- !u!114 &1031990865
 MonoBehaviour:
@@ -23901,7 +24005,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e7e025d8bdd374e93355fb4f0e9ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RaceCheckpoint
-  ShowTopMostFoldoutHeaderGroup: 1
   index: 10
 --- !u!65 &1185498426
 BoxCollider:
@@ -25261,7 +25364,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e7e025d8bdd374e93355fb4f0e9ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RaceCheckpoint
-  ShowTopMostFoldoutHeaderGroup: 1
   index: 1
 --- !u!114 &1303976261
 MonoBehaviour:
@@ -25790,7 +25892,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e7e025d8bdd374e93355fb4f0e9ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RaceCheckpoint
-  ShowTopMostFoldoutHeaderGroup: 1
   index: 2
 --- !u!114 &1329611391
 MonoBehaviour:
@@ -32495,7 +32596,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e7e025d8bdd374e93355fb4f0e9ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RaceCheckpoint
-  ShowTopMostFoldoutHeaderGroup: 1
   index: 4
 --- !u!114 &1488382608
 MonoBehaviour:
@@ -33009,18 +33109,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e477c7622bbb2ac4cae67136ef28dc09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CPUKart
-  ShowTopMostFoldoutHeaderGroup: 1
-  laps:
-    m_InternalValue: 0
-  actualCheckpoint:
-    m_InternalValue: 0
-  Position:
-    m_InternalValue: 0
   centerOfMass: {fileID: 1186382055}
   Nozzle: {fileID: 0}
-  raycastLayers:
+  gravityLayers:
     serializedVersion: 2
-    m_Bits: 2147483648
+    m_Bits: 0
+  rotationLayers:
+    serializedVersion: 2
+    m_Bits: 0
   rightParticles: {fileID: 252892777}
   leftParticles: {fileID: 1923625371}
   exhaustVFX: {fileID: 149490578}
@@ -33340,7 +33436,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e7e025d8bdd374e93355fb4f0e9ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RaceCheckpoint
-  ShowTopMostFoldoutHeaderGroup: 1
   index: 14
 --- !u!65 &1557114806
 BoxCollider:
@@ -33519,7 +33614,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e7e025d8bdd374e93355fb4f0e9ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RaceCheckpoint
-  ShowTopMostFoldoutHeaderGroup: 1
   index: 9
 --- !u!114 &1575825472
 MonoBehaviour:
@@ -34753,7 +34847,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e7e025d8bdd374e93355fb4f0e9ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RaceCheckpoint
-  ShowTopMostFoldoutHeaderGroup: 1
   index: 16
 --- !u!65 &1681388859
 BoxCollider:
@@ -35069,6 +35162,11 @@ Transform:
   - {fileID: 147146501}
   m_Father: {fileID: 1049544753}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1737110040 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3126331460264618300, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
+  m_PrefabInstance: {fileID: 412543408}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1754328854 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1691451409165826975, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
@@ -35204,7 +35302,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e7e025d8bdd374e93355fb4f0e9ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RaceCheckpoint
-  ShowTopMostFoldoutHeaderGroup: 1
   index: 7
 --- !u!1 &1764167263
 GameObject:
@@ -35787,7 +35884,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e7e025d8bdd374e93355fb4f0e9ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RaceCheckpoint
-  ShowTopMostFoldoutHeaderGroup: 1
   index: 11
 --- !u!65 &1815010236
 BoxCollider:
@@ -70142,18 +70238,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e477c7622bbb2ac4cae67136ef28dc09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CPUKart
-  ShowTopMostFoldoutHeaderGroup: 1
-  laps:
-    m_InternalValue: 0
-  actualCheckpoint:
-    m_InternalValue: 0
-  Position:
-    m_InternalValue: 0
   centerOfMass: {fileID: 1691451409797335601}
   Nozzle: {fileID: 0}
-  raycastLayers:
+  gravityLayers:
     serializedVersion: 2
-    m_Bits: 2147483648
+    m_Bits: 0
+  rotationLayers:
+    serializedVersion: 2
+    m_Bits: 0
   rightParticles: {fileID: 6367780099158335854}
   leftParticles: {fileID: 4515069374130924504}
   exhaustVFX: {fileID: 4474405624241673906}

@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class ThrottleKartState : DriveKartState
 {
-    public override void ApplyThrottle(Rigidbody kartRB, bool isThrottling, bool isGrounded, bool isDrifting, bool isReversing, float maxForce, float maxTurnForce, float reverseForce, float airMultiplier, float targetSpeed, float maxBoosterMultiplier, float accelerationRate, float maxTurnCounterForce)
+    public override void ApplyThrottle(Rigidbody kartRB, Vector3 centerOfMass, bool isThrottling, bool isGrounded, bool isDrifting, bool isReversing, float raycastDistance, float maxForce, float maxTurnForce, float reverseForce, float airMultiplier, float targetSpeed, float maxBoosterMultiplier, float accelerationRate, float maxTurnCounterForce, LayerMask rotationLayers, LayerMask gravityLayers)
     {
-        base.ApplyThrottle(kartRB, isThrottling, isGrounded, isDrifting, isReversing, maxForce, maxTurnForce, reverseForce, airMultiplier, targetSpeed, maxBoosterMultiplier, accelerationRate, maxTurnCounterForce);
+        base.ApplyThrottle(kartRB, centerOfMass, isThrottling, isGrounded, isDrifting, isReversing, raycastDistance, maxForce, maxTurnForce, reverseForce, airMultiplier, targetSpeed, maxBoosterMultiplier, accelerationRate, maxTurnCounterForce, rotationLayers, gravityLayers);
 
         Vector3 velocity = Vector3.zero;
 

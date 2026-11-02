@@ -119,6 +119,47 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &249827602 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3126331460264618300, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
+  m_PrefabInstance: {fileID: 790118978}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &320280095
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 320280096}
+  m_Layer: 0
+  m_Name: Checkpoints
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &320280096
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320280095}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.14894, y: 2.2841, z: 8.30465}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!198 &414130047 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4515069374993128054, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
+  m_PrefabInstance: {fileID: 790118978}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &421794971
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,6 +298,7 @@ GameObject:
   - component: {fileID: 477280542}
   - component: {fileID: 477280541}
   - component: {fileID: 477280540}
+  - component: {fileID: 477280543}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -325,6 +367,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &477280543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477280539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c421618551040be4a8c43f0e4d19ae43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PositionsManager
+  checkpoints: []
+  fallLimitYValue: -100
+--- !u!198 &592456336 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6367780099118731456, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
+  m_PrefabInstance: {fileID: 790118978}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &653957686 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2827617119004407297, guid: 9fd0761d728f3f54e9282e86d9fc7d23, type: 3}
@@ -365,6 +426,10 @@ PrefabInstance:
       value: 359762652
       objectReference: {fileID: 0}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 1419625767}
+    - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_Force
       value: 12
       objectReference: {fileID: 0}
@@ -372,6 +437,10 @@ PrefabInstance:
       propertyPath: exhaustVFX
       value: 
       objectReference: {fileID: 2088232656}
+    - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
+      propertyPath: virtualCam
+      value: 
+      objectReference: {fileID: 249827602}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_StuckTime
       value: 5
@@ -387,7 +456,7 @@ PrefabInstance:
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: leftParticles
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 414130047}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_TargetSpeed
       value: 27
@@ -399,7 +468,7 @@ PrefabInstance:
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: rightParticles
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 592456336}
     - target: {fileID: 2482036718828327940, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
       propertyPath: m_RotationAngle
       value: 50
@@ -581,6 +650,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 653957690}
   m_SourcePrefab: {fileID: 100100000, guid: 9fd0761d728f3f54e9282e86d9fc7d23, type: 3}
+--- !u!20 &1419625767 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 4957525831573528922, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
+  m_PrefabInstance: {fileID: 790118978}
+  m_PrefabAsset: {fileID: 0}
 --- !u!198 &2088232656 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 4474405623471744796, guid: 0e2a2e7f03b0b2c4b9fc98ff748d7c66, type: 3}
@@ -755,3 +829,4 @@ SceneRoots:
   - {fileID: 2227028143885862306}
   - {fileID: 6616840662039191472}
   - {fileID: 477280542}
+  - {fileID: 320280096}
