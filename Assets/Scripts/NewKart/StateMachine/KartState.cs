@@ -16,11 +16,11 @@ public class KartState
         kartRB.linearVelocity = Vector3.zero;
     }
 
-    public virtual void ApplyThrottle(Rigidbody kartRB, Vector3 centerOfMass, bool isThrottling, bool isGrounded, bool isDrifting, bool isReversing, float raycastDistance, float maxForce, float maxTurnForce, float reverseForce, float airMultiplier, float targetSpeed, float maxBoosterMultiplier, float accelerationRate, float maxTurnCounterForce, LayerMask rotationLayers, LayerMask gravityLayers) { }
+    public virtual void ApplyThrottle(Rigidbody kartRB, Vector3 centerOfMass, Vector3 input, bool isThrottling, bool isGrounded, bool isDrifting, bool isReversing, float raycastDistance, float maxForce, float maxTurnForce, float reverseForce, float airMultiplier, float targetSpeed, float maxBoosterMultiplier, float accelerationRate, float maxTurnCounterForce, LayerMask rotationLayers, LayerMask gravityLayers) { }
 
     public virtual void ApplyReverse(Rigidbody kartRB, bool isReversing, bool isGrounded, float reverseForce, float airMultiplier, float targetSpeed, float maxBoosterMultiplier, float accelerationRate) { }
 
-    public virtual void ApplyRotation(Rigidbody kartRB, Vector3 centerOfMass, Vector3 input, bool isThrottling, float raycastDistance, float rotationForce, float targetSpeed, LayerMask rotationLayers, LayerMask gravityLayers) { }
+    public virtual void ApplyRotation(Rigidbody kartRB, Transform rightWheel, Transform leftWheel, Vector3 centerOfMass, Vector3 input, Vector3 normal, bool contact, bool isThrottling, bool isGrounded, int contactLayer, float raycastDistance, float rotationForce, float targetSpeed, LayerMask rotationLayers, LayerMask gravityLayers) { }
 
     public virtual void ApplyDrift(Rigidbody kartRB, Vector2 move, bool isDrifting, bool isGrounded, bool boostActive, bool driftBoostActive, out bool exhaustVFXActive, bool exhaustVFX, out bool rightParticlesActive, bool rightParticles, out bool leftParticlesActive, bool leftParticles, out bool driftInitiated, float boostImmediateForce, float driftThrottleUpperThreshold, float driftThrottleLowerThreshold, out float maxRotationAngle, out float maxDriftingTime, out float maxBoosterTime, out float maxBoosterMultiplier, float boosterTime, float boosterMultiplier, float rotationAngle, float driftingRotationAngle, float driftingTime)
     {
@@ -39,20 +39,20 @@ public class KartState
 
     public virtual void ApplyTrackGravity(Rigidbody kartRB, Vector3 centerOfMass, float raycastDistance, float gravityConstant, LayerMask rotationLayers, LayerMask gravityLayers)
     {
-        //RaycastHit gravityHit, rotationHit;
-        //bool gravity = Physics.Raycast(centerOfMass, -kartRB.transform.up, out gravityHit, raycastDistance, gravityLayers);
-        //bool rotation = Physics.Raycast(centerOfMass, -kartRB.transform.up, out rotationHit, raycastDistance, rotationLayers);
+        RaycastHit gravityHit, rotationHit;
+        bool gravity = Physics.Raycast(centerOfMass, -kartRB.transform.up, out gravityHit, raycastDistance, gravityLayers);
+        bool rotation = Physics.Raycast(centerOfMass, -kartRB.transform.up, out rotationHit, raycastDistance, rotationLayers);
 
-        //if (rotation && !gravity)
-        //{
-        //    gravityVariable = Mathf.Lerp(gravityVariable, gravityConstant * 5f, Time.fixedDeltaTime);
-        //    kartRB.AddForce(Vector3.down * gravityVariable, ForceMode.Acceleration);
-        //    return;
-        //}
-        //if(gravity)
-        //{
-        //    gravityVariable = gravityConstant;
-        //}
+        if (rotation && !gravity)
+        {
+            gravityVariable = Mathf.Lerp(gravityVariable, gravityConstant * 4f, Time.fixedDeltaTime);
+            kartRB.AddForce(Vector3.down * gravityVariable, ForceMode.Acceleration);
+            return;
+        }
+        if (gravity)
+        {
+            gravityVariable = gravityConstant;
+        }
 
         RaycastHit hit;
         if (Physics.Raycast(centerOfMass, kartRB.transform.forward, out hit, raycastDistance, gravityLayers) || Physics.Raycast(centerOfMass, -kartRB.transform.up, out hit, raycastDistance, gravityLayers))

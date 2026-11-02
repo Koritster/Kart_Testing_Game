@@ -18,7 +18,7 @@ public class ReverseKartState : DriveKartState
             velocity *= airMultiplier;
         }
 
-        if (kartRB.linearVelocity.magnitude < targetSpeed)
+        if (kartRB.linearVelocity.magnitude < targetSpeed * 0.5f)
             kartRB.AddForce(velocity * maxBoosterMultiplier * accelerationRate, ForceMode.Force);
     }
 }

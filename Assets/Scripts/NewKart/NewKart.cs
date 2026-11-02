@@ -33,9 +33,10 @@ public class NewKart : MonoBehaviour
     bool boostActive, isGrounded, groundBoostActive, driftBoostActive, driftInitiated, exhaustVFXActive, rightParticlesActive, leftParticlesActive, checkForStuckKart;
 
     protected Vector2 move;
-    protected Vector3 m_Input;
-    protected bool throttle, reverse, drift, kartStuck;
+    protected Vector3 m_Input, m_CollisionNormal;
+    protected bool throttle, reverse, drift, kartStuck, kartCollision;
     protected float m_MaxForce, m_MaxTurnForce, m_MaxTurnCounterForce, m_MaxDriftingTime, m_MaxBoosterTime, m_MaxBoosterMultiplier, m_MaxRotationAngle, m_MaxStuckTime;
+    protected int m_CollisionLayer;
 
     protected InitialKartState initialKartState;
     protected DriveKartState driveKartState;
@@ -44,6 +45,8 @@ public class NewKart : MonoBehaviour
 
     public Transform centerOfMass;
     public Transform Nozzle;
+    public Transform RightWheel;
+    public Transform LeftWheel;
     public LayerMask gravityLayers;
     public LayerMask rotationLayers;
     public ParticleSystem rightParticles, leftParticles, exhaustVFX;
@@ -111,20 +114,20 @@ public class NewKart : MonoBehaviour
         if (!IsServer) return;
 #endif
 
-        stateMachine.currentState.ApplyThrottle(m_Rigidbody, centerOfMass.position, throttle, isGrounded, driftInitiated, reverse, m_RaycastDistance, m_MaxForce, m_MaxTurnForce, m_ReverseForce, m_AirMultiplier, m_TargetSpeed, m_MaxBoosterMultiplier, m_AccelerationRate, m_MaxTurnCounterForce, rotationLayers, gravityLayers);
+        stateMachine.currentState.ApplyThrottle(m_Rigidbody, centerOfMass.position, m_Input, throttle, isGrounded, driftInitiated, reverse, m_RaycastDistance, m_MaxForce, m_MaxTurnForce, m_ReverseForce, m_AirMultiplier, m_TargetSpeed, m_MaxBoosterMultiplier, m_AccelerationRate, m_MaxTurnCounterForce, rotationLayers, gravityLayers);
         stateMachine.currentState.ApplyReverse(m_Rigidbody, reverse, isGrounded, m_ReverseForce, m_AirMultiplier, m_TargetSpeed, m_MaxBoosterMultiplier, m_AccelerationRate);
-        stateMachine.currentState.ApplyRotation(m_Rigidbody, centerOfMass.position, m_Input, throttle, m_RaycastDistance, m_RotationForce, m_TargetSpeed, rotationLayers, gravityLayers);
+        stateMachine.currentState.ApplyRotation(m_Rigidbody, RightWheel, LeftWheel, centerOfMass.position, m_Input, m_CollisionNormal, kartCollision, throttle, isGrounded, m_CollisionLayer, m_RaycastDistance, m_RotationForce, m_TargetSpeed, rotationLayers, gravityLayers);
         stateMachine.currentState.ApplyTrackGravity(m_Rigidbody, centerOfMass.position, m_RaycastDistance, m_GravityConstant, rotationLayers, gravityLayers);
         kartStuck = stateMachine.currentState.CheckIfKartIsStuck(m_Rigidbody, throttle, m_StuckTime, out m_MaxStuckTime, m_MaxStuckTime, m_TargetSpeed);
         //stateMachine.currentState.ApplyDrift(m_Rigidbody, move, drift, isGrounded, boostActive, driftBoostActive, out exhaustVFXActive, exhaustVFXActive, out rightParticlesActive, rightParticlesActive, out leftParticlesActive, leftParticlesActive, out driftInitiated, m_BoostImmediateForce, m_DriftThrottleUpperThreshold, m_DriftThrottleLowerThreshold, out m_MaxRotationAngle, out m_MaxDriftingTime, out m_MaxBoosterTime, out m_MaxBoosterMultiplier, m_BoosterTime, m_BoosterMultiplier, m_RotationAngle, m_DriftingRotationAngle, m_DriftingTime);
         if (stateMachine.currentState != reverseKartState)
         {
             ApplyDrift();
-            //ShowParticleEffects(exhaustVFXActive, rightParticlesActive, leftParticlesActive);
+            ShowParticleEffects(exhaustVFXActive, rightParticlesActive, leftParticlesActive);
         }
         if(stateMachine.currentState == driveKartState)
         {
-            //ShowParticleEffects(exhaustVFXActive, false, false);
+            ShowParticleEffects(exhaustVFXActive, false, false);
         }
     }
 
@@ -152,6 +155,7 @@ public class NewKart : MonoBehaviour
         exhaustVFXActive = false;
         rightParticlesActive = false;
         leftParticlesActive = false;
+        kartCollision = false;
         m_MaxBoosterTime = 0;
         m_MaxDriftingTime = m_DriftingTime;
         m_MaxBoosterMultiplier = 1;
@@ -184,17 +188,37 @@ public class NewKart : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        #if DEBUG_FEATURE
+#if DEBUG_FEATURE
         if (!IsServer) return;
 #endif
 
-        if (groundBoostActive && isGrounded && stateMachine.currentState == throttleKartState)
+        if (groundBoostActive && stateMachine.currentState != initialKartState)
         {
             //APPLY GROUND LANDING BOOST
             stateMachine.currentState.ApplyBoost(m_Rigidbody, m_BoostImmediateForce * 0.5f, 0.5f, out boostActive, out m_MaxBoosterTime, out m_MaxBoosterMultiplier, m_BoosterTime, m_BoosterMultiplier);
             exhaustVFXActive = boostActive;
             groundBoostActive = false;
         }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+#if DEBUG_FEATURE
+        if (!IsServer) return;
+#endif
+
+        kartCollision = true;
+        m_CollisionNormal = collision.GetContact(0).normal;
+        m_CollisionLayer = collision.GetContact(0).otherCollider.gameObject.layer;
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+#if DEBUG_FEATURE
+        if (!IsServer) return;
+#endif
+
+        kartCollision = false;
     }
 
     private void ShowParticleEffects(bool exhaustVFXActive, bool rightParticlesActive, bool leftParticlesActive)

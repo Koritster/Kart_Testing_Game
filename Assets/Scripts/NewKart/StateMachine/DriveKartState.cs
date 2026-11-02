@@ -3,37 +3,39 @@ using UnityEngine.Windows;
 
 public class DriveKartState : KartState
 {
-    public override void ApplyRotation(Rigidbody kartRB, Vector3 centerOfMass, Vector3 input, bool isThrottling, float raycastDistance, float rotationForce, float targetSpeed, LayerMask rotationLayers, LayerMask gravityLayers)
+    public override void ApplyRotation(Rigidbody kartRB, Transform rightWheel, Transform leftWheel, Vector3 centerOfMass, Vector3 input, Vector3 normal, bool contact, bool isThrottling, bool isGrounded, int contactLayer, float raycastDistance, float rotationForce, float targetSpeed, LayerMask rotationLayers, LayerMask gravityLayers)
     {
-        base.ApplyRotation(kartRB, centerOfMass, input, isThrottling, raycastDistance, rotationForce, targetSpeed, rotationLayers, gravityLayers);
+        base.ApplyRotation(kartRB, rightWheel, leftWheel, centerOfMass, input, normal, contact, isThrottling, isGrounded, contactLayer, raycastDistance, rotationForce, targetSpeed, rotationLayers, gravityLayers);
 
-        RaycastHit hit;
+        //RaycastHit hit;
+        rightWheel.transform.rotation = Quaternion.LookRotation(input);
+        leftWheel.transform.rotation = Quaternion.LookRotation(input);
 
-        if (kartRB.linearVelocity.magnitude < targetSpeed * 0.15f)
+        //if (contact && kartRB.linearVelocity.magnitude < targetSpeed * 0.05f && (gravityLayers & (1 << contactLayer)) == 0)
+        //{
+        //    kartRB.rotation = Quaternion.Slerp(kartRB.rotation, Quaternion.LookRotation(input), Time.fixedDeltaTime * rotationForce * 0.25f);
+        //    return;
+        //}
+
+        //if (isGrounded && Physics.Raycast(centerOfMass, -kartRB.transform.up, out hit, raycastDistance, rotationLayers))
+        //{
+        //    Quaternion gravityRotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+        //    Quaternion inputRotation = Quaternion.LookRotation(input);
+        //    Quaternion combinedRotation = gravityRotation * inputRotation;
+        //    kartRB.rotation = Quaternion.Slerp(kartRB.rotation, combinedRotation, Time.fixedDeltaTime * rotationForce);
+        //    return;
+        //}
+
+        if (contact && (rotationLayers & (1 << contactLayer)) != 0)
         {
-            kartRB.rotation = Quaternion.Lerp(kartRB.rotation, Quaternion.LookRotation(input), Time.fixedDeltaTime * rotationForce);
-            return;
-        }
-
-        if (Physics.Raycast(centerOfMass, kartRB.transform.forward, out hit, raycastDistance * 1.5f, rotationLayers))
-        {
-            Quaternion gravityRotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+            Quaternion gravityRotation = Quaternion.FromToRotation(Vector3.up, normal);
             Quaternion inputRotation = Quaternion.LookRotation(input);
             Quaternion combinedRotation = gravityRotation * inputRotation;
-            kartRB.rotation = Quaternion.Lerp(kartRB.rotation, combinedRotation, Time.fixedDeltaTime * rotationForce * 1.25f);
+            kartRB.rotation = Quaternion.Slerp(kartRB.rotation, combinedRotation, Time.fixedDeltaTime * rotationForce * 1.5f);
             return;
         }
 
-        if (Physics.Raycast(centerOfMass, -kartRB.transform.up, out hit, raycastDistance, rotationLayers))
-        {
-            Quaternion gravityRotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
-            Quaternion inputRotation = Quaternion.LookRotation(input);
-            Quaternion combinedRotation = gravityRotation * inputRotation;
-            kartRB.rotation = Quaternion.Lerp(kartRB.rotation, combinedRotation, Time.fixedDeltaTime * rotationForce);
-            return;
-        }
-
-        kartRB.rotation = Quaternion.Lerp(kartRB.rotation, Quaternion.LookRotation(input), Time.fixedDeltaTime * rotationForce);
+        kartRB.rotation = Quaternion.Slerp(kartRB.rotation, Quaternion.LookRotation(input), Time.fixedDeltaTime * rotationForce);
     }
 
     public override void ApplyBoost(Rigidbody kartRB, float boostImmediateForce, float boostTimeMultiplier, out bool boostActive, out float maxBoosterTime, out float maxBoosterMultiplier, float boosterTime, float boosterMultiplier)
