@@ -87,7 +87,7 @@ public class NewKart : MonoBehaviour
 #if DEBUG_FEATURE
         if (!IsServer)
 #endif
-            PositionsManager.instance.RegisterKart(this);
+            //PositionsManager.instance.RegisterKart(this);
     }
 
     public virtual void Update()
@@ -124,6 +124,13 @@ public class NewKart : MonoBehaviour
         {
             ApplyDrift();
             ShowParticleEffects(exhaustVFXActive, rightParticlesActive, leftParticlesActive);
+        }
+        else
+        {
+            boostActive = false;
+            groundBoostActive = false;
+            driftBoostActive = false;
+            drift = false;
         }
         if(stateMachine.currentState == driveKartState)
         {

@@ -10653,10 +10653,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineOrbitalFollow
   TargetOffset: {x: 0, y: 0, z: 0}
   TrackerSettings:
-    BindingMode: 1
+    BindingMode: 3
     PositionDamping: {x: 0, y: 0, z: 0}
     AngularDampingMode: 0
-    RotationDamping: {x: 0, y: 5, z: 0}
+    RotationDamping: {x: 4, y: 5, z: 4}
     QuaternionDamping: 1
   OrbitStyle: 0
   Radius: 5
@@ -10671,7 +10671,7 @@ MonoBehaviour:
       Radius: 2.5
       Height: 0.1
     SplineCurvature: 0.5
-  RecenteringTarget: 2
+  RecenteringTarget: 3
   HorizontalAxis:
     Value: 0
     Center: 0
@@ -11226,7 +11226,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 2147483767
+    m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -18049,7 +18049,6 @@ GameObject:
   - component: {fileID: 6784735772859011882}
   - component: {fileID: -1275289677290428019}
   - component: {fileID: 2482036718828327940}
-  - component: {fileID: 2870337828850430000}
   m_Layer: 0
   m_Name: ProtoKartv2
   m_TagString: Untagged
@@ -18173,6 +18172,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 79f36d6b-faea-4efa-bdf6-eb66ec85aca2
     m_ActionName: 'Kart/Reverse[/Mouse/rightButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 098b7834-734d-41d7-81af-d27a95f1b440
+    m_ActionName: 'Kart/UseItems[/Keyboard/e]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Kart
@@ -18215,40 +18218,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fa8aab2a0f81924c88ba141d2258295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  laps:
-    m_InternalValue: 0
-  actualCheckpoint:
-    m_InternalValue: 0
-  Position:
-    m_InternalValue: 0
   centerOfMass: {fileID: 1691451409165826975}
   Nozzle: {fileID: 0}
-  raycastLayers:
+  RightWheel: {fileID: 24996097916511045}
+  LeftWheel: {fileID: 8299552639148603399}
+  gravityLayers:
     serializedVersion: 2
-    m_Bits: 2147483648
+    m_Bits: 2147485696
+  rotationLayers:
+    serializedVersion: 2
+    m_Bits: 2147486784
   rightParticles: {fileID: 6367780099118731456}
   leftParticles: {fileID: 4515069374993128054}
   exhaustVFX: {fileID: 4474405623471744796}
   m_RaycastDistance: 0.5
-  m_AccelerationRate: 3
-  m_TargetSpeed: 20
-  m_Force: 10
+  m_AccelerationRate: 5
+  m_TargetSpeed: 25
+  m_Force: 12
   m_ReverseForce: 10
-  m_TurnForce: 12
-  m_BoostImmediateForce: 14
-  m_MagnitudeTurnLimit: 10
-  m_TurnCounterForce: 0.4
-  m_GravityConstant: 9.81
+  m_TurnForce: 10
+  m_BoostImmediateForce: 12
+  m_MagnitudeTurnLimit: 12
+  m_TurnCounterForce: 0.5
+  m_GravityConstant: 18
   m_RotationAngle: 45
   m_DriftingRotationAngle: 65
   m_DriftingTime: 0.5
-  m_RotationForce: 4
+  m_RotationForce: 1.5
   m_BoosterTime: 0.3
   m_BoosterMultiplier: 1.5
   m_AirMultiplier: 0.5
   m_DriftThrottleUpperThreshold: 10
   m_DriftThrottleLowerThreshold: 8
+  m_StuckTime: 5
+  cam: {fileID: 4957525831573528922}
+  virtualCam: {fileID: 3126331460264618300}
 --- !u!1 &8852320416513257911
 GameObject:
   m_ObjectHideFlags: 0
@@ -18430,15 +18434,5 @@ PrefabInstance:
 --- !u!4 &3519221442766047174 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7820753747013667498, guid: 6d1e78e31a75f424fa5e1714edd019c8, type: 3}
-  m_PrefabInstance: {fileID: 6655809360352775532}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5375597829884546638 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1641521277710435106, guid: 6d1e78e31a75f424fa5e1714edd019c8, type: 3}
-  m_PrefabInstance: {fileID: 6655809360352775532}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8317277246361586622 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3401001463749428946, guid: 6d1e78e31a75f424fa5e1714edd019c8, type: 3}
   m_PrefabInstance: {fileID: 6655809360352775532}
   m_PrefabAsset: {fileID: 0}

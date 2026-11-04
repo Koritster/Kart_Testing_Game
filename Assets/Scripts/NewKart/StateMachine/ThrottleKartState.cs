@@ -8,33 +8,33 @@ public class ThrottleKartState : DriveKartState
 
         Vector3 velocity = Vector3.zero;
 
-        RaycastHit gravityHit, rotationHit;
-        bool gravity = Physics.Raycast(centerOfMass, -kartRB.transform.up, out gravityHit, raycastDistance, gravityLayers);
-        bool rotation = Physics.Raycast(centerOfMass, -kartRB.transform.up, out rotationHit, raycastDistance, rotationLayers);
+        //RaycastHit gravityHit, rotationHit;
+        //bool gravity = Physics.Raycast(centerOfMass, -kartRB.transform.up, out gravityHit, raycastDistance, gravityLayers);
+        //bool rotation = Physics.Raycast(centerOfMass, -kartRB.transform.up, out rotationHit, raycastDistance, rotationLayers);
 
-        if (rotation && !gravity)
-        {
-            accelerationVariable = Mathf.Lerp(accelerationVariable, accelerationRate * 0.95f, Time.fixedDeltaTime);
-        }
-        if (gravity)
-        {
-            accelerationVariable = accelerationRate;
-        }
+        //if (rotation && !gravity)
+        //{
+        //    accelerationVariable = Mathf.Lerp(accelerationVariable, accelerationRate * 0.95f, Time.fixedDeltaTime);
+        //}
+        //if (gravity)
+        //{
+        //    accelerationVariable = accelerationRate;
+        //}
 
         if (isThrottling)
         {
-            velocity = input.normalized * maxForce;
+            velocity = kartRB.transform.forward * maxForce;
         }
 
         if (isDrifting)
         {
-            velocity = input.normalized * maxTurnForce;
+            velocity = kartRB.transform.forward * maxTurnForce;
             kartRB.AddForce(-kartRB.linearVelocity * maxTurnCounterForce, ForceMode.Force);
         }
 
         if (isReversing)
         {
-            velocity = -input.normalized * reverseForce;
+            velocity = -kartRB.transform.forward * reverseForce;
         }
 
         if (!isGrounded)

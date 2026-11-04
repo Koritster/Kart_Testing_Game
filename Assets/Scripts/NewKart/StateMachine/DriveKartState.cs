@@ -28,14 +28,14 @@ public class DriveKartState : KartState
 
         if (contact && (rotationLayers & (1 << contactLayer)) != 0)
         {
-            Quaternion gravityRotation = Quaternion.FromToRotation(Vector3.up, normal);
-            Quaternion inputRotation = Quaternion.LookRotation(input);
-            Quaternion combinedRotation = gravityRotation * inputRotation;
-            kartRB.rotation = Quaternion.Slerp(kartRB.rotation, combinedRotation, Time.fixedDeltaTime * rotationForce * 1.5f);
+            //Quaternion gravityRotation = Quaternion.FromToRotation(Vector3.up, normal);
+            Quaternion inputRotation = Quaternion.LookRotation(input, normal);
+            //Quaternion combinedRotation = gravityRotation * inputRotation;
+            kartRB.transform.localRotation = Quaternion.Lerp(kartRB.transform.localRotation, inputRotation, Time.fixedDeltaTime * rotationForce * 1.5f);
             return;
         }
 
-        kartRB.rotation = Quaternion.Slerp(kartRB.rotation, Quaternion.LookRotation(input), Time.fixedDeltaTime * rotationForce);
+        kartRB.rotation = Quaternion.Lerp(kartRB.rotation, Quaternion.LookRotation(input), Time.fixedDeltaTime * rotationForce);
     }
 
     public override void ApplyBoost(Rigidbody kartRB, float boostImmediateForce, float boostTimeMultiplier, out bool boostActive, out float maxBoosterTime, out float maxBoosterMultiplier, float boosterTime, float boosterMultiplier)

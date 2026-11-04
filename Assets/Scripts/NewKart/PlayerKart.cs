@@ -59,11 +59,26 @@ public class PlayerKart : NewKart
 
         base.CalculateMoveInput();
 
+        Debug.Log(cam.transform.eulerAngles.y);
         float angleLimit = Mathf.Clamp(Mathf.Atan2(move.x, move.y) * Mathf.Rad2Deg, -m_MaxRotationAngle, m_MaxRotationAngle);
-        float targetAngle = angleLimit + cam.transform.eulerAngles.y;
-        m_Input = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-        
-        Debug.Log($"m_Input {m_Input}");
+        float targetAngleY = angleLimit + cam.transform.eulerAngles.y;
+        m_Input = Quaternion.Euler(0, targetAngleY, 0) * Vector3.forward;
+        //m_Input = Quaternion.AngleAxis(targetAngleY, cam.transform.up) * Vector3.forward;
+
+        if (!kartCollision)
+            return;
+
+        Vector3 camForward = Vector3.ProjectOnPlane(cam.transform.forward, m_CollisionNormal).normalized;
+        Vector3 camRight = Vector3.ProjectOnPlane(cam.transform.right, m_CollisionNormal).normalized;
+
+        if (move.sqrMagnitude > 0.001f)
+        {
+            m_Input = Quaternion.AngleAxis(angleLimit, m_CollisionNormal) * camForward;
+        }
+        else
+        {
+            m_Input = camForward;
+        }
     }
 
     public void OnMove(InputAction.CallbackContext context)
